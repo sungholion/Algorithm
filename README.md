@@ -10,4 +10,5 @@
 ### 🚀 Bronze
 | 문제번호 | 링크 |
 | ----- | ----- |
+|10699. 오늘 날짜|[링크](./%EB%B0%B1%EC%A4%80/Bronze/10699.%E2%80%85%EC%98%A4%EB%8A%98%E2%80%85%EB%82%A0%EC%A7%9C/%EC%98%A4%EB%8A%98%E2%80%85%EB%82%A0%EC%A7%9C.java)|
 |2557. Hello World|[링크](./%EB%B0%B1%EC%A4%80/Bronze/2557.%E2%80%85Hello%E2%80%85World/Hello%E2%80%85World.java)|
