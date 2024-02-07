@@ -28,8 +28,8 @@ public class Main {
 			for(int j=0; j<100; j++) 
 				if(colorPaper[i][j] == 1) area++;	// 색칠된 부분이라면 넓이+1
 		
-		System.out.println(area);
-//		bw.write(area);
-//		bw.flush(); bw.close(); br.close(); // 출력 닫기
+//		System.out.println(area);
+		bw.write(Integer.toString(area));	// write : 정수를 유니코드로 출력하므로 문자열로 바꿈
+		bw.flush(); bw.close(); br.close(); // 출력 닫기
 	}
 }
