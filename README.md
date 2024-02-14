@@ -159,3 +159,7 @@
 |2941. 크로아티아 알파벳|[링크](./%EB%B0%B1%EC%A4%80/Silver/2941.%E2%80%85%ED%81%AC%EB%A1%9C%EC%95%84%ED%8B%B0%EC%95%84%E2%80%85%EC%95%8C%ED%8C%8C%EB%B2%B3/README.md)|
 |5014. 스타트링크|[링크](./%EB%B0%B1%EC%A4%80/Silver/5014.%E2%80%85%EC%8A%A4%ED%83%80%ED%8A%B8%EB%A7%81%ED%81%AC/README.md)|
 |7562. 나이트의 이동|[링크](./%EB%B0%B1%EC%A4%80/Silver/7562.%E2%80%85%EB%82%98%EC%9D%B4%ED%8A%B8%EC%9D%98%E2%80%85%EC%9D%B4%EB%8F%99/README.md)|
+### 🚀 Silver I
+| 문제번호 | 링크 |
+| ----- | ----- |
+|1992. 쿼드트리|[링크](./%EB%B0%B1%EC%A4%80/Silver%20I/1992.%E2%80%85%EC%BF%BC%EB%93%9C%ED%8A%B8%EB%A6%AC/README.md)|
