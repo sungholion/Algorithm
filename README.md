@@ -166,6 +166,7 @@
 ### 🚀 Silver I
 | 문제번호 | 링크 |
 | ----- | ----- |
+|1931. 회의실 배정|[링크](./%EB%B0%B1%EC%A4%80/Silver%20I/1931.%E2%80%85%ED%9A%8C%EC%9D%98%EC%8B%A4%E2%80%85%EB%B0%B0%EC%A0%95/README.md)|
 |1992. 쿼드트리|[링크](./%EB%B0%B1%EC%A4%80/Silver%20I/1992.%E2%80%85%EC%BF%BC%EB%93%9C%ED%8A%B8%EB%A6%AC/README.md)|
 ### 🚀 Silver III
 | 문제번호 | 링크 |
