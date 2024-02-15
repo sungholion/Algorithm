@@ -127,6 +127,7 @@
 ### 🚀 Bronze III
 | 문제번호 | 링크 |
 | ----- | ----- |
+|1267. 핸드폰 요금|[링크](./%EB%B0%B1%EC%A4%80/Bronze%20III/1267.%E2%80%85%ED%95%B8%EB%93%9C%ED%8F%B0%E2%80%85%EC%9A%94%EA%B8%88/README.md)|
 |2490. 윷놀이|[링크](./%EB%B0%B1%EC%A4%80/Bronze%20III/2490.%E2%80%85%EC%9C%B7%EB%86%80%EC%9D%B4/README.md)|
 |2576. 홀수|[링크](./%EB%B0%B1%EC%A4%80/Bronze%20III/2576.%E2%80%85%ED%99%80%EC%88%98/README.md)|
 ### 🚀 Bronze IV
