@@ -131,6 +131,7 @@
 |10804. 카드 역배치|[링크](./%EB%B0%B1%EC%A4%80/Bronze%20II/10804.%E2%80%85%EC%B9%B4%EB%93%9C%E2%80%85%EC%97%AD%EB%B0%B0%EC%B9%98/README.md)|
 |11328. Strfry|[링크](./%EB%B0%B1%EC%A4%80/Bronze%20II/11328.%E2%80%85Strfry/README.md)|
 |13300. 방 배정|[링크](./%EB%B0%B1%EC%A4%80/Bronze%20II/13300.%E2%80%85%EB%B0%A9%E2%80%85%EB%B0%B0%EC%A0%95/README.md)|
+|1919. 애너그램 만들기|[링크](./%EB%B0%B1%EC%A4%80/Bronze%20II/1919.%E2%80%85%EC%95%A0%EB%84%88%EA%B7%B8%EB%9E%A8%E2%80%85%EB%A7%8C%EB%93%A4%EA%B8%B0/README.md)|
 ### 🚀 Bronze III
 | 문제번호 | 링크 |
 | ----- | ----- |
