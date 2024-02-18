@@ -9,11 +9,13 @@ public class Main{
         int L = Integer.parseInt(br.readLine());
         String str = br.readLine();
 
-        long sum = 0;
+        long ans = 0;
+        long pow = 1;
         for(int i=0; i<str.length(); i++){
-            sum += (str.charAt(i) - 'a' + 1) * Math.pow(31, i);
+            ans += (str.charAt(i) - 'a' + 1) * pow;
+            pow = (pow * 31) % 1234567891;
         }
 
-        System.out.println(sum % 1234567891);
+        System.out.println(ans % 1234567891);
     }
 }
