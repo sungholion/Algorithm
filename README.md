@@ -148,6 +148,7 @@
 | 문제번호 | 링크 |
 | ----- | ----- |
 |14891. 톱니바퀴|[링크](./%EB%B0%B1%EC%A4%80/Gold/14891.%E2%80%85%ED%86%B1%EB%8B%88%EB%B0%94%ED%80%B4/README.md)|
+|15686. 치킨 배달|[링크](./%EB%B0%B1%EC%A4%80/Gold/15686.%E2%80%85%EC%B9%98%ED%82%A8%E2%80%85%EB%B0%B0%EB%8B%AC/README.md)|
 |1759. 암호 만들기|[링크](./%EB%B0%B1%EC%A4%80/Gold/1759.%E2%80%85%EC%95%94%ED%98%B8%E2%80%85%EB%A7%8C%EB%93%A4%EA%B8%B0/README.md)|
 |2493. 탑|[링크](./%EB%B0%B1%EC%A4%80/Gold/2493.%E2%80%85%ED%83%91/README.md)|
 |9663. N－Queen|[링크](./%EB%B0%B1%EC%A4%80/Gold/9663.%E2%80%85N%EF%BC%8DQueen/README.md)|
