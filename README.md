@@ -213,6 +213,7 @@
 |5014. 스타트링크|[링크](./%EB%B0%B1%EC%A4%80/Silver/5014.%E2%80%85%EC%8A%A4%ED%83%80%ED%8A%B8%EB%A7%81%ED%81%AC/README.md)|
 |5397. 키로거|[링크](./%EB%B0%B1%EC%A4%80/Silver/5397.%E2%80%85%ED%82%A4%EB%A1%9C%EA%B1%B0/README.md)|
 |7562. 나이트의 이동|[링크](./%EB%B0%B1%EC%A4%80/Silver/7562.%E2%80%85%EB%82%98%EC%9D%B4%ED%8A%B8%EC%9D%98%E2%80%85%EC%9D%B4%EB%8F%99/README.md)|
+|9012. 괄호|[링크](./%EB%B0%B1%EC%A4%80/Silver/9012.%E2%80%85%EA%B4%84%ED%98%B8/README.md)|
 ### 🚀 Silver I
 | 문제번호 | 링크 |
 | ----- | ----- |
