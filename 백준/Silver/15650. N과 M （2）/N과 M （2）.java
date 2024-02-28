@@ -4,36 +4,42 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+
 public class Main {
-	static int n, m;
-	static int[] numbers;
+	static int N, M;
+	static int[] num;
+	static boolean[] visited;
+	static StringBuilder sb = new StringBuilder();
 	
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	public static void main(String[] args) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		n = Integer.parseInt(st.nextToken());
-		m = Integer.parseInt(st.nextToken());
-		numbers = new int[m];
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
 		
-		comb(0, 1);
+		num = new int[M];
+		visited = new boolean[N+1];
+		
+		dfs(1, 0);
+		
+		System.out.println(sb.toString());
 	}
-    
-	private static void comb(int cnt, int start) {
-		
-		if (cnt == m) {
-			for(int i=0; i<numbers.length; i++) {
-				System.out.print(numbers[i] + " ");
+	
+	static void dfs(int start, int depth) {
+		if (depth == M) {
+			for(int x : num) {
+				sb.append(x).append(" ");
 			}
-			System.out.println();
+			
+			sb.append("\n");
 			return;
 		}
 		
-
-		for (int i = start; i <= n; i++) {
-			numbers[cnt] = i; 
-			comb(cnt+1, i+1);	
+		for(int i=start; i<=N; i++) {
+			num[depth] = i;
+			dfs(i+1, depth+1);
 		}
+		
 	}
 	
 }
-
