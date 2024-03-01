@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
@@ -67,18 +66,16 @@ public class Solution {
 			totalCnt = 0;
 			for(int i=0; i<N; i++) {
 				st = new StringTokenizer(br.readLine());
-				for(int j=0; j<M; j++) {
+				for(int j=0; j<M; j++) 
 					map[i][j] = Integer.parseInt(st.nextToken());
-				}
 			}
 			
 			if(L == 1) 
-				System.out.println("#" + TC + " " + 1);
-			else {
+				totalCnt = 1;
+			else 
 				bfs(new Coord(R, C, map[R][C]));
-				System.out.println("#" + TC + " " + totalCnt);
-			}
 			
+			System.out.println("#" + TC + " " + totalCnt);
 		}
 	}
 	
@@ -92,135 +89,80 @@ public class Solution {
 			int cx = cur.x;
 			int cy = cur.y;
 			int cType = cur.type;	
-			if(visited[cx][cy]-1 ==  L) break;	// 제한 초
+			if(visited[cx][cy] - 1 ==  L) break;	// 제한 초. 시작이 1초이기 때문에 -1 
 			else totalCnt++;
 			
-//			System.out.print(cx + " " + cy + " -> ");
 			for(int i=0; i<4; i++) {
-				int nx = cx + dirx[cType][i];
+				int nx = cx + dirx[cType][i];	// 현재 있는 칸의 구조물이 갈 수 있는 좌표를 구함.
 				int ny = cy + diry[cType][i];
 				
-				if(nx >= 0 && nx < N && ny >= 0 && ny < M && map[nx][ny]!= 0 && visited[nx][ny] == 0) {
-					 // 서로 연결될 수 있는 파이프 유형인지!!!!!
-						Coord next = new Coord(nx, ny, map[nx][ny]);
-						if(isConnected(cur, next, i)) {
-							q.offer(next);
-							visited[nx][ny] = visited[cx][cy] + 1;
-							
-						}
+				// 다음 좌표가 맵을 벗어나지 않는지, 갈 수 있는 칸인지(구조물 있어야 함), 방문한 적 던 곳인지 체크
+				if(nx < 0 || nx >= N || ny < 0 || ny >= M || map[nx][ny]== 0 || visited[nx][ny] != 0)
+					continue;
+				
+				// 다음 구조물과 연결되는지 확인하고, 연결되 있다면 큐에 넣음.
+				Coord nType = new Coord(nx, ny, map[nx][ny]);	
+				if(isConnected(cur, nType, i)) {		
+					q.offer(nType);	
+					visited[nx][ny] = visited[cx][cy] + 1;	// 연결되어 있는 칸들 거리 + 1 (1초마다 갈 수 있는 거리 갱신)
 				}
 			}
-			
 		}
-		
 		
 		return;
 	}
 	
-	static boolean isConnected(Coord cur, Coord cur_next, int direction) {
-		int cx = cur.x;
-		int cy = cur.y;
+	static boolean isConnected(Coord cur, Coord cur_nType, int direction) {
 		int cType = cur.type;
-		int nx = cur_next.x;
-		int ny = cur_next.y;
-		int next = cur_next.type;
-		int cnt = 0;
+		int nType = cur_nType.type;
 		
 		if(cType == 1) {
-			 if (direction == 0) {
-	                if (next == 1 || next == 2 || next == 5 || next == 6) return true;
-	            }
-	            if (direction == 1) {
-	                if (next == 1 || next == 4 || next == 7 || next == 2) return true;
-	            }
-	            if (direction == 2) {
-	                if (next == 1 || next == 3 || next == 4 || next == 5) return true;
-	            }
-	            if (direction == 3) {
-	                if (next == 1 || next == 3 || next == 6 || next == 7) return true;
-	            }
+			 if (direction == 0) 
+	                if (nType == 1 || nType == 2 || nType == 5 || nType == 6) return true;
+	         if (direction == 1) 
+	                if (nType == 1 || nType == 4 || nType == 7 || nType == 2) return true;
+	         if (direction == 2) 
+	                if (nType == 1 || nType == 3 || nType == 4 || nType == 5) return true;
+	         if (direction == 3) 
+	                if (nType == 1 || nType == 3 || nType == 6 || nType == 7) return true;
 		}
 		else if(cType == 2) {
-			 if (direction == 0) {
-	                if (next == 1 || next == 2 || next == 5 || next == 6) return true;
-	            }
-	            if (direction == 1) {
-	                if (next == 1 || next == 4 || next == 7 || next == 2) return true;
-	            }
+			 if (direction == 0) 
+	                if (nType == 1 || nType == 2 || nType == 5 || nType == 6) return true;
+	         if (direction == 1) 
+	                if (nType == 1 || nType == 4 || nType == 7 || nType == 2) return true;
 		}
 		else if(cType == 3) {
-			if (direction == 2) {
-                if (next == 1 || next == 3 || next == 4 || next == 5) return true;
-            }
-            if (direction == 3) {
-                if (next == 1 || next == 3 || next == 6 || next == 7) return true;
-            }
+			if (direction == 2) 
+                	if (nType == 1 || nType == 3 || nType == 4 || nType == 5) return true;
+            if (direction == 3) 
+                	if (nType == 1 || nType == 3 || nType == 6 || nType == 7) return true;
 		}
 		else if(cType == 4) {
-			  if (direction == 0) {
-	                if (next == 1 || next == 2 || next == 5 || next == 6) return true;
-	            }
-	            if (direction == 3) {
-	                if (next == 1 || next == 3 || next == 6 || next == 7) return true;
-	            }
+			if (direction == 0) 
+	                if (nType == 1 || nType == 2 || nType == 5 || nType == 6) return true;
+	        if (direction == 3) 
+	                if (nType == 1 || nType == 3 || nType == 6 || nType == 7) return true;
 		}
 		else if(cType == 5) {
-			if (direction == 3) {
-                if (next == 1 || next == 3 || next == 6 || next == 7) return true;
-            }
-            if (direction == 1) {
-                if (next == 1 || next == 4 || next == 7 || next == 2) return true;
-            }
+			if (direction == 3) 
+                	if (nType == 1 || nType == 3 || nType == 6 || nType == 7) return true;
+            if (direction == 1) 
+                	if (nType == 1 || nType == 4 || nType == 7 || nType == 2) return true;
 		}
 		else if(cType == 6) {
-			 if (direction == 2) {
-	                if (next == 1 || next == 3 || next == 4 || next == 5) return true;
-	            }
-	            if (direction == 1) {
-	                if (next == 1 || next == 4 || next == 7 || next == 2) return true;
-	            }
+			if (direction == 2) 
+	                if (nType == 1 || nType == 3 || nType == 4 || nType == 5) return true;
+	        if (direction == 1) 
+	                if (nType == 1 || nType == 4 || nType == 7 || nType == 2) return true;
 		}
 		else if(cType == 7) {
-			  if (direction == 0) {
-	                if (next == 1 || next == 2 || next == 5 || next == 6) return true;
-	            }
-	            if (direction == 2) {
-	                if (next == 1 || next == 3 || next == 4 || next == 5) return true;
-	            }
+			if (direction == 0) 
+	                if (nType == 1 || nType == 2 || nType == 5 || nType == 6) return true;
+	        if (direction == 2) 
+	                if (nType == 1 || nType == 3 || nType == 4 || nType == 5) return true;
 	        }
 		
 		return false;
-//		if(dirx[cType][0] == -dirx[nType][1] ||
-//			dirx[cType][1] == -dirx[nType][0] ||
-//			diry[cType][2] == -diry[nType][3] ||
-//			diry[cType][3] == -diry[nType][2]
-//			) {
-//			return true;
-//		}
-//		
-//		return false;
-		
-//		for(int i=0; i<4; i++) {
-//			if(dirx[cType][i] == -dirx[nType][i] || diry[cType][i] == -diry[nType][i]) {
-//				return true;
-//			}
-//		}
-//		
-//		return false;
-		
-//		for(int i=0; i<4; i++) {
-//			int dr = nx + dirx[nType][i];
-//			int dc = ny + diry[nType][i];
-//			if(dr >= 0 && dc >= 0 && dr < N && dc < M && map[dr][dc] == map[cx][cy]) {
-//				cnt++;
-//				break;
-//			}
-//		}
-		
-//		if(cnt == 2) return true;
-//		else return false;
-//		
 	}
-
-
 }		
