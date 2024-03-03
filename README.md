@@ -1,3 +1,5 @@
+### Algorithm
+ <img src="http://mazassumnida.wtf/api/v2/generate_badge?boj=java_eoblue" height="150">
 #
 # 백준, 프로그래머스 문제 풀이 목록
 ## 📚 SWEA
