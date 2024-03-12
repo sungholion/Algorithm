@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.StringTokenizer;
+import  java.util.*;
 
 class Node implements Comparable<Node>{
     int A;
@@ -16,7 +16,8 @@ class Node implements Comparable<Node>{
 
     @Override
     public int compareTo(Node a){
-        return this.val - a.val;
+        return val - a.val;
+
     }
 
 }
@@ -24,9 +25,8 @@ class Node implements Comparable<Node>{
 public class Main
 {
     static int V, E;
-    static ArrayList<Node> list = new ArrayList<>();
+    static List<Node> list = new ArrayList<>();
     static int[] parent;
-
     public static void main(String[] args) throws IOException
     {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -36,7 +36,7 @@ public class Main
         V = Integer.parseInt(st.nextToken());
         E = Integer.parseInt(st.nextToken());
 
-        for(int i = 0; i < E; i++){
+        for(int i=0; i<E; i++){
             st = new StringTokenizer(br.readLine());
             int A = Integer.parseInt(st.nextToken());
             int B = Integer.parseInt(st.nextToken());
@@ -46,11 +46,12 @@ public class Main
 
         Collections.sort(list);
 
-        parent = new int[V + 1];
-        for(int i = 1; i <= V; i++)
-            parent[i] = i;
 
         int sum = 0;
+        parent = new int[V+1];
+        for(int i=1; i<=V; i++)
+            parent[i] = i;
+
         int max = -1;
         for(Node a : list){
             int A = a.A;
@@ -65,9 +66,10 @@ public class Main
             max = val;
         }
 
-        bw.write(sum-max + "");
+        bw.write(sum-max +"");
         bw.close();
         br.close();
+
     }
 
     static int find(int A){
