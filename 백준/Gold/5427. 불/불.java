@@ -20,6 +20,7 @@ public class Main {
   static int[] dy = {1, -1, 0, 0};
   static Queue<Coord> fire;
   static StringBuilder sb;
+
   public static void main(String[] args) throws IOException{
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -52,16 +53,12 @@ public class Main {
       }
 
       runToExit(new Coord(startX, startY));
-
-
-
     }
 
     bw.write(sb.toString());
     bw.flush();
     bw.close();
     br.close();
-
   }
 
   static void runToExit(Coord v){
@@ -89,7 +86,7 @@ public class Main {
         int ny = c.y + dy[i];
 
         if(nx >= h || ny >= w || nx < 0 || ny < 0) {
-          sb.append(time+1 + "\n");
+          sb.append((time + 1) + "\n");
           return;
         }
         if(map[nx][ny] == '.' && !visited[nx][ny]) {
