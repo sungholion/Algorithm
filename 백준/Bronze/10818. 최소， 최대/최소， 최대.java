@@ -1,22 +1,30 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
-public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-		int[] arr = new int[n];
-		
-		for (int i=0; i<n; i++)
-			arr[i] = sc.nextInt();
-		
-		int max = arr[0], min = arr[0];
-		for (int i=1; i<n; i++) {
-			if (arr[i] > max)
-				max = arr[i];
-			if (arr[i] < min)
-				min = arr[i];
-		}
-		
-		System.out.println(min + " " + max);
-	}
+public class Main{
+   public static void main(String[] args) throws IOException{
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+      int n = Integer.parseInt(br.readLine());
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int[] arr = new int[n];
+
+      int max = Integer.MIN_VALUE;
+      int min = Integer.MAX_VALUE;
+      for(int i = 0; i < n; i++){
+         arr[i] = Integer.parseInt(st.nextToken());
+         if(arr[i] > max){
+            max = arr[i];
+         }
+
+         if(arr[i] < min){
+            min = arr[i];
+         }
+      }
+
+      bw.write(min + " " + max + "\n");
+      bw.flush();
+      br.close();
+      bw.close();
+   }
 }
