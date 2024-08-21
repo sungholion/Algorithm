@@ -1,10 +1,22 @@
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("         ,r'\"7");
-        System.out.println("r`-_   ,'  ,/");
-        System.out.println(" \\. \". L_r'");
-        System.out.println("   `~\\/");
-        System.out.println("      |");
-        System.out.println("      |");
-    }
+import java.util.*;
+import java.io.*;
+
+public class Main{
+   public static void main(String[] args) throws IOException{
+       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+       BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+       String str = "         ,r'\"7" + "\n" +
+               "r`-_   ,'  ,/" + "\n" +
+               " \\. \". L_r'" + "\n" +
+               "   `~\\/" + "\n" +
+               "      |" + "\n" +
+               "      |" + "\n";
+
+
+       bw.write(str);
+       bw.flush();
+       br.close();
+       bw.close();
+   }
 }
