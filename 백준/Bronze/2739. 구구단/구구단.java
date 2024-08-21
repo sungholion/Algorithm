@@ -1,11 +1,23 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
+public class Main{
+   public static void main(String[] args) throws IOException{
+       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+       BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+       StringBuilder sb = new StringBuilder();
+       StringTokenizer st = new StringTokenizer(br.readLine());
 
-        for ( int i = 1 ; i <= 9 ; i++ )
-            System.out.printf("%d * %d = %d\n", n, i, n*i);
-    }
+       int n = Integer.parseInt(st.nextToken());
+
+       for(int i=1; i<10; i++){
+          sb.append(n + " * " + i + " = " + (n * i) + "\n");
+       }
+
+
+       bw.write(sb.toString());
+       bw.flush();
+       br.close();
+       bw.close();
+   }
 }
