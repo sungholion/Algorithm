@@ -1,19 +1,25 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+public class Main{
+   public static void main(String[] args) throws IOException{
+       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+       BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+       StringBuilder sb = new StringBuilder();
+       StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int n = sc.nextInt();
+       int n = Integer.parseInt(st.nextToken());
 
-        for ( int i = 1 ; i <= n ; i++ ){
-            for( int j = 1 ; j <= i ; j++ ) {
-                System.out.print("*");
-            }
-            System.out.println(); // 줄바꿈
-        }
+       for(int i = 0; i < n; i++){
+          for(int j = 0; j <= i; j++){
+             sb.append("*");
+          }
+          sb.append("\n");
+       }
 
-
-
-    }
+       bw.write(sb.toString());
+       bw.flush();
+       br.close();
+       bw.close();
+   }
 }
