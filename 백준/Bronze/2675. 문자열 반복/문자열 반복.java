@@ -1,22 +1,29 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
-public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int t = sc.nextInt();	//test case 개수 입력
-		sc.nextLine();	// /n 문자 삭제
-		
-		for (int i=0; i<t; i++) {
-			String n_word = sc.nextLine();	//숫자와 문자 동시에 입력받고
-			int n = Character.getNumericValue(n_word.charAt(0));	//숫자 분리
-			
-			
-			for (int k=2; k<n_word.length(); k++) {	//숫자만큼 문자 반복
-				for (int j=0; j<n; j++) {
-					System.out.print(n_word.charAt(k));
-				}
-			}
-			System.out.println();
-		}
-	}
+public class Main{
+   public static void main(String[] args) throws IOException{
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+      StringTokenizer st;
+      int t = Integer.parseInt(br.readLine());
+
+
+      for(int i = 0; i < t; i++){
+         st = new StringTokenizer(br.readLine());
+         int r = Integer.parseInt(st.nextToken());
+         String s = st.nextToken();
+         StringBuilder result = new StringBuilder();
+
+         for(int j = 0; j < s.length(); j++){
+            for(int k = 0; k < r; k++)
+               result.append(s.charAt(j));
+         }
+         bw.write(result + "\n");
+      }
+
+      bw.flush();
+      br.close();
+      bw.close();
+   }
 }
