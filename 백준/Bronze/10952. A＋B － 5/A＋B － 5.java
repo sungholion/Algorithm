@@ -1,19 +1,28 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+public class Main{
+   public static void main(String[] args) throws IOException{
+       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+       BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+       StringBuilder sb = new StringBuilder();
+       StringTokenizer st;
 
-        while (true){
-            int a = sc.nextInt();
-            int b = sc.nextInt();
-            if (a == 0 && b == 0)
-                break;
-            else
-                System.out.println(a+b);
+       while(true){
+          st = new StringTokenizer(br.readLine());
 
-        }
+          int a = Integer.parseInt(st.nextToken());
+          int b = Integer.parseInt(st.nextToken());
 
+          if(a==b && a == 0){
+             break;
+          }
+          sb.append(a+b).append("\n");
+       }
 
-    }
+       bw.write(sb.toString());
+       bw.flush();
+       br.close();
+       bw.close();
+   }
 }
