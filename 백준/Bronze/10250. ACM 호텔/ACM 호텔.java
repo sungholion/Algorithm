@@ -1,54 +1,42 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.*;
+import java.io.*;
 
-public class Main {
-	public static void main(String[] args) throws IOException{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		int t = Integer.parseInt(br.readLine());
-		
-		while(true) {
-			if(t==0)
-				break;
-			
-			String[] hotel = br.readLine().split(" ");
-			int h = Integer.parseInt(hotel[0]);
-			int w = Integer.parseInt(hotel[1]);
-			int n = Integer.parseInt(hotel[2]);
-			
-			int[] room = new int[h*w];
-			int room_num = 101;
-			room[0] = room_num;
-			
-			for(int i=1; i<h*w; i++) {
-				if(h==1) {
-					room_num++;
-					room[i] = room_num;
-				}
-				
-				else {
-					room_num += 100;
-					room[i] = room_num;
-					if(room_num/100 >= h) {
-						room_num -= h*100;
-						room_num++;
-					}
-				}
-				
-				
-			}
-			
-			System.out.println(room[n-1]);
-			t--;
-		}
-	}
+public class Main{
+   public static void main(String[] args) throws IOException{
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+      StringTokenizer st;
+      StringBuilder sb = new StringBuilder();
+
+      int t = Integer.parseInt(br.readLine());
+
+      for(int i = 0; i < t; i++){
+         st = new StringTokenizer(br.readLine());
+         int h = Integer.parseInt(st.nextToken());
+         int w = Integer.parseInt(st.nextToken());
+         int n = Integer.parseInt(st.nextToken());
+
+         int x = n % h;
+         int y = 1 + n / h;
+         if(x == 0){
+            x = h;
+            y -= 1;
+         }
+
+         boolean needZero = y < 10;
+
+         if(needZero){
+            sb.append(x).append(0).append(y).append("\n");
+         }
+         else{
+            sb.append(x).append(y).append("\n");
+         }
+      }
+
+
+      bw.write(sb.toString());
+      bw.flush();
+      br.close();
+      bw.close();
+   }
 }
-
-
-/*
- * h = 1
- * ->
- * h > 1 ( h+100)
- 
- * */
