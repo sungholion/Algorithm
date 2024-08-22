@@ -1,27 +1,31 @@
+import java.util.*;
 import java.io.*;
-import java.util.StringTokenizer;
 
-public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
+public class Main{
+   public static void main(String[] args) throws IOException{
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
+      int score = Integer.parseInt(br.readLine());
 
-        int a = Integer.parseInt(st.nextToken());
+      if(score <= 100 && score >= 90){
+         bw.write("A");
+      }
+      else if(score >= 80 && score < 90){
+         bw.write("B");
+      }
+      else if(score >= 70 && score < 80){
+         bw.write("C");
+      }
+      else if(score >= 60 && score < 70){
+         bw.write("D");
+      }
+      else{
+         bw.write("F");
+      }
 
-        if(a>=90) sb.append("A");
-        else if(a>=80) sb.append("B");
-        else if (a>=70) sb.append("C");
-        else if(a>=60) sb.append("D");
-        else sb.append("F");
-
-
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
-
-    }
+      bw.flush();
+      br.close();
+      bw.close();
+   }
 }
