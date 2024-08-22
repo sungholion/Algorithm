@@ -1,14 +1,21 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
+public class Main{
+   public static void main(String[] args) throws IOException{
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        long anw = 1L;
-        for ( int i = 1 ; i <= n ; i++ )
-            anw *= i;
+      int n = Integer.parseInt(br.readLine());
 
-        System.out.println(anw);
-    }
+      long result = 1;
+      for(int i = 1; i <= n; i++){
+         result *= i;
+      }
+
+      bw.write(String.valueOf(result));
+      bw.flush();
+      br.close();
+      bw.close();
+   }
 }
