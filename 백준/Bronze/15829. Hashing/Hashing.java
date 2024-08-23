@@ -1,21 +1,26 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.math.BigInteger;
+import java.util.*;
+import java.io.*;
 
 public class Main{
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+   public static void main(String[] args) throws IOException{
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int L = Integer.parseInt(br.readLine());
-        String str = br.readLine();
+      int L = Integer.parseInt(br.readLine());
+      String str = br.readLine();
 
-        long ans = 0;
-        long pow = 1;
-        for(int i=0; i<str.length(); i++){
-            ans += (str.charAt(i) - 'a' + 1) * pow;
-            pow = (pow * 31) % 1234567891;
-        }
+      //result = result.add(BigInteger.valueOf(S.charAt(i) - 96).multiply(BigInteger.valueOf(31).pow(i)));
+      //System.out.println(result.remainder(BigInteger.valueOf(1234567891)));
+      BigInteger result = new BigInteger("0");
+      for(int i = 0; i < str.length(); i++){
+         char ch = str.charAt(i);
+         result = result.add(BigInteger.valueOf(ch - 96).multiply(BigInteger.valueOf(31).pow(i)));
+      }
 
-        System.out.println(ans % 1234567891);
-    }
+      bw.write(result.remainder(BigInteger.valueOf(1234567891)) + "");
+      bw.flush();
+      bw.close();
+      br.close();
+   }
 }
