@@ -1,31 +1,35 @@
-import java.util.Scanner;
- 
-public class Main {
-	static int b, s;
-	public static void main(String[] args) {
- 
-		Scanner sc = new Scanner(System.in);
- 
-		int n1 = sc.nextInt();
-		int n2 = sc.nextInt();
-		if(n1 >= n2) {
-			b = n1;
-			s = n2;
-		}
-		else {
-			b = n2;
-			s = n1;
-		}
-		System.out.println(gcd(b, s));
-		System.out.println(lcm(b, s));
-		
-	}
-	public static int gcd(int big, int small) {
-		if(small==0) return big;
-		return gcd(small, big%small);
-	}
-	
-	public static int lcm(int big, int small) {
-		return big * small / gcd(big, small);
-	}
+import java.math.BigInteger;
+import java.util.*;
+import java.io.*;
+
+public class Main{
+   public static void main(String[] args) throws IOException{
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int a = Integer.parseInt(st.nextToken());
+      int b = Integer.parseInt(st.nextToken());
+
+      int greatest = gcd(a, b);
+      int least = (a * b) / greatest;
+
+      bw.write(greatest + "\n");
+      bw.write(least + "\n");
+      bw.flush();
+      bw.close();
+      br.close();
+   }
+
+   public static int gcd(int a, int b){
+      while(b!=0){
+         int r = a % b;
+
+         a = b;
+         b = r;
+      }
+      return a;
+   }
 }
+
+
