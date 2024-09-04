@@ -2,51 +2,48 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
+   public static void main(String[] args) throws IOException {
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-	public static void main(String[] args) throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int n = Integer.parseInt(st.nextToken());
+      int m = Integer.parseInt(st.nextToken());
 
-		int row = Integer.parseInt(st.nextToken());
-		int col = Integer.parseInt(st.nextToken());
+      String[] arr = new String[n];
 
-		String board[] = new String[row];
+      for (int i = 0; i < n; i++) {
+         arr[i] = br.readLine();
+      }
 
-		for(int i=0; i<row; i++) {
-			board[i] = br.readLine();
-		}
+      int res = Integer.MAX_VALUE;
+      for(int i = 0; i <= n - 8; i++){
+         for(int j = 0; j <= m - 8; j++){
+            int curRes = getRes(i, j, arr);
+            if(curRes < res){
+               res = curRes;
+            }
+         }
+      }
 
-		int sol = Integer.MAX_VALUE;
+      bw.write(String.valueOf(res));
+      bw.flush();
+      bw.close();
+      br.close();
+   }
 
-		for(int i=0; i<=row - 8; i++) {
-			for(int j=0; j<=col - 8; j++) {
-				int curSol = solved(i, j, board);
+   public static int getRes(int startRow, int startCol, String[] arr){
+      String[] correctArr = {"BWBWBWBW", "WBWBWBWB"};
+      int black = 0;
 
-				if(sol > curSol) {
-					sol = curSol;
-				}
-			}
-		}
+      for(int i=0; i<8; i++){
+         int row = startRow + i;
+         for(int j=0; j<8; j++){
+            int col = startCol + j;
+            if(arr[row].charAt(col) != correctArr[row % 2].charAt(j)) black++;
+         }
+      }
 
-		System.out.println(sol);
-	}
-
-	private static int solved(int start_row, int start_col, String[] board) {
-		String orgBoard[] = {"WBWBWBWB", "BWBWBWBW"};
-		int whiteSol = 0;
-
-		for(int i=0; i<8; i++) {
-			int row = start_row + i;
-			for(int j=0; j<8; j++) {
-				int col = start_col + j;
-
-				if(board[row].charAt(col) != orgBoard[row % 2].charAt(j)) {
-					whiteSol++;
-				}
-			}
-		}
-
-		return Math.min(whiteSol, 64 - whiteSol);
-	} // End of solved
-
-} // End of class
+      return Math.min(black, 64-black);
+   }
+}
