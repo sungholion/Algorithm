@@ -1,23 +1,26 @@
-import java.io.IOException;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-
     public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
-        int a = sc.nextInt();
-        int b = sc.nextInt();
-        int sum = 0;
-        int n1 = a * (b%10);
-        int n2 = a * ((b%100)/10);
-        int n3 = a * (b/100);
-        sum = n1 + 10*n2 + 100*n3;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        System.out.println(n1);
-        System.out.println(n2);
-        System.out.println(n3);
-        System.out.println(sum);
+        int a = Integer.parseInt(br.readLine());
+        int b = Integer.parseInt(br.readLine());
 
+        int res1 = a * (b % 10);
+        int res2 = a * ((b % 100) / 10);
+        int res3 = a * (b/100);
+        int res4 = res1 + (10 * res2) + (100 * res3);
 
+        bw.write(res1 + "\n");
+        bw.write(res2 + "\n");
+        bw.write(res3 + "\n");
+        bw.write(res4 + "\n");
+        
+        bw.flush();
+        bw.close();
+        br.close();
     }
 }
