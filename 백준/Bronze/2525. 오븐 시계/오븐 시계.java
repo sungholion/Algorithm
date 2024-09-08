@@ -1,27 +1,28 @@
-import java.io.IOException;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-
     public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
-        int h = sc.nextInt();
-        int m = sc.nextInt();
-        int add = sc.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        m += add;
-        if ((m+add) >= 60){
-            h+= m/60;
-            m-= (m/60)*60;
-        }
-        else
-            m+=add;
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int h = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(br.readLine());
 
-        if(h >= 24)
-            h-= 24;
+        m += n;
 
-        System.out.println(h + " " + m);
+        int plusH = m / 60;
+        m -= plusH * 60;
 
+        h += plusH;
 
+        if(h >= 24) h-= 24;
+
+        bw.write(h + " " + m + "\n");
+        bw.flush();
+        bw.close();
+        br.close();
     }
 }
