@@ -1,28 +1,33 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-	public static void main(String[] args) throws IOException{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int x = Integer.parseInt(br.readLine());
-		int n = Integer.parseInt(br.readLine());
-		
-		int sum = 0;
-		for(int i=0; i<n; i++) {
-			String[] input = br.readLine().split(" ");
-			int a = Integer.parseInt(input[0]);
-			int b = Integer.parseInt(input[1]);
-			sum += a*b;
-		}
-			
-		if(x == sum)
-			System.out.println("Yes");
-		else
-			System.out.println("No");
-		
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int x = Integer.parseInt(br.readLine());
+        int n = Integer.parseInt(br.readLine());
+
+        boolean flag = true;
+        for(int i = 0; i < n; i++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+
+            x -= a * b;
+
+            if(x < 0){
+                flag = false;
+                break;
+            }
+        }
+        
+        if(flag && x == 0) bw.write("Yes\n");
+        else bw.write("No\n");
+
+        bw.flush();
+        bw.close();
+        br.close();
+    }
 }
-
-
-
