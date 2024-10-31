@@ -7,21 +7,16 @@ class Solution {
         Stack<Character> stack = new Stack<>();
         
         for(int i=0; i<s.length(); i++){
-            if(s.charAt(i) == '('){
-                stack.push(s.charAt(i));
-            } 
-            else if(s.charAt(i) == ')')
-            {    
-                if(stack.isEmpty()){
-                   answer = false;
+            char c = s.charAt(i);
+            
+            if(c == '('){
+                stack.push(c);
+            } else if(c == ')'){
+                if(!stack.isEmpty()){
+                    stack.pop();    
+                } else{
+                    answer = false;
                     break;
-                }
-                else{
-                    char p = stack.pop();
-                    if(p!= '('){
-                        answer = false;
-                        break;
-                    }
                 }
             }
         }
@@ -29,8 +24,7 @@ class Solution {
         if(!stack.isEmpty()){
             answer = false;
         }
-        
-        
+  
         return answer;
     }
 }
