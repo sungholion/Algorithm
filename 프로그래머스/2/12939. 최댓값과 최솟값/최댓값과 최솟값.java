@@ -1,24 +1,19 @@
 class Solution {
     public String solution(String s) {
         String answer = "";
-        String[] numbers = s.split(" ");
         
-        int max = Integer.MIN_VALUE;
-        int min = Integer.MAX_VALUE;
+        String[] arr = s.split(" ");
+        int min = Integer.parseInt(arr[0]);
+        int max = min;
         
-        for(int i=0; i < numbers.length; i++){
-            int n = Integer.parseInt(numbers[i]);
-            
-            if(n > max){
-                max = n;
-            }
-            
-            if( n < min){
-                min = n;
-            }
+        for(int i=1; i<arr.length; i++){
+            int num = Integer.parseInt(arr[i]);
+            min = Math.min(num, min);
+            max = Math.max(num, max);
         }
         
         answer = min + " " + max;
+        
         
         return answer;
     }
