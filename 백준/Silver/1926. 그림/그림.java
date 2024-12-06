@@ -19,6 +19,7 @@ public class Main {
     static boolean[][] visited;
     static int cnt;
     static int maxArea;
+    static int area;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
 
@@ -44,7 +45,9 @@ public class Main {
         for(int i=0; i<n; i++) {
             for(int j=0; j<m; j++) {
                 if(map[i][j] == 1 && !visited[i][j]) {
-                    bfs(new Coord(i, j));
+                    area = 0;
+                    area = dfs(new Coord(i, j));
+                    maxArea = Math.max(maxArea, area);
                     cnt++;
                 }
             }
@@ -58,32 +61,21 @@ public class Main {
 
     }
 
-    static void bfs(Coord start) {
-        Queue<Coord> q = new ArrayDeque<>();
+    static int dfs(Coord start) {
         visited[start.x][start.y] = true;
-        q.offer(start);
 
-        int tempArea = 1;
-        while(!q.isEmpty()) {
-            Coord cur = q.poll();
+        area++;
+        for(int i=0; i<4; i++) {
+            int nx = start.x + dx[i];
+            int ny = start.y + dy[i];
 
-            for(int i=0; i<4; i++) {
-                int nx = cur.x + dx[i];
-                int ny = cur.y + dy[i];
-
-                if(nx < 0 || ny < 0 || nx >= n || ny >= m || visited[nx][ny] || map[nx][ny] == 0) {
-                    continue;
-                }
-
-                Coord next = new Coord(nx, ny);
-                visited[nx][ny] = true;
-                q.offer(next);
-                tempArea++;
+            if(nx < 0 || ny < 0 || nx >= n || ny >= m || visited[nx][ny] || map[nx][ny] == 0) {
+                continue;
             }
+
+            dfs(new Coord(nx, ny));
         }
 
-        if(tempArea > maxArea)
-            maxArea = tempArea;
-
+        return area;
     }
 }
