@@ -1,93 +1,104 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
+
+class Coord{
+    int y;
+    int x;
+
+    public Coord(int y, int x){
+        this.y = y;
+        this.x = x;
+    }
+}
 
 public class Main{
-	static int m, n, k;
-	static int[][] map;
-	static boolean[][] visited;
-	static int lx, ly, rx, ry;
-	static int dx[] = {0, 0, -1, 1};
-	static int dy[] = {-1, 1, 0, 0};
-	static int cnt;
-	static List<Integer> ans;
-	
-	public static void dfs(int x, int y) {
-		visited[x][y] = true;
-		
-		for(int i=0; i<4; i++) {
-			int nx = x + dx[i];
-			int ny = y + dy[i];
-			
-			if(range_check(nx, ny)) {
-				cnt++;
-				dfs(nx, ny);
-			}
-		}
-	}
-	
-	public static boolean range_check(int x, int y) {
-		if(x>=0 && y>=0 && x<m && y<n && !visited[x][y] && map[x][y] == 1)
-			return true;
-		else return false;
-	}
-	
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));		
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		m = Integer.parseInt(st.nextToken());
-		n = Integer.parseInt(st.nextToken());
-		k = Integer.parseInt(st.nextToken());
-		map = new int[m][n];
-		visited = new boolean[m][n];
-		ans = new LinkedList<>();
-		
-		for(int i=0; i<m; i++) {
-			for(int j=0; j<n; j++) {
-				map[i][j] = 1;
-			}
-		}
-		
-		for(int none = 0; none<k; none++) {
-			st = new StringTokenizer(br.readLine());
-			lx = Integer.parseInt(st.nextToken());
-			ly = Integer.parseInt(st.nextToken());
-			rx = Integer.parseInt(st.nextToken());
-			ry = Integer.parseInt(st.nextToken());
-			
-			for(int i=ly; i<ry ;i++) {
-				for(int j=lx; j<rx ;j++) {
-					map[i][j] = 0;
-				}
-			}
-		}
-		
-		cnt = 1; 
-		for(int i=0; i<m; i++) {
-			for(int j=0; j<n; j++) {
-				if(map[i][j] == 1 && !visited[i][j]) {
-					dfs(i, j);
-					ans.add(cnt);
-					cnt = 1;
-				}
-			}
-		}
-		
-		Collections.sort(ans);
-		bw.write(ans.size() + "\n");
-		for(int a : ans)
-			bw.write(a + " ");
-		
-		bw.flush();
-		br.close();
-		bw.close();
-	}
-	
+    static int m, n, k;
+    static int[][] map;
+    static boolean[][] visited;
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
+    static List<Integer> list = new LinkedList<>();
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        m = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
+
+        map = new int[m][n];
+        visited = new boolean[m][n];
+
+        for(int kc=0; kc<k; kc++){
+            st = new StringTokenizer(br.readLine());
+            int x1 = Integer.parseInt(st.nextToken());
+            int y1 = Integer.parseInt(st.nextToken());
+            int x2 = Integer.parseInt(st.nextToken());
+            int y2 = Integer.parseInt(st.nextToken());
+
+            for(int i = y1; i < y2; i++){
+                for(int j = x1; j < x2; j++){
+                    map[i][j] = -1;
+                }
+            }
+        }
+
+        int cnt = 0;
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(map[i][j] != -1 && !visited[i][j]){
+                    cnt++;
+                    bfs(new Coord(i, j));
+                }
+            }
+        }
+
+        Collections.sort(list);
+
+        bw.write(cnt + "\n");
+        for(int i=0; i<list.size(); i++){
+            bw.write(list.get(i) + " ");
+        }
+        bw.flush();
+        bw.close();
+        br.close();
+
+//        for(int i=0; i<m; i++){
+//            for(int j=0; j<n; j++){
+//                System.out.print(map[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
+
+    }
+
+    static void bfs(Coord start){
+        Queue<Coord> q = new ArrayDeque<>();
+
+        visited[start.y][start.x] = true;
+        int width = 1;
+        q.offer(start);
+
+        while(!q.isEmpty()){
+            Coord cur = q.poll();
+
+            for(int i=0; i<4; i++){
+                int ny = cur.y + dy[i];
+                int nx = cur.x + dx[i];
+
+                if(ny < 0 || nx < 0 || ny >= m || nx >= n || map[ny][nx] == -1 || visited[ny][nx]){
+                    continue;
+                }
+
+                width++;
+                visited[ny][nx] = true;
+                q.offer(new Coord(ny, nx));
+
+            }
+        }
+
+        list.add(width);
+
+    }
 }
