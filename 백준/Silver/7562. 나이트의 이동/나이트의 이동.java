@@ -1,64 +1,86 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.LinkedList;
+import java.io.*;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class Main {
-	static int[][] map;
-	static boolean[][] visited;
-	static int[] dx = {-2, -1, 1, 2, 2, 1, -1, -2};
-	static int[] dy = {1, 2, 2, 1, -1, -2, -2, -1};
-	static int l;
-	static int x1, x2, y1, y2;
-	static int cx, cy, nx, ny;
-	
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
-		int t = Integer.parseInt(br.readLine());
-		
-		for(int tc = 1; tc<=t; tc++) {
-			l = Integer.parseInt(br.readLine());	// 변의 길이
-			map = new int[l][l];
-			visited = new boolean[l][l];
-			
-			st = new StringTokenizer(br.readLine());	// 시작점
-			x1 = Integer.parseInt(st.nextToken());
-			y1 = Integer.parseInt(st.nextToken());
-			
-			st = new StringTokenizer(br.readLine());	//도착점
-			x2 = Integer.parseInt(st.nextToken());
-			y2 = Integer.parseInt(st.nextToken());
-			
-			bfs(x1, y1);
-			
-			System.out.println(map[x2][y2]);
-		}
-	}
+class Coord{
+    int x;
+    int y;
 
-	public static void bfs(int x, int y) {
-		Queue<int[]> q = new LinkedList<>();
-		q.add(new int[] {x, y});
-		visited[x][y] = true;
-		
-		while(!q.isEmpty()) {
-			int[] cur = q.poll();
-			cx = cur[0];
-			cy = cur[1];
-			
-			for(int i=0; i<dx.length; i++) {
-				nx = cx + dx[i];
-				ny = cy + dy[i];
-				
-				if(nx < 0 || ny < 0 || nx >=l || ny >= l || visited[nx][ny])
-					continue;
-				
-				visited[nx][ny] = true;
-				map[nx][ny] = map[cx][cy] + 1;
-				q.add(new int[] {nx, ny});
-			}
-		}
-	}
+    public  Coord(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+
+}
+
+
+
+public class Main{
+
+    static int l;
+    static int[][] map;
+    static int[][] visited;
+    static int[] dx = {-2, -2, -1, -1, 2, 2, 1, 1 };
+    static int[] dy = {-1, 1, -2, 2, -1, 1, -2, 2 };
+    static Coord start;
+    static Coord target;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
+
+        int t = Integer.parseInt(br.readLine());
+
+        for(int tc=0; tc<t; tc++){
+            l = Integer.parseInt(br.readLine());
+            map = new int[l][l];
+            visited = new int[l][l];
+
+            st = new StringTokenizer(br.readLine());
+            start = new Coord(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+
+            st = new StringTokenizer(br.readLine());
+            target = new Coord(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+
+            int answer = bfs(start);
+
+            bw.write(answer + "\n");
+        }
+
+        bw.flush();
+        bw.close();
+        br.close();
+    }
+
+    static int bfs(Coord start){
+        Queue<Coord> q = new ArrayDeque<>();
+
+        q.offer(start);
+
+        while(!q.isEmpty()){
+            Coord cur = q.poll();
+
+            if(cur.x == target.x && cur.y == target.y){
+                return visited[cur.x][cur.y];
+            }
+
+            for(int i=0; i<8; i++){
+                int nx = cur.x + dx[i];
+                int ny = cur.y + dy[i];
+
+                if(nx < 0 || ny < 0 || nx >= l || ny >= l || visited[nx][ny] != 0){
+                    continue;
+                }
+
+                visited[nx][ny] = visited[cur.x][cur.y] + 1;
+                q.offer(new Coord(nx, ny));
+            }
+        }
+
+        return -1;
+    }
+
+
 }
