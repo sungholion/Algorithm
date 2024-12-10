@@ -20,7 +20,7 @@ public class Main{
 
     static int l;
     static int[][] map;
-    static int[][] visited;
+    static boolean[][] visited;
     static int[] dx = {-2, -2, -1, -1, 2, 2, 1, 1 };
     static int[] dy = {-1, 1, -2, 2, -1, 1, -2, 2 };
     static Coord start;
@@ -36,7 +36,7 @@ public class Main{
         for(int tc=0; tc<t; tc++){
             l = Integer.parseInt(br.readLine());
             map = new int[l][l];
-            visited = new int[l][l];
+            visited = new boolean[l][l];
 
             st = new StringTokenizer(br.readLine());
             start = new Coord(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
@@ -57,24 +57,26 @@ public class Main{
     static int bfs(Coord start){
         Queue<Coord> q = new ArrayDeque<>();
 
+        visited[start.x][start.y] = true;
         q.offer(start);
 
         while(!q.isEmpty()){
             Coord cur = q.poll();
 
             if(cur.x == target.x && cur.y == target.y){
-                return visited[cur.x][cur.y];
+                return map[cur.x][cur.y];
             }
 
             for(int i=0; i<8; i++){
                 int nx = cur.x + dx[i];
                 int ny = cur.y + dy[i];
 
-                if(nx < 0 || ny < 0 || nx >= l || ny >= l || visited[nx][ny] != 0){
+                if(nx < 0 || ny < 0 || nx >= l || ny >= l || visited[nx][ny]){
                     continue;
                 }
 
-                visited[nx][ny] = visited[cur.x][cur.y] + 1;
+                visited[nx][ny] = true;
+                map[nx][ny] = map[cur.x][cur.y] + 1;
                 q.offer(new Coord(nx, ny));
             }
         }
