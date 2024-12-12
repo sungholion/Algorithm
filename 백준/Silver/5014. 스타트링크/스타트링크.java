@@ -1,57 +1,62 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class Main {
-	static int F, S, G, U, D;
-	static int[] building;
-	
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		
-		F = Integer.parseInt(st.nextToken());	// 총 높이
-		S = Integer.parseInt(st.nextToken());	// 현재 높이
-		G = Integer.parseInt(st.nextToken());	// 목표 높이
-		U = Integer.parseInt(st.nextToken());	// 위로 U층 이동
-		D = Integer.parseInt(st.nextToken());	// 아래로 D층 이동
-		
-		building = new int[F+1];
-		
-		bfs(F, S, G);
-	}
-	
-	public static void bfs(int max_h, int cur_h, int fin_h) {
-		Queue<Integer> q = new LinkedList<>();
-		q.add(cur_h);
-		building[cur_h] = 1;
-		
-		while(!q.isEmpty()) {
-			int now_h = q.poll();
-			if(now_h == G) {
-				System.out.println(building[now_h] -1);	
-				return;
-			}
-				
-			if(now_h + U <= F) {
-				if(building[now_h+U] == 0) {
-					building[now_h+U] = building[now_h] + 1;
-					q.add(now_h + U);
-				}
-			}
-			
-			if(now_h - D > 0) {
-				if(building[now_h - D] == 0) {
-					building[now_h - D] = building[now_h] + 1;
-					q.add(now_h - D);
-				}
-			}
-			
-		}
-		System.out.println("use the stairs");
-		return;
-	}
+public class Main{
+
+    static int f, s, g, u, d; // f : 총 층 수, s : 현재 층 수, g : 목표 층 수, u : 위 층으로 몇 칸, d : 아래층으로 몇 칸
+    static int[] map;
+    static int cnt = 1;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        f = Integer.parseInt(st.nextToken());
+        s = Integer.parseInt(st.nextToken());
+        g = Integer.parseInt(st.nextToken());
+        u = Integer.parseInt(st.nextToken());
+        d = Integer.parseInt(st.nextToken());
+
+        map = new int[f+1];
+
+        bfs(s);
+        if(map[g] != -1){
+            bw.write(map[g] - 1 + "\n");
+        }
+        else{
+            bw.write("use the stairs" + "\n");
+        }
+        bw.flush();
+        bw.close();
+        br.close();
+    }
+
+    static void bfs(int x){
+        Queue<Integer> q = new ArrayDeque<>();
+        map[x] = cnt;
+
+        q.offer(x);
+
+        while(!q.isEmpty()){
+            int cur = q.poll();
+
+            if(cur == g){
+                return;
+            }
+
+            if((cur + u) <= f && map[cur + u] == 0){
+                map[cur+u] = map[cur] + 1;
+                q.offer(cur+u);
+            }
+
+            if((cur - d) > 0 && map[cur-d] == 0){
+                map[cur-d] = map[cur] + 1;
+                q.offer(cur-d);
+            }
+        }
+
+        map[g] = -1;
+    }
+
 }
