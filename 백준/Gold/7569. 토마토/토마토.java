@@ -1,87 +1,117 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-class Coord {
+class Coord{
     int z;
     int x;
     int y;
 
-    public Coord(int z, int x, int y) {
+    public Coord(int z, int x, int y){
         this.z = z;
         this.x = x;
         this.y = y;
     }
 }
 
-public class Main {
-    static int n, m, h;
+public class Main{
+    static int m, n, h;
     static int[][][] map;
-    static int[] dz = {0, 0, 0, 0, 1, -1};
-    static int[] dx = {-1, 1, 0, 0, 0, 0};
-    static int[] dy = {0, 0, -1, 1, 0, 0};
-    static Queue<Coord> q = new LinkedList<>();
+    static boolean[][][] vis;
+    static int dx[] = {-1, 1, 0, 0, 0, 0};
+    static int dy[] = {0, 0, -1, 1, 0, 0};
+    static int dz[] = {0, 0, 0, 0, -1, 1};
+    static Queue<Coord> q = new ArrayDeque<>();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
+
         m = Integer.parseInt(st.nextToken());
         n = Integer.parseInt(st.nextToken());
         h = Integer.parseInt(st.nextToken());
         map = new int[h][n][m];
+        vis = new boolean[h][n][m];
 
-        for (int i = 0; i < h; i++) {
-            for (int j = 0; j < n; j++) {
+        for(int i=0; i<h; i++){
+            for(int j=0; j<n; j++){
                 st = new StringTokenizer(br.readLine());
-                for (int k = 0; k < m; k++) {
+                for(int k=0; k<m; k++){
                     map[i][j][k] = Integer.parseInt(st.nextToken());
-                    if (map[i][j][k] == 1) {
-                        q.add(new Coord(i, j, k));
+                }
+            }
+        }
+
+        for(int i=0; i<h; i++){
+            for(int j=0; j<n; j++){
+                for(int k=0; k<m; k++){
+                    if(map[i][j][k] == 1){
+                        q.offer(new Coord(i, j, k));
                     }
                 }
             }
         }
 
-        int result = bfs();
-        System.out.println(result);
+        bw.write(bfs() + "\n");
+        bw.flush();
+        bw.close();
+        br.close();
+
     }
 
-    static int bfs() {
-        int days = -1; // 처음 상태를 0일로 시작하기 위해 -1로 초기화
-        while (!q.isEmpty()) {
-            int size = q.size(); // 같은 날에 익는 토마토들 처리를 위해 큐의 사이즈 저장
-            for (int s = 0; s < size; s++) {
-                Coord cur = q.poll();
+    static int bfs(){
 
-                for (int i = 0; i < 6; i++) {
-                    int nz = cur.z + dz[i];
-                    int nx = cur.x + dx[i];
-                    int ny = cur.y + dy[i];
+        while(!q.isEmpty()){
+            Coord cur = q.poll();
 
-                    if (nz >= 0 && nz < h && nx >= 0 && nx < n && ny >= 0 && ny < m && map[nz][nx][ny] == 0) {
-                        q.offer(new Coord(nz, nx, ny));
-                        map[nz][nx][ny] = 1;
-                    }
+            for(int i=0; i<6; i++){
+                int nz = cur.z + dz[i];
+                int nx = cur.x + dx[i];
+                int ny = cur.y + dy[i];
+
+                if(nz < 0 || nx < 0 || ny < 0 || nz >= h || nx >= n || ny >= m || map[nz][nx][ny] != 0){
+                    continue;
                 }
-            }
-            days++; // 하루가 지남
-        }
 
-        // 모든 토마토가 익었는지 확인
-        for (int i = 0; i < h; i++) {
-            for (int j = 0; j < n; j++) {
-                for (int k = 0; k < m; k++) {
-                    if (map[i][j][k] == 0) {
-                        return -1; // 익지 않은 토마토가 있는 경우
-                    }
-                }
+                map[nz][nx][ny] = map[cur.z][cur.x][cur.y] + 1;
+                q.offer(new Coord(nz, nx, ny));
+
             }
         }
 
-        return days; // 모든 토마토가 익은 경우 걸린 날짜 반환
+        int max = Integer.MIN_VALUE;
+
+        if(checkTomato()){
+            return -1;
+        } else{
+            for(int i=0; i<h; i++){
+                for(int j=0; j<n; j++){
+                    for(int k=0; k<m; k++){
+                        if(max < map[i][j][k]){
+                            max = map[i][j][k];
+                        }
+                    }
+
+                }
+            }
+        }
+
+        return max - 1;
+
     }
+
+    private static boolean checkTomato(){
+        for(int i=0; i<h; i++){
+            for(int j=0; j<n; j++){
+                for(int k=0; k<m; k++){
+                    if(map[i][j][k] == 0){
+                        return true;
+                    }
+                }
+
+            }
+        }
+        return false;
+    }
+
 }
