@@ -1,119 +1,124 @@
-import java.awt.Point;
 import java.io.*;
 import java.util.*;
 
 class Coord{
-  int x;
-  int y;
+    int x;
+    int y;
 
-  Coord(int x, int y){
-    this.x = x;
-    this.y = y;
-  }
+    public Coord(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
 }
 
-public class Main {
-  static int w, h;
-  static char[][] map;
-  static boolean[][] visited;
-  static int[] dx = {0, 0, 1, -1};
-  static int[] dy = {1, -1, 0, 0};
-  static Queue<Coord> fire;
-  static StringBuilder sb;
+public class Main{
 
-  public static void main(String[] args) throws IOException{
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-    sb = new StringBuilder();
+    static int h,w;
+    static char[][] map;
+    static boolean[][] vis;
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
+    static Queue<Coord> fire;
+    static StringBuilder sb;
 
-    int T = Integer.parseInt(br.readLine());
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        sb = new StringBuilder();
+        StringTokenizer st;
 
-    int startX = 0, startY = 0;
-    for(int t=0; t < T; t++){
-      StringTokenizer st = new StringTokenizer(br.readLine());
-      w = Integer.parseInt(st.nextToken());
-      h = Integer.parseInt(st.nextToken());
+        int t = Integer.parseInt(br.readLine());
 
-      map = new char[h][w];
-      fire = new LinkedList<>();
+        for(int tc = 0; tc < t; tc++){
+            st = new StringTokenizer(br.readLine());
+            w = Integer.parseInt(st.nextToken());
+            h = Integer.parseInt(st.nextToken());
 
-      for(int i=0; i<h; i++){
-        String input = br.readLine();
-        for(int j=0; j<w; j++){
-          map[i][j] = input.charAt(j);
+            map = new char[h][w];
+            fire = new ArrayDeque<>();
 
-          if(map[i][j] == '@'){
-            startX = i;
-            startY = j;
-          }
+            Coord start = new Coord(-1, -1);
+            for(int i=0; i<h; i++){
+                String temp = br.readLine();
+                for(int j=0; j<w; j++){
+                    map[i][j] = temp.charAt(j);
+                    if(map[i][j] == '@'){
+                        start = new Coord(i, j);
+                    }
+                    else if(map[i][j] == '*'){
+                        fire.offer(new Coord(i, j));
+                    }
+                }
+            }
 
-          if(map[i][j] == '*')
-            fire.add(new Coord(i, j));
+            bfs(start);
+
         }
-      }
 
-      runToExit(new Coord(startX, startY));
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
     }
 
-    bw.write(sb.toString());
-    bw.flush();
-    bw.close();
-    br.close();
-  }
+    private static void bfs(Coord start){
+        Queue<Coord> q = new ArrayDeque<>();
 
-  static void runToExit(Coord v){
-    Queue<Coord> q = new LinkedList<>();
-    visited = new boolean[h][w];
-    visited[v.x][v.y] = true;
-    q.offer(new Coord(-1, -1));
-    q.offer(new Coord(v.x, v.y));
-    int time = -1;
+        vis = new boolean[h][w];
+        vis[start.x][start.y] = true;
+        q.offer(new Coord(-1, -1)); // 불 먼저 이동시키는 플래
+        q.offer(start);
+        int time = -1;  // 불이 먼저 움직여야 하므로, 불이 움직이는 건 시간으로 안 침
 
-    while(!q.isEmpty()){
-      Coord c = q.poll();
+        while(!q.isEmpty()){
+            Coord cur = q.poll();
 
-      if(c.x == -1 && c.y == -1) {
-        burn();
-        if(!q.isEmpty())
-          q.offer(c);
-        time++;
-        continue;
-      }
+            if(cur.x == -1 && cur.y == -1){
+                burn();
 
+                if(!q.isEmpty()){
+                    q.offer(cur);   // 아직 상근이가 이동 중이라면, 불 옮겨붙기 다음에 한번 더 해야
+                }
+                time++;
+                continue;
+            }
 
-      for(int i=0; i<4; i++){
-        int nx = c.x + dx[i];
-        int ny = c.y + dy[i];
+            for(int i=0; i<4; i++){
+                int nx = cur.x + dx[i];
+                int ny = cur.y + dy[i];
 
-        if(nx >= h || ny >= w || nx < 0 || ny < 0) {
-          sb.append((time + 1) + "\n");
-          return;
+                if(nx < 0 || ny < 0 || nx >= h || ny >= w ){
+                    sb.append((time+1) + "\n");
+                    return;
+                }
+
+                if(map[nx][ny] == '.' && !vis[nx][ny]){
+                    vis[nx][ny] = true;
+                    q.offer(new Coord(nx, ny));
+                }
+
+            }
         }
-        if(map[nx][ny] == '.' && !visited[nx][ny]) {
-          q.offer(new Coord(nx, ny));
-          visited[nx][ny] = true;
-        }
-
-      }
+        sb.append("IMPOSSIBLE\n");
     }
-    sb.append("IMPOSSIBLE\n");
-  }
 
-  public static void burn() {
-    int size = fire.size();
+    private static void burn(){
+        int size = fire.size(); // 불 1개당 1번만 옮겨붙어야 하므로
 
-    for(int s = 0; s < size; s++) {
-      Coord c = fire.poll();
+        for(int s=0; s<size; s++){
+            Coord cur = fire.poll();
 
-      for(int i = 0; i < 4; i++) {
-        int nx = c.x + dx[i];
-        int ny = c.y + dy[i];
+            for(int i=0; i<4; i++) {
+                int nx = cur.x + dx[i];
+                int ny = cur.y + dy[i];
 
-        if(nx >= 0 && ny >= 0 && nx < h && ny < w && (map[nx][ny] == '.' || map[nx][ny] == '@')) {
-          fire.offer(new Coord(nx, ny));
-          map[nx][ny] = '*';
+                if(nx >= 0 && ny >= 0 && nx < h && ny < w && (map[nx][ny] == '.' || map[nx][ny] == '@')) {
+                    fire.offer(new Coord(nx, ny));
+                    map[nx][ny] = '*';
+                }
+
+            }
         }
-      }
     }
-  }
+
 }
