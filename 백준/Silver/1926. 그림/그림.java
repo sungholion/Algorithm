@@ -1,7 +1,5 @@
 import java.io.*;
-import java.util.ArrayDeque;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 class Coord{
     int x;
@@ -13,19 +11,19 @@ class Coord{
     }
 }
 
-public class Main {
+public class Main{
     static int n, m;
     static int[][] map;
-    static boolean[][] visited;
-    static int cnt;
-    static int maxArea;
-    static int area;
+    static boolean[][] vis;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
-
-    public static void main(String[] args) throws IOException {
+    static int cnt;
+    static int maxArea;
+    
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
         StringTokenizer st;
 
         st = new StringTokenizer(br.readLine());
@@ -33,49 +31,57 @@ public class Main {
         m = Integer.parseInt(st.nextToken());
 
         map = new int[n][m];
-        visited = new boolean[n][m];
-
-        for(int i=0; i<n; i++) {
+        vis = new boolean[n][m];
+        for(int i=0; i<n; i++){
             st = new StringTokenizer(br.readLine());
-            for(int j=0; j<m; j++) {
+            for(int j=0; j<m; j++){
                 map[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        for(int i=0; i<n; i++) {
-            for(int j=0; j<m; j++) {
-                if(map[i][j] == 1 && !visited[i][j]) {
-                    area = 0;
-                    area = dfs(new Coord(i, j));
-                    maxArea = Math.max(maxArea, area);
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(map[i][j] == 1 && !vis[i][j]){
                     cnt++;
+                    int area = bfs(new Coord(i, j));
+                    if(area > maxArea){
+                        maxArea = area;
+                    }
                 }
             }
         }
 
-        bw.write(cnt + "\n");
-        bw.write(maxArea + "\n");
+        sb.append(cnt).append("\n").append(maxArea).append("\n");
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
         br.close();
-
     }
 
-    static int dfs(Coord start) {
-        visited[start.x][start.y] = true;
+    static int bfs(Coord start){
+        Queue<Coord> q = new ArrayDeque<>();
 
-        area++;
-        for(int i=0; i<4; i++) {
-            int nx = start.x + dx[i];
-            int ny = start.y + dy[i];
+        vis[start.x][start.y] = true;
+        q.offer(start);
 
-            if(nx < 0 || ny < 0 || nx >= n || ny >= m || visited[nx][ny] || map[nx][ny] == 0) {
-                continue;
+        int area = 1;
+        while(!q.isEmpty()){
+            Coord cur = q.poll();
+
+            for(int i=0; i<4; i++){
+                int nx = cur.x + dx[i];
+                int ny = cur.y + dy[i];
+
+                if(nx < 0 || ny < 0 || nx >= n || ny >= m || map[nx][ny] == 0 || vis[nx][ny]){
+                    continue;
+                }
+
+                area++;
+                vis[nx][ny] = true;
+                q.offer(new Coord(nx, ny));
             }
-
-            dfs(new Coord(nx, ny));
         }
-
         return area;
     }
+
 }
