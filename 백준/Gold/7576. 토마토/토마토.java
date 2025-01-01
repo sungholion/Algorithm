@@ -14,20 +14,20 @@ class Coord{
 public class Main{
     static int m, n;
     static int[][] map;
-    static boolean[][] vis;
-    static int dx[] = {-1, 1, 0, 0};
-    static int dy[] = {0, 0, -1, 1};
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
     static Queue<Coord> q = new ArrayDeque<>();
 
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
 
+        st = new StringTokenizer(br.readLine());
         m = Integer.parseInt(st.nextToken());
         n = Integer.parseInt(st.nextToken());
         map = new int[n][m];
-        vis = new boolean[n][m];
 
         for(int i=0; i<n; i++){
             st = new StringTokenizer(br.readLine());
@@ -36,24 +36,22 @@ public class Main{
             }
         }
 
-        int cnt = 0;
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
-                if(map[i][j] == 1){
+                if (map[i][j] == 1) {
                     q.offer(new Coord(i, j));
                 }
             }
         }
 
-        bw.write(bfs() + "\n");
+        sb.append(bfs()).append("\n");
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
         br.close();
-
     }
 
     static int bfs(){
-
         while(!q.isEmpty()){
             Coord cur = q.poll();
 
@@ -67,15 +65,11 @@ public class Main{
 
                 map[nx][ny] = map[cur.x][cur.y] + 1;
                 q.offer(new Coord(nx, ny));
-
-
-
             }
         }
-
+        
         int max = Integer.MIN_VALUE;
-
-        if(checkTomato()){
+        if(tomatoPresent()){
             return -1;
         } else{
             for(int i=0; i<n; i++){
@@ -86,12 +80,10 @@ public class Main{
                 }
             }
         }
-
         return max - 1;
-
     }
 
-    private static boolean checkTomato(){
+    private static boolean tomatoPresent(){
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
                 if(map[i][j] == 0){
@@ -101,5 +93,4 @@ public class Main{
         }
         return false;
     }
-
 }
