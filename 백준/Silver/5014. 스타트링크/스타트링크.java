@@ -1,62 +1,60 @@
 import java.io.*;
 import java.util.*;
 
-public class Main{
-
-    static int f, s, g, u, d; // f : 총 층 수, s : 현재 층 수, g : 목표 층 수, u : 위 층으로 몇 칸, d : 아래층으로 몇 칸
+public class Main {
+    static int F, S, G, U, D;
     static int[] map;
-    static int cnt = 1;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+
         StringTokenizer st = new StringTokenizer(br.readLine());
+        F = Integer.parseInt(st.nextToken());
+        S = Integer.parseInt(st.nextToken());
+        G = Integer.parseInt(st.nextToken());
+        U = Integer.parseInt(st.nextToken());
+        D = Integer.parseInt(st.nextToken());
 
-        f = Integer.parseInt(st.nextToken());
-        s = Integer.parseInt(st.nextToken());
-        g = Integer.parseInt(st.nextToken());
-        u = Integer.parseInt(st.nextToken());
-        d = Integer.parseInt(st.nextToken());
+        map = new int[F+1];
 
-        map = new int[f+1];
+        bfs();
 
-        bfs(s);
-        if(map[g] != -1){
-            bw.write(map[g] - 1 + "\n");
+        if(map[G] == 0){
+            sb.append("use the stairs\n");
+        } else{
+            sb.append(map[G] - 1).append("\n");
         }
-        else{
-            bw.write("use the stairs" + "\n");
-        }
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
         br.close();
     }
 
-    static void bfs(int x){
+    static void bfs() {
         Queue<Integer> q = new ArrayDeque<>();
-        map[x] = cnt;
 
-        q.offer(x);
+        map[S] = 1;
+        q.offer(S);
 
         while(!q.isEmpty()){
             int cur = q.poll();
 
-            if(cur == g){
+            if(cur == G){
                 return;
             }
 
-            if((cur + u) <= f && map[cur + u] == 0){
-                map[cur+u] = map[cur] + 1;
-                q.offer(cur+u);
+            if((cur + U) <= F && map[cur+U] == 0){
+                map[cur+U] = map[cur] + 1;
+                q.offer(cur+U);
             }
 
-            if((cur - d) > 0 && map[cur-d] == 0){
-                map[cur-d] = map[cur] + 1;
-                q.offer(cur-d);
+            if((cur - D) >= 1 && map[cur-D] == 0){
+                map[cur-D] = map[cur] + 1;
+                q.offer(cur-D);
             }
         }
-
-        map[g] = -1;
     }
 
 }
