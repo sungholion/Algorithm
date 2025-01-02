@@ -1,70 +1,67 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-
-    static int n, m, v;
-    static int[][] g;
-    static boolean[] visited;
+    static int N, M, V;
+    static int[][] map;
+    static boolean[]vis;
     static StringBuilder sb = new StringBuilder();
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
         StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        V = Integer.parseInt(st.nextToken());
 
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        v = Integer.parseInt(st.nextToken());
+        map = new int[N+1][N+1];
 
-        g = new int[n+1][n+1];
-        visited = new boolean[n+1];
-        for(int i = 0; i<m; i++){
+        for(int i=0; i<M; i++){
             st = new StringTokenizer(br.readLine());
-            int v1 = Integer.parseInt(st.nextToken());
-            int v2 = Integer.parseInt(st.nextToken());
-
-            g[v1][v2] = g[v2][v1] = 1;
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            map[x][y] = map[y][x] = 1;
         }
-        dfs(v);
+
+        vis = new boolean[N+1];
+        dfs(V);
+
         sb.append("\n");
 
-        visited = new boolean[n+1];
-        bfs(v);
+        vis = new boolean[N+1];
+        bfs(V);
 
         bw.write(sb.toString());
         bw.flush();
         bw.close();
         br.close();
-
     }
 
-    public static void dfs(int v){
-        visited[v] = true;
-        sb.append(v).append(" ");
-        for(int i = 1; i<=n; i++){
-            if(g[v][i] == 1 && !visited[i]){
+    static void dfs(int start){
+        vis[start] = true;
+        sb.append(start).append(" ");
+
+        for(int i=1; i<=N; i++){
+            if(map[start][i] == 1 && !vis[i]){
                 dfs(i);
             }
         }
     }
 
-    public static void bfs(int v){
-        Queue<Integer> q = new LinkedList<>();
-        q.add(v);
-        visited[v] = true;
+    static void bfs(int start){
+        Queue<Integer> q = new ArrayDeque<>();
+        vis[start] = true;
+        q.offer(start);
 
         while(!q.isEmpty()){
-            v = q.poll();
-            sb.append(v).append(" ");
-            for(int i = 1; i<=n; i++){
-                if(g[v][i] == 1 && !visited[i]){
-                    q.add(i);
-                    visited[i] = true;
+            start = q.poll();
+            sb.append(start).append(" ");
+
+            for(int i=1; i<= N; i++){
+                if(map[start][i] == 1 && !vis[i]){
+                    q.offer(i);
+                    vis[i] = true;
                 }
             }
         }
