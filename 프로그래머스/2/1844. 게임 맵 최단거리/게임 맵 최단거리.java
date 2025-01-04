@@ -2,54 +2,60 @@ import java.util.*;
 
 class Solution {
     
-    int[] dx = {1, 0, -1, 0};
-    int[] dy = {0, 1, 0, -1};
+    static class Coord{
+        int x;
+        int y;
+        
+        public Coord(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+    }
+    
+    static int n, m;
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
+    static int[][] vis;
     
     public int solution(int[][] maps) {
         int answer = 0;
-        int[][] visited = new int[maps.length][maps[0].length];
         
-        bfs(maps, visited);
-        answer = visited[maps.length-1][maps[0].length-1];
+        n = maps.length;
+        m = maps[0].length;
+        vis = new int[n][m];
         
-        if(answer == 0){
+        bfs(maps);
+        
+        if(vis[n-1][m-1] == 0){
             answer = -1;
+        } else {
+            answer = vis[n-1][m-1];
         }
         
         
         return answer;
     }
     
-    public void bfs(int[][] maps, int[][] visited){
-        int x = 0;
-        int y = 0;
-        visited[x][y] = 1;
-        Queue<int[]> q = new LinkedList<>();
-        q.add(new int[]{x,y});
+    static void bfs(int[][] maps){
+        Queue<Coord> q = new ArrayDeque<>();
+        q.offer(new Coord(0, 0));
+        vis[0][0] = 1;
         
         while(!q.isEmpty()){
-            int[] cur = q.remove();
-            int cx = cur[0];
-            int cy = cur[1];
+            Coord cur = q.poll();
             
             for(int i=0; i<4; i++){
-                int nx = cx + dx[i];
-                int ny = cy + dy[i];
+                int nx = cur.x + dx[i];
+                int ny = cur.y + dy[i];
                 
-                if(nx < 0 || ny < 0 || nx > maps.length-1 || ny > maps[0].length-1){
+                if(nx < 0 || ny < 0 || nx >= n || ny >= m || maps[nx][ny] == 0 || vis[nx][ny] !=0){
+                
                     continue;
                 }
-                
-                if(visited[nx][ny] == 0 && maps[nx][ny] == 1){
-                    visited[nx][ny] = visited[cx][cy] + 1;
-                    q.add(new int[]{nx, ny});
-                }
-                
-                
+                   
+                    vis[nx][ny] = vis[cur.x][cur.y] + 1;
+                    q.offer(new Coord(nx, ny));
             }
-            
         }
-        
-        
     }
 }
