@@ -1,25 +1,28 @@
-import java.util.*;
 import java.io.*;
+import java.util.StringTokenizer;
 
-public class Main{
-   public static void main(String[] args) throws IOException{
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-      int[] numCnt = new int[10];
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-      int multiply = Integer.parseInt(br.readLine()) * Integer.parseInt(br.readLine()) * Integer.parseInt(br.readLine());
-      String str = String.valueOf(multiply);
+        int a = Integer.parseInt(br.readLine());
+        int b = Integer.parseInt(br.readLine());
+        int c = Integer.parseInt(br.readLine());
+        String res = a * b * c + "";
 
-      for(int i = 0; i < str.length(); i++){
-         numCnt[str.charAt(i) - '0']++;
-      }
+        int[] num = new int[10];
+        for(int i=0; i<res.length(); i++){
+            int idx = res.charAt(i) - '0';
+            num[idx]++;
+        }
 
-      for(int n : numCnt){
-         bw.write(n + "\n");
-      }
+        for(int x : num){
+            bw.write(x + "\n");
+        }
 
-      bw.flush();
-      br.close();
-      bw.close();
-   }
+
+        bw.flush();
+        bw.close();
+    }
 }
