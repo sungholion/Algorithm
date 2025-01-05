@@ -1,21 +1,17 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-public class Main{
-   public static void main(String[] args) throws IOException{
-       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-       BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-       StringBuilder sb = new StringBuilder();
-       StringTokenizer st = new StringTokenizer(br.readLine());
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-       double a = Integer.parseInt(st.nextToken());
-       double b = Integer.parseInt(st.nextToken());
-       double result = (double)a/b;
-
-       sb.append(result);
-       bw.write(sb.toString());
-       bw.flush();
-       br.close();
-       bw.close();
-   }
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int a = Integer.parseInt(st.nextToken());
+        int b = Integer.parseInt(st.nextToken());
+        
+        bw.write((double)a / b + "\n");
+        bw.flush();
+        bw.close();
+    }
 }
