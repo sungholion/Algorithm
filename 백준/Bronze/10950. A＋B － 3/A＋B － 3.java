@@ -1,27 +1,21 @@
-import java.util.*;
 import java.io.*;
+import java.util.StringTokenizer;
 
-public class Main{
-   public static void main(String[] args) throws IOException{
-       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-       BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-       StringBuilder sb = new StringBuilder();
-       StringTokenizer st = new StringTokenizer(br.readLine());
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-       int t = Integer.parseInt(st.nextToken());
+        int t = Integer.parseInt(br.readLine());
 
-       for(int i = 0; i < t; i++){
-          st = new StringTokenizer(br.readLine());
+        for(int tc=0; tc<t; tc++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            bw.write((a+b) + "\n");
+        }
 
-          int a = Integer.parseInt(st.nextToken());
-          int b = Integer.parseInt(st.nextToken());
-
-          sb.append(a+b).append("\n");
-       }
-       
-       bw.write(sb.toString());
-       bw.flush();
-       br.close();
-       bw.close();
-   }
+        bw.flush();
+        bw.close();
+    }
 }
