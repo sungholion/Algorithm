@@ -1,29 +1,30 @@
-import java.util.*;
+import javax.sql.rowset.serial.SerialStruct;
 import java.io.*;
+import java.util.StringTokenizer;
 
-public class Main{
-   public static void main(String[] args) throws IOException{
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-      StringTokenizer st;
-      int t = Integer.parseInt(br.readLine());
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int t = Integer.parseInt(br.readLine());
+
+        for(int tc=0; tc<t; tc++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int n = Integer.parseInt(st.nextToken());
+            String str = st.nextToken();
+
+            for(int i=0; i<str.length(); i++){
+                for(int j=0; j<n; j++){
+                    bw.write(str.charAt(i));
+                }
+            }
+            bw.write("\n");
+        }
 
 
-      for(int i = 0; i < t; i++){
-         st = new StringTokenizer(br.readLine());
-         int r = Integer.parseInt(st.nextToken());
-         String s = st.nextToken();
-         StringBuilder result = new StringBuilder();
 
-         for(int j = 0; j < s.length(); j++){
-            for(int k = 0; k < r; k++)
-               result.append(s.charAt(j));
-         }
-         bw.write(result + "\n");
-      }
-
-      bw.flush();
-      br.close();
-      bw.close();
-   }
+        bw.flush();
+        bw.close();
+    }
 }
