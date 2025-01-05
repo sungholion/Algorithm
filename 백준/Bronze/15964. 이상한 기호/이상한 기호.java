@@ -7,15 +7,15 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int a = Integer.parseInt(st.nextToken());
-        int b = Integer.parseInt(st.nextToken());
+        long a = Long.parseLong(st.nextToken());
+        long b = Long.parseLong(st.nextToken());
 
         bw.write(operator(a, b) + "\n");
         bw.flush();
         bw.close();
     }
 
-    static int operator(int num1, int num2){
+    static long operator(long num1, long num2){
         return (num1 + num2) * (num1 - num2);
     }
 }
