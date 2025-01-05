@@ -1,24 +1,21 @@
-import java.util.Scanner;
-
-class Cal {
-	long a;
-	long b;
-	
-	void print(long a, long b) {
-		long result = (a+b) * (a-b);
-		System.out.println(result);
-	}
-}
+import java.io.*;
+import java.util.StringTokenizer;
 
 public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		long a = sc.nextLong();
-		long b = sc.nextLong();
-		
-		Cal c = new Cal();
-		c.print(a, b);
-	}
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int a = Integer.parseInt(st.nextToken());
+        int b = Integer.parseInt(st.nextToken());
+
+        bw.write(operator(a, b) + "\n");
+        bw.flush();
+        bw.close();
+    }
+
+    static int operator(int num1, int num2){
+        return (num1 + num2) * (num1 - num2);
+    }
 }
