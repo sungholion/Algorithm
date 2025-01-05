@@ -16,7 +16,7 @@ Empty
 
 ### 제출 일자
 
-2024년 03월 08일 16:13:28
+2025년 01월 05일 09:18:11
 
 ### 문제 설명
 
@@ -229,15 +229,9 @@ Empty
 <th>SCORE</th>
 </tr>
 </thead>
-        <tbody><tr>
-<td>00035</td>
-<td>삼촌식당</td>
-<td>일식</td>
-<td>80</td>
-<td>서울특별시 강서구 가로공원로76가길</td>
-<td>4.50</td>
-</tr>
-</tbody>
+        <tbody></tbody>
       </table>
+<p>| 00035 | 삼촌식당 | 일식 | 80 | 서울특별시 강서구 가로공원로76가길 | 4.50 |</p>
+
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
