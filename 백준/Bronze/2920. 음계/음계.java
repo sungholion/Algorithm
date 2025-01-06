@@ -1,32 +1,52 @@
-import java.util.*;
 import java.io.*;
+import java.util.StringTokenizer;
 
-public class Main{
-   public static void main(String[] args) throws IOException{
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-      StringTokenizer st = new StringTokenizer(br.readLine());
-      int[] arr = new int[8];
-      String result = "";
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-      for(int i = 0; i < 8; i++){
-         arr[i] = Integer.parseInt(st.nextToken());
-      }
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-      for(int i=0; i <arr.length - 1; i++){
-         if(arr[i+1] == arr[i] + 1){
-            result = "ascending";
-         } else if(arr[i+1] == arr[i] - 1){
-            result = "descending";
-         } else {
-            result = "mixed";
-            break;
-         }
-      }
+        int start = Integer.parseInt(st.nextToken());
 
-      bw.write(result);
-      bw.flush();
-      br.close();
-      bw.close();
-   }
+        boolean ascFlag = true;
+        boolean desFlag = true;
+        if(start == 1){
+            int ascNum = 2;
+            for(int i=0; i<7; i++){
+                int asc = Integer.parseInt(st.nextToken());
+                if(asc != ascNum){
+                    ascFlag = false;
+                    break;
+                }
+                ascNum++;
+            }
+            if(ascFlag){
+                bw.write("ascending\n");
+            } else{
+                bw.write("mixed\n");
+            }
+        } else if(start == 8){
+            int desNum = 7;
+            for(int i=0; i<7; i++){
+                int des = Integer.parseInt(st.nextToken());
+                if(des != desNum){
+                    desFlag = false;
+                    break;
+                }
+                desNum--;
+            }
+            if(desFlag) {
+                bw.write("descending\n");
+            } else {
+                bw.write("mixed\n");
+            }
+        } else {
+            bw.write("mixed\n");
+        }
+
+        bw.flush();
+        bw.close();
+    }
 }
