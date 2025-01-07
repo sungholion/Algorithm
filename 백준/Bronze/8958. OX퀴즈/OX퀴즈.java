@@ -1,32 +1,29 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class Main {
-	public static void main(String[] args) throws IOException{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		int n = Integer.parseInt(br.readLine());
-		
-		for (int test_case=0; test_case<n; test_case++) {
-			String input = br.readLine();
-			char[] str = input.toCharArray();
-			
-			int sum = 0;
-			int k = 0;
-			for(int i=0; i<str.length; i++) {
-				if(str[i] == 'O') {
-					k++;
-					sum+=k;
-				}
-				else
-					k = 0;
-			}
-			System.out.println(sum);
-		}
-		
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int t = Integer.parseInt(br.readLine());
+
+        for(int tc=0; tc<t; tc++){
+            String str = br.readLine();
+            int sum = 0;
+            int cum = 0;
+            
+            for(int i=0; i<str.length(); i++){
+                if(str.charAt(i) == 'O'){
+                    cum++;
+                    sum += cum;
+                } else if(str.charAt(i) == 'X'){
+                    cum = 0;
+                }
+            }
+            bw.write(sum + "\n");
+        }
+        
+        bw.flush();
+        bw.close();
+    }
 }
-
-
-
