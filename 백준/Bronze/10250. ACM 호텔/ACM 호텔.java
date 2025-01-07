@@ -1,42 +1,30 @@
-import java.util.*;
 import java.io.*;
+import java.util.StringTokenizer;
 
-public class Main{
-   public static void main(String[] args) throws IOException{
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-      StringTokenizer st;
-      StringBuilder sb = new StringBuilder();
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
 
-      int t = Integer.parseInt(br.readLine());
+        int t = Integer.parseInt(br.readLine());
 
-      for(int i = 0; i < t; i++){
-         st = new StringTokenizer(br.readLine());
-         int h = Integer.parseInt(st.nextToken());
-         int w = Integer.parseInt(st.nextToken());
-         int n = Integer.parseInt(st.nextToken());
+        for(int tc=0; tc < t; tc++){
+            st = new StringTokenizer(br.readLine());
+            int h = Integer.parseInt(st.nextToken());
+            int w = Integer.parseInt(st.nextToken());
+            int n = Integer.parseInt(st.nextToken());
 
-         int x = n % h;
-         int y = 1 + n / h;
-         if(x == 0){
-            x = h;
-            y -= 1;
-         }
+            int customerH = n % h;
+            if(customerH == 0) customerH = h;
+            customerH *= 100;
 
-         boolean needZero = y < 10;
+            int customerW = (n - 1) / h + 1;
 
-         if(needZero){
-            sb.append(x).append(0).append(y).append("\n");
-         }
-         else{
-            sb.append(x).append(y).append("\n");
-         }
-      }
+            bw.write(customerH + customerW + "\n");
+        }
 
-
-      bw.write(sb.toString());
-      bw.flush();
-      br.close();
-      bw.close();
-   }
+        bw.flush();
+        bw.close();
+    }
 }
