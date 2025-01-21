@@ -1,32 +1,28 @@
+import java.util.Arrays;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.IOException;
 import java.util.StringTokenizer;
-
+ 
 public class Main {
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException {
+ 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n = Integer.parseInt(br.readLine());
-		int[] score = new int[n];
+ 
+		double arr[] = new double[Integer.parseInt(br.readLine())];
+        
+		StringTokenizer st = new StringTokenizer(br.readLine()," ");
 		
-		
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		for(int i= 0; i<n; i++) {
-			score[i] = Integer.parseInt(st.nextToken());
-		}
-		
-		int m = score[0];
-		for(int i=1; i<n; i++) {
-			if(score[i] > m)
-				m = score[i];
+		for(int i = 0; i < arr.length; i++) {
+			arr[i] = Double.parseDouble(st.nextToken());
 		}
 		
 		double sum = 0;
-		for(int i=0; i<n; i++) {
-			sum += (double)score[i] / m * 100;
+		Arrays.sort(arr);
+		
+		for(int i = 0; i < arr.length; i++) {
+			sum += ((arr[i] / arr[arr.length - 1]) * 100);
 		}
-		
-		System.out.println(sum/n);
-		
+		System.out.print(sum / arr.length);
 	}
 }
