@@ -1,33 +1,23 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.util.Scanner;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		String str = br.readLine();
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
 		
-		int s =0, e = str.length()-1;
-		int cnt = str.length()/2;
-		boolean pal = true;
+		String str = sc.next();
+		sc.close();
+		int len = str.length();
+		int ans = 1;
 		
-		while(s < e) {
-			cnt--;
-			if(str.charAt(s++) != str.charAt(e--)) {
-				pal = false;
-				break;
+		StringBuilder sb = new StringBuilder(str);
+		sb.reverse();
+		
+		for(int i=0;i<len/2;i++) {
+			if(str.charAt(i) != sb.charAt(i)) {
+				ans = 0;
 			}
 		}
-		if(pal)
-			bw.write(1 + "\n");
-		else
-			bw.write(0 + "\n");
+		System.out.println(ans);
 		
-		bw.flush();
-		bw.close();
-		br.close();
 	}
 }
