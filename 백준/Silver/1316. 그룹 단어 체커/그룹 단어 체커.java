@@ -1,38 +1,43 @@
-import java.io.*;
-
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+ 
 public class Main {
-    static String str;
-
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        int n = Integer.parseInt(br.readLine());
-        int cnt = 0;
-
-        for(int tc=0; tc<n; tc++){
-            str = br.readLine();
-            if(groupCheck()) cnt++;
-        }
-
-        System.out.println(cnt);
-    }
-
-    static boolean groupCheck(){
-        boolean [] dup = new boolean[26];
-        char before = ' ';
-
-        for(int i=0; i<str.length(); i++){
-            char cur = str.charAt(i);
-
-            if(cur!= before){   // 이전 문자와 현재 문자가 다를 경우
-                    if(!dup[cur - 'a']){
-                        dup[cur - 'a'] = true;
-                        before = cur;
-                    }
-                    else return false;
-            }
-            continue;   // 같은 경우 체크 필요 없음
-            }
-        return true;    // 그룹단어인 경우
-    }
+ 
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+ 
+	public static void main(String[] args) throws IOException {
+ 
+		int count = 0;
+		int N = Integer.parseInt(br.readLine());
+ 
+		for (int i = 0; i < N; i++) {
+			if (check()) {
+				count++;
+			}
+		}
+		System.out.print(count);
+	}
+ 
+	public static boolean check() throws IOException {
+		boolean[] check = new boolean[26];
+		int prev = 0;
+		String str = br.readLine();
+		
+		for(int i = 0; i < str.length(); i++) {
+			int now = str.charAt(i);
+			
+			
+			if (prev != now) {		
+				if (!check[now - 'a']) {
+					check[now - 'a'] = true;
+					prev = now;	
+				}
+				else {
+					return false;	
+				}
+			}
+		}    
+		return true;
+	}
 }
