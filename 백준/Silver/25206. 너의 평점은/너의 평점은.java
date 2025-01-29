@@ -1,53 +1,65 @@
 import java.io.*;
 import java.util.StringTokenizer;
 
+// 전공 평점 = (SUM(학점X과목평점)) / SUM(학점)
+// 과목 평점 = 등급에 따라, P는 제외
+
 public class Main {
-    static int n;
-    static int[] cnt;
-
     public static void main(String[] args) throws IOException {
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
+        double sumNumxScore = 0;
+        double sumNum = 0;
 
-        double total = 0;
-        double cnt = 0;
-        for (int tc = 0; tc < 20; tc++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            st.nextToken();
-            double score = Double.parseDouble(st.nextToken());
-            String grade = st.nextToken();
-            if (grade.equals("A+")) {
+        for(int i = 0; i < 20; i++){
+            st = new StringTokenizer(br.readLine());
+            String object = st.nextToken();
+            double num = Double.parseDouble(st.nextToken());
+            String alphabet = st.nextToken();
+            double score = 0;
 
-                total += score * 4.5;
-                cnt+= score;
-            } else if (grade.equals("A0")) {
-                total += score * 4.0;
-                cnt+= score;
-            } else if (grade.equals("B+")) {
-                total += score * 3.5;
-                cnt+= score;
-            } else if (grade.equals("B0")) {
-                total += score * 3.0;
-                cnt+= score;
-            } else if (grade.equals("C+")) {
-                total += score * 2.5;
-                cnt+= score;
-            } else if (grade.equals("C0")) {
-                total += score * 2.0;
-                cnt+= score;
-            } else if (grade.equals("D+")) {
-                total += score * 1.5;
-                cnt+= score;
-            } else if (grade.equals("D0")) {
-                total += score * 1.0;
-                cnt+= score;
-            } else if (grade.equals("F")) {
-                total += score * 0.0;
-                cnt+= score;
+            // P가 아닐 때만 체크
+            if(!(alphabet.equals("P"))){
+                // 과목 평점 계산
+                switch (alphabet) {
+                    case "A+":
+                        score = 4.5;
+                        break;
+                    case "A0":
+                        score = 4.0;
+                        break;
+                    case "B+":
+                        score = 3.5;
+                        break;
+                    case "B0":
+                        score = 3.0;
+                        break;
+                    case "C+":
+                        score = 2.5;
+                        break;
+                    case "C0":
+                        score = 2.0;
+                        break;
+                    case "D+":
+                        score = 1.5;
+                        break;
+                    case "D0":
+                        score = 1.0;
+                        break;
+                    case "F":
+                        score = 0.0;
+                        break;
+                    default:
+                        break;
+                }
+
+                sumNumxScore += (num*score);
+                sumNum += num;
             }
-
-
         }
-        System.out.printf("%.6f", total/cnt);
+        // 소수점 아래 6자리까지 출력
+        System.out.printf("%.6f", sumNumxScore/sumNum);
+        br.close();
     }
 }
