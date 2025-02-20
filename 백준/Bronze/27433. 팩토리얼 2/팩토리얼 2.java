@@ -1,19 +1,23 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class Main {
-    private static long factorial(int n){
-        if (n <=1){
-            return 1;
-        }
-        else{
-            return n * factorial(n-1);
-        }
-    }
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n  = Integer.parseInt(br.readLine());
-        System.out.println(factorial(n));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int n = Integer.parseInt(br.readLine());
+        long res = 1;
+        if(n == 0){
+            bw.write("1\n");
+        } else{
+            for(int i = n; i>0; i--){
+                res *= i;
+            }
+            bw.write(res + "\n");
+        }
+
+        bw.flush();
+        bw.close();
+        br.close();
     }
 }
