@@ -1,9 +1,13 @@
 class Solution {
-  public long solution(long n) {
-      if (Math.pow((int)Math.sqrt(n), 2) == n) {
-            return (long) Math.pow(Math.sqrt(n) + 1, 2);
+    public long solution(long n) {
+        long answer = -1;
+        long temp = (long) Math.sqrt(n);
+        
+        if(Math.pow(temp,2) == n ){
+            answer = (long)Math.pow(temp +1,2);
         }
 
-        return -1;
-  }
+        
+        return answer;
+    }
 }
