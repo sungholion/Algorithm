@@ -1,25 +1,26 @@
 class Solution {
-  
+    static int cnt;
     public int solution(int n, int[][] computers) {
         int answer = 0;
-        boolean[] vis = new boolean[n];
         
-        for(int i = 0; i < n; i++){
-            if(vis[i] == false){
-                answer++;
-                dfs(i, vis, computers);
-            }            
+        boolean[] vis = new boolean[n];
+        for(int i=0; i<n; i++){
+            if(vis[i] != true){
+                dfs(i, computers, vis);
+                cnt++;
+            }
         }
         
+        answer = cnt;
         return answer;
     }
     
-    public void dfs(int node, boolean[] vis, int[][] computers){
-        vis[node] = true;
+    public static void dfs(int v, int[][] computers, boolean[] vis){
+        vis[v] = true;
         
-        for(int i = 0; i < computers.length; i++){
-            if(vis[i] == false && computers[node][i] == 1){
-                dfs(i, vis, computers);
+        for(int i = 0; i<computers.length; i++){
+            if(computers[v][i] == 1 && !vis[i]){
+                dfs(i, computers, vis);
             }
         }
     }
