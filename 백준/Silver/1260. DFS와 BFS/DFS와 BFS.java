@@ -2,69 +2,64 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int N, M, V;
-    static int[][] map;
-    static boolean[]vis;
-    static StringBuilder sb = new StringBuilder();
-    public static void main(String[] args) throws IOException {
+    static int[][] arr;
+    static boolean[] vis;
+    static int n;
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
         StringTokenizer st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
-        V = Integer.parseInt(st.nextToken());
 
-        map = new int[N+1][N+1];
+        n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int v = Integer.parseInt(st.nextToken());
 
-        for(int i=0; i<M; i++){
+        arr = new int[n+1][n+1];
+
+        for(int i=0; i<m; i++){
             st = new StringTokenizer(br.readLine());
-            int x = Integer.parseInt(st.nextToken());
-            int y = Integer.parseInt(st.nextToken());
-            map[x][y] = map[y][x] = 1;
+            int v1 = Integer.parseInt(st.nextToken());
+            int v2 = Integer.parseInt(st.nextToken());
+            arr[v1][v2] = 1;
+            arr[v2][v1] = 1;
         }
 
-        vis = new boolean[N+1];
-        dfs(V);
+        vis = new boolean[n+1];
+        dfs(v);
+        System.out.println();
 
-        sb.append("\n");
+        vis = new boolean[n+1];
+        bfs(v);
 
-        vis = new boolean[N+1];
-        bfs(V);
-
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
     }
 
-    static void dfs(int start){
-        vis[start] = true;
-        sb.append(start).append(" ");
+    public static void dfs(int node){
+        vis[node] = true;
+        System.out.print(node + " ");
 
-        for(int i=1; i<=N; i++){
-            if(map[start][i] == 1 && !vis[i]){
+        for(int i=1; i<=n; i++){
+            if(arr[node][i] == 1 && !vis[i]){
                 dfs(i);
             }
         }
+
     }
 
-    static void bfs(int start){
-        Queue<Integer> q = new ArrayDeque<>();
-        vis[start] = true;
-        q.offer(start);
+    public static void bfs(int node){
+        Queue<Integer> q = new LinkedList<>();
+        vis[node] = true;
+        q.offer(node);
 
         while(!q.isEmpty()){
-            start = q.poll();
-            sb.append(start).append(" ");
+            int cur = q.poll();
+            System.out.print(cur + " ");
 
-            for(int i=1; i<= N; i++){
-                if(map[start][i] == 1 && !vis[i]){
-                    q.offer(i);
+            for(int i=1; i<=n; i++){
+                if(arr[cur][i] == 1 && !vis[i]){
                     vis[i] = true;
+                    q.offer(i);
                 }
             }
         }
     }
-
 }
