@@ -1,59 +1,48 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
+
 
 public class Main {
-	static int n, m;	// 컴퓨터 수, 연결 쌍 수
-	static int[][] map;
-	static boolean[]visited;
-	static int cnt;
-	
-	public static void main(String[] args) throws IOException {
-		//System.setIn(new FileInputStream("src/input.txt"));
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
-		
-		n = Integer.parseInt(br.readLine());
-		m = Integer.parseInt(br.readLine());
-		map = new int[n+1][n+1];
-		visited = new boolean[n+1];
-		
-		for(int i = 0; i < m; i++) {
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			int com1 = Integer.parseInt(st.nextToken());
-			int com2 = Integer.parseInt(st.nextToken());
-			map[com1][com2] = map[com2][com1] = 1;
-		}
-		
-		bfs(1);
-		
-		sb.append(cnt);
-		System.out.println(sb.toString());
-	}
-	
-	static void bfs(int start) {
-		Queue<Integer> q = new LinkedList<>();
-		q.offer(start);
-		visited[start] = true;
-		
-		while(!q.isEmpty()) {
-			int cur = q.poll();
-			
-			for(int i=1; i<=n; i++) {
-				if(map[cur][i] == 1 && visited[i] == false) {
-					q.offer(i);
-					visited[i] = true;
-					cnt++;
-				}
-			}
-			
-		}
-		
-	
-	}
-	
+    static int cnt;
+    static int[][] arr;
+    static boolean[] vis;
+    static int n, m;
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        n = Integer.parseInt(br.readLine());
+        m = Integer.parseInt(br.readLine());
+
+        arr = new int[n+1][n+1];
+        vis = new boolean[n+1];
+        for(int i=0; i<m; i++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int v1 = Integer.parseInt(st.nextToken());
+            int v2 = Integer.parseInt(st.nextToken());
+            arr[v1][v2] = arr[v2][v1] = 1;
+        }
+
+        bfs(1);
+        System.out.println(cnt - 1);
+    }
+
+    public static void bfs(int node){
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(node);
+        vis[node] = true;
+        cnt++;
+
+        while(!q.isEmpty()){
+            int cur = q.poll();
+
+            for(int i=1; i<=n; i++){
+                if(arr[cur][i] == 1 && !vis[i]){
+                    vis[i] = true;
+                    q.offer(i);
+                    cnt++;
+                }
+            }
+        }
+    }
 }
