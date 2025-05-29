@@ -1,18 +1,18 @@
-import javax.sql.rowset.serial.SerialStruct;
 import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int a = Integer.parseInt(br.readLine());
-        int b = Integer.parseInt(br.readLine());
-        int c = Integer.parseInt(br.readLine());
+        String A = br.readLine();
+        String B = br.readLine();
+        String C = br.readLine();
 
-        bw.write((a + b - c) + "\n");
-        bw.write(Integer.parseInt(a + "" + b) - c + "\n");
-
+        br.close();
+        bw.write(Integer.parseInt(A) + Integer.parseInt(B) - Integer.parseInt(C)+"\n");
+        bw.write(Integer.parseInt(A+B) - Integer.parseInt(C)+"\n");
         bw.flush();
         bw.close();
     }
