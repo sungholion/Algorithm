@@ -1,24 +1,26 @@
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int ans = 0;
-        boolean vis[] = new boolean[42];
-        for(int i=0; i<10; i++){
+        int[] arr = new int[42];
+        int cnt = 0;
+
+        for(int i = 0; i < 10; i++){
             int n = Integer.parseInt(br.readLine());
-            vis[n%42] = true;
+            arr[n%42]++;
         }
 
-        for(int i=0; i<42; i++){
-            if(vis[i]) {
-                ans++;
-            }
+        for(int x : arr){
+            if(x != 0)
+                cnt++;
         }
 
-        bw.write(ans + "\n");
+        bw.write(cnt + "\n");
+        br.close();
         bw.flush();
         bw.close();
     }
