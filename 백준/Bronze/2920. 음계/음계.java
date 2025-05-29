@@ -1,51 +1,52 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int start = Integer.parseInt(st.nextToken());
+        int[] asc = {1, 2, 3, 4, 5, 6, 7, 8};
+        int[] desc = {8, 7, 6, 5, 4, 3, 2, 1};
 
-        boolean ascFlag = true;
-        boolean desFlag = true;
-        if(start == 1){
-            int ascNum = 2;
-            for(int i=0; i<7; i++){
-                int asc = Integer.parseInt(st.nextToken());
-                if(asc != ascNum){
-                    ascFlag = false;
+        int[] arr = new int[8];
+        for(int i = 0; i < 8; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        boolean flag = true;
+        if(arr[0] == 1){
+            for(int i = 0; i < 8; i++) {
+                if(arr[i] != asc[i]){
+                    flag = false;
                     break;
                 }
-                ascNum++;
             }
-            if(ascFlag){
+            if(flag)
                 bw.write("ascending\n");
-            } else{
+            else
                 bw.write("mixed\n");
-            }
-        } else if(start == 8){
-            int desNum = 7;
-            for(int i=0; i<7; i++){
-                int des = Integer.parseInt(st.nextToken());
-                if(des != desNum){
-                    desFlag = false;
+
+        } else if(arr[0] == 8){
+            for(int i = 0; i < 8; i++) {
+                if(arr[i] != desc[i]){
+                    flag = false;
                     break;
                 }
-                desNum--;
             }
-            if(desFlag) {
+            if(flag)
                 bw.write("descending\n");
-            } else {
+            else
                 bw.write("mixed\n");
-            }
-        } else {
+
+        } else{
             bw.write("mixed\n");
         }
 
+
+
+        br.close();
         bw.flush();
         bw.close();
     }
