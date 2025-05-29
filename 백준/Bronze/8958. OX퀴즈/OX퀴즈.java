@@ -1,28 +1,30 @@
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int t = Integer.parseInt(br.readLine());
+        int T = Integer.parseInt(br.readLine());
 
-        for(int tc=0; tc<t; tc++){
+        while (T-- > 0) {
             String str = br.readLine();
             int sum = 0;
-            int cum = 0;
-            
-            for(int i=0; i<str.length(); i++){
+            int cnt = 0;
+
+            for (int i = 0; i < str.length(); i++) {
                 if(str.charAt(i) == 'O'){
-                    cum++;
-                    sum += cum;
-                } else if(str.charAt(i) == 'X'){
-                    cum = 0;
+                    cnt++;
+                    sum += cnt;
+                } else{
+                    cnt = 0;
                 }
             }
             bw.write(sum + "\n");
         }
-        
+
+        br.close();
         bw.flush();
         bw.close();
     }
