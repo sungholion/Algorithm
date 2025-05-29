@@ -1,22 +1,25 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args)throws IOException {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
+        
+        bw.write("|\\_/|");
+        bw.newLine();	// 줄 구분자
 
-        sb.append("|\\_/|\n");
-        sb.append("|q p|   /}\n");
-        sb.append("( 0 )\"\"\"\\\n");
-        sb.append("|\"^\"`    |\n");
-        sb.append("||_/=\\\\__|\n");
+        bw.write("|q p|   /}");
+        bw.newLine();
 
-        bw.write(sb.toString());
+        bw.write("( 0 )\"\"\"\\");
+        bw.newLine();
+
+        bw.write("|\"^\"`    |");
+        bw.newLine();
+
+        bw.write("||_/=\\\\__|");
+
         bw.flush();
         bw.close();
-        br.close();
-
     }
 }
