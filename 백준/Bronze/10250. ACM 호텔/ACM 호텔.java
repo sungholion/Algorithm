@@ -1,29 +1,35 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
+
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st;
 
-        int t = Integer.parseInt(br.readLine());
+        int T = Integer.parseInt(br.readLine());
+        while(T-- > 0){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int H = Integer.parseInt(st.nextToken());
+            int W = Integer.parseInt(st.nextToken());
+            int N = Integer.parseInt(st.nextToken());
 
-        for(int tc=0; tc < t; tc++){
-            st = new StringTokenizer(br.readLine());
-            int h = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
-            int n = Integer.parseInt(st.nextToken());
+            int y = N % H;
+            int x = N / H + 1;
 
-            int customerH = n % h;
-            if(customerH == 0) customerH = h;
-            customerH *= 100;
+            if(y == 0){
+                y = H;
+                x--;
+            }
 
-            int customerW = (n - 1) / h + 1;
-
-            bw.write(customerH + customerW + "\n");
+            if(x < 10){
+                bw.write(y + "0" + x + "\n");
+            } else {
+                bw.write(y + "" + x + "\n");
+            }
         }
 
+        br.close();
         bw.flush();
         bw.close();
     }
