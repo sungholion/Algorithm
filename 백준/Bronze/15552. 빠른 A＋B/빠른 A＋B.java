@@ -1,22 +1,27 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-public class Main{
-   public static void main(String[] args) throws IOException{
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-      int t = Integer.parseInt(br.readLine());
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
 
-      for(int i = 0; i < t; i++){
-         StringTokenizer st = new StringTokenizer(br.readLine());
-         int a = Integer.parseInt(st.nextToken());
-         int b = Integer.parseInt(st.nextToken());
-         bw.write(a+b+"\n");
-      }
+        int T = Integer.parseInt(br.readLine());
+        int A = 0, B = 0;
 
-      bw.flush();
-      br.close();
-      bw.close();
-   }
+        while(T-- > 0){
+            st = new StringTokenizer(br.readLine());
+            A = Integer.parseInt(st.nextToken());
+            B = Integer.parseInt(st.nextToken());
+            sb.append(A+B).append("\n");
+        }
+
+        br.close();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
 }
