@@ -1,22 +1,25 @@
 import java.io.*;
+import java.time.LocalDate;
+import java.util.*;
+
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
-        int n = Integer.parseInt(br.readLine());
+        int N = Integer.parseInt(br.readLine());
+        int sum = 1;
 
-        if(n == 0){
-            bw.write("1\n");
-        } else{
-            int res = 1;
-            for(int i=1; i<=n; i++){
-                res *= i;
-            }
-            bw.write(res + "\n");
+        while(N != 0){
+            sum *= N;
+            N--;
         }
 
+        sb.append(sum);
+        br.close();
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
     }
