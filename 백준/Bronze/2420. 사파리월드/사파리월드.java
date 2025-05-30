@@ -1,16 +1,21 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.time.LocalDate;
+import java.util.*;
+
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        long n = Long.parseLong(st.nextToken());
-        long m = Long.parseLong(st.nextToken());
+        Long N = Long.parseLong(st.nextToken());
+        Long M = Long.parseLong(st.nextToken());
+        sb.append(Math.abs(N - M)).append("\n");
 
-        bw.write(Math.abs(n-m)+"\n");
+        br.close();
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
     }
