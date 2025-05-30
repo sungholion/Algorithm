@@ -1,21 +1,22 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
+
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
+        StringBuilder sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(br.readLine());
-        long a = Long.parseLong(st.nextToken());
-        long b = Long.parseLong(st.nextToken());
 
-        bw.write(operator(a, b) + "\n");
+        long A = Long.parseLong(st.nextToken());
+        long B = Long.parseLong(st.nextToken());
+        long res = (A + B) * (A - B);
+        sb.append(res);
+        
+        br.close();
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
-    }
-
-    static long operator(long num1, long num2){
-        return (num1 + num2) * (num1 - num2);
     }
 }
