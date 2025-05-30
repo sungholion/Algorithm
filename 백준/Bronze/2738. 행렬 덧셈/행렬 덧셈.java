@@ -1,46 +1,42 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
+
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
+        StringBuilder sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
 
-        int[][] arr1 = new int[n][m];
-        int[][] arr2 = new int[n][m];
-        int[][] arr3 = new int[n][m];
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        int[][] arr1 = new int[N][M];
+        int[][] arr2 = new int[N][M];
 
-        for(int i=0; i<n; i++){
+        for(int i = 0; i < N; i++){
             st = new StringTokenizer(br.readLine());
-            for(int j=0; j<m; j++){
+            for(int j = 0; j < M; j++){
                 arr1[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        for(int i=0; i<n; i++){
+        for(int i = 0; i < N; i++){
             st = new StringTokenizer(br.readLine());
-            for(int j=0; j<m; j++){
+            for(int j = 0; j < M; j++){
                 arr2[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        for(int i=0; i<n; i++){
-            for(int j=0; j<m; j++){
-                arr3[i][j] = arr1[i][j] + arr2[i][j];
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < M; j++){
+                sb.append(arr1[i][j] + arr2[i][j]).append(" ");
             }
+            sb.append("\n");
         }
 
-        for(int i=0; i<n; i++){
-            for(int j=0; j<m; j++){
-                bw.write(arr3[i][j] + " ");
-            }
-            bw.write("\n");
-        }
-
+        br.close();
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
     }
