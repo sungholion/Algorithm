@@ -1,16 +1,19 @@
 import java.io.*;
-import java.text.*;
+import java.time.LocalDate;
 import java.util.*;
 
-public class Main{
+
+public class Main {
     public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
-        Date date = new Date();
-        DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
-        df.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+        LocalDate now = LocalDate.now();
+        sb.append(now);
 
-        bw.write(df.format(date));
+        br.close();
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
     }
