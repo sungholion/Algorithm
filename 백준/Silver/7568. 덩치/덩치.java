@@ -25,15 +25,15 @@ public class Main {
         }
 
         for(int i = 0; i < N; i++){
-            int cnt = 1;
+            int rank = 1;
             for(int j = 0; j < N; j++){
-                if((p[i].weight == p[j].weight) && (p[i].height == p[j].height)){
+                if(i == j){
                     continue;   // 같은 원소 비교 x
                 } else if((p[i].weight < p[j].weight) && (p[i].height < p[j].height)){
-                    cnt++;
+                    rank++;
                 }
             }
-            sb.append(cnt).append(" ");
+            sb.append(rank).append(" ");
 
         }
 
