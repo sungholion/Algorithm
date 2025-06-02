@@ -1,38 +1,35 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-public class Main{
-   public static void main(String[] args) throws IOException{
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+public class Main {
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+        int[][] apt = new int[15][15];
 
-      int t = Integer.parseInt(br.readLine());
+        for(int i = 0; i < 15; i++){
+            apt[i][1] = 1;
+            apt[0][i] = i;
+        }
 
-      for(int i = 0; i < t; i++){
-         int [][] apt = new int[15][15];
-
-         for(int j=0; j<15; j++){   // 0층 값 설정 및 모든 층 1호 1로 초기화
-            apt[j][1] = 1;
-            apt[0][j] = j;
-         }
-
-         int k = Integer.parseInt(br.readLine());     //층
-         int n = Integer.parseInt(br.readLine());     //호
-
-         for(int l=1; l < 15; l++){
-            for(int m=2; m < 15; m++){
-               apt[l][m] = apt[l][m-1] + apt[l-1][m];
+        for(int i = 1; i < 15; i++){
+            for(int j = 2; j < 15; j++){
+                apt[i][j] = apt[i][j-1] + apt[i-1][j];
             }
-         }
+        }
 
-         bw.write(apt[k][n] + "\n");
+        int T = Integer.parseInt(br.readLine());
+        while(T-- > 0) {
+            int k = Integer.parseInt(br.readLine());
+            int n = Integer.parseInt(br.readLine());
+            sb.append(apt[k][n]).append("\n");
+        }
 
-      }
+        br.close();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
 
-      bw.flush();
-      bw.close();
-      br.close();
-   }
 }
-
-
