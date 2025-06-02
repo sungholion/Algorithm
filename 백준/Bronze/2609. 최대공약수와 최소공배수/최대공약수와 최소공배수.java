@@ -1,35 +1,27 @@
-import java.math.BigInteger;
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-public class Main{
-   public static void main(String[] args) throws IOException{
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+public class Main {
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-      StringTokenizer st = new StringTokenizer(br.readLine());
-      int a = Integer.parseInt(st.nextToken());
-      int b = Integer.parseInt(st.nextToken());
+        int A = Integer.parseInt(st.nextToken());
+        int B = Integer.parseInt(st.nextToken());
+        sb.append(gcd(A,B)).append("\n");
+        sb.append((A*B)/gcd(A,B));
 
-      int greatest = gcd(a, b);
-      int least = (a * b) / greatest;
+        br.close();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
 
-      bw.write(greatest + "\n");
-      bw.write(least + "\n");
-      bw.flush();
-      bw.close();
-      br.close();
-   }
+    public static int gcd(int a, int b) {
+        if(b == 0) return a;
 
-   public static int gcd(int a, int b){
-      while(b!=0){
-         int r = a % b;
-
-         a = b;
-         b = r;
-      }
-      return a;
-   }
+        return gcd(b, a % b);
+    }
 }
-
-
