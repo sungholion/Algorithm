@@ -1,47 +1,45 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 class Person{
-   int height;
-   int weight;
-   int rank;
+    int weight;
+    int height;
 
-   Person(int height, int weight, int rank){
-      this.height = height;
-      this.weight = weight;
-      this.rank = rank;
-   }
+    Person(int weight, int height){
+        this.weight = weight;
+        this.height = height;
+    }
 }
 
 public class Main {
-   public static void main(String[] args) throws IOException {
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+        int N = Integer.parseInt(br.readLine());
+        Person[] p = new Person[N];
 
-      int n = Integer.parseInt(br.readLine());
-      Person[] persons = new Person[n];
+        for(int i = 0; i < N; i++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            p[i] = new Person(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+        }
 
-      for (int i = 0; i < n; i++) {
-         StringTokenizer st = new StringTokenizer(br.readLine());
-         Person p = new Person(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), 1);
-         persons[i] = p;
-      }
-
-      for(int i = 0; i < n - 1; i++){
-         for(int j = i+1; j < n; j++){
-            if(persons[i].height < persons[j].height && persons[i].weight < persons[j].weight){
-               persons[i].rank++;
-            } else if(persons[i].height > persons[j].height && persons[i].weight > persons[j].weight){
-               persons[j].rank++;
+        for(int i = 0; i < N; i++){
+            int cnt = 1;
+            for(int j = 0; j < N; j++){
+                if((p[i].weight == p[j].weight) && (p[i].height == p[j].height)){
+                    continue;   // 같은 원소 비교 x
+                } else if((p[i].weight < p[j].weight) && (p[i].height < p[j].height)){
+                    cnt++;
+                }
             }
-         }
-      }
+            sb.append(cnt).append(" ");
 
-      for(int i = 0; i < n ; i++){
-         bw.write(persons[i].rank + " ");
-      }
+        }
 
-      bw.flush();
-      bw.close();
-   }
+        br.close();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
 }
