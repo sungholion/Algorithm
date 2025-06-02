@@ -1,22 +1,29 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
- 
+import java.io.*;
+import java.util.*;
+
 public class Main {
-	public static void main(String[] args) throws IOException {
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int N = Integer.parseInt(br.readLine());
- 
-		int num = 666;
-		int count = 1;
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+        int N = Integer.parseInt(br.readLine());
+
+        int movie = 666;
+        int cnt = 1;
+      
+        while(cnt != N){
+            movie++;
+            if(String.valueOf(movie).contains("666"))
+                cnt++;
+        }
         
-		while(count != N) {
-			num++;
-			if(String.valueOf(num).contains("666")) {
-				count++;
-			}
-		}
-		System.out.println(num);
-	}
+
+        sb.append(movie);
+        br.close();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
+
+
 }
