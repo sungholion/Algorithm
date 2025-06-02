@@ -1,26 +1,25 @@
-import java.math.BigInteger;
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-public class Main{
-   public static void main(String[] args) throws IOException{
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-      int L = Integer.parseInt(br.readLine());
-      String str = br.readLine();
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
-      //result = result.add(BigInteger.valueOf(S.charAt(i) - 96).multiply(BigInteger.valueOf(31).pow(i)));
-      //System.out.println(result.remainder(BigInteger.valueOf(1234567891)));
-      BigInteger result = new BigInteger("0");
-      for(int i = 0; i < str.length(); i++){
-         char ch = str.charAt(i);
-         result = result.add(BigInteger.valueOf(ch - 96).multiply(BigInteger.valueOf(31).pow(i)));
-      }
+        int L = Integer.parseInt(br.readLine());
+        String str = br.readLine();
+        long sum = 0;
 
-      bw.write(result.remainder(BigInteger.valueOf(1234567891)) + "");
-      bw.flush();
-      bw.close();
-      br.close();
-   }
+        for(int i=0; i<str.length(); i++){
+            int a = Character.getNumericValue(str.charAt(i)) - Character.getNumericValue('a') + 1;
+            sum += (long) (a * Math.pow(31, i) % 1234567891);
+        }
+        sb.append(sum);
+        br.close();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
 }
