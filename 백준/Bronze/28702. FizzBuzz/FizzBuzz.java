@@ -1,39 +1,38 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-public class Main{
-   public static void main(String[] args) throws IOException{
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-      boolean flag = false;
-      int num = 0;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
-      for(int i=0; i<3; i++){
-         String s = br.readLine();
+        for(int i=0; i<3; i++){
+            String str = br.readLine();
+            int num = 0;
+            if(str.equals("Fizz") || str.equals("Buzz") || str.equals("FizzBuzz")){
+                continue;
+            } else {
+                num = Integer.parseInt(str);
+                num += 3 - i;
 
-         char ch = s.charAt(0);
+                if((num % 3 == 0) && (num % 5 == 0)){
+                    sb.append("FizzBuzz");
+                } else if((num % 3 == 0) && (num % 5 != 0)){
+                    sb.append("Fizz");
+                } else if((num % 3 !=0) && (num % 5 == 0)){
+                    sb.append("Buzz");
+                } else{
+                    sb.append(num);
+                }
+                break;
+            }
+        }
 
-         if(ch != 'F' && ch != 'B'){
-            flag = true;
-            num = Integer.parseInt(s);
-         }
-
-         num++;
-      }
-
-      if(num % 3 == 0 && num % 5 == 0){
-         bw.write("FizzBuzz\n");
-      } else if(num % 3 == 0){
-         bw.write("Fizz\n");
-      } else if(num % 5 == 0){
-         bw.write("Buzz\n");
-      } else {
-         bw.write(num + "\n");
-      }
-
-      bw.flush();
-      bw.close();
-      br.close();
-   }
+        br.close();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
 }
