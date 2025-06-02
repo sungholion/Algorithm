@@ -1,39 +1,42 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-class User{
-   int age;
-   String name;
+class Person{
+    int age;
+    String name;
 
-   User(int age, String name){
-      this.age = age;
-      this.name = name;
-   }
+    Person(int age, String name){
+        this.age = age;
+        this.name = name;
+    }
 }
 
-public class Main{
-   public static void main(String[] args) throws IOException{
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-      StringBuilder sb = new StringBuilder();
+public class Main {
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+        int N = Integer.parseInt(br.readLine());
+        Person[] p = new Person[N];
 
-      int n = Integer.parseInt(br.readLine());
-      User[] users = new User[n];
+        for(int i = 0; i < N; i++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            p[i] = new Person(Integer.parseInt(st.nextToken()), st.nextToken());
+        }
 
-      for(int i = 0; i < n; i++){
-         StringTokenizer st = new StringTokenizer(br.readLine());
-         users[i] = new User(Integer.parseInt(st.nextToken()), st.nextToken());
-      }
+        Arrays.sort(p, new Comparator<Person>(){
+            public int compare(Person o1, Person o2){
+                return o1.age - o2.age;
+            }
+        });
 
-      Arrays.sort(users, (a, b) -> a.age - b.age);
+        for(int i = 0; i < N; i++){
+            sb.append(p[i].age).append(" ").append(p[i].name).append("\n");
+        }
 
-      for(User user : users){
-         sb.append(user.age).append(" ").append(user.name).append("\n");
-      }
-
-      bw.write(sb.toString());
-      bw.flush();
-      bw.close();
-      br.close();
-   }
+        br.close();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
 }
