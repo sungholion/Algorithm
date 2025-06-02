@@ -1,27 +1,26 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-public class Main{
-   public static void main(String[] args) throws IOException{
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+public class Main {
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
 
-      StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
 
-      int n = Integer.parseInt(st.nextToken());
-      int k = Integer.parseInt(st.nextToken());
+        sb.append(pascal(N, K)).append("\n");
 
-      bw.write(Integer.toString(Pas(n,k)));
-      bw.flush();
-      bw.close();
-      br.close();
-   }
+        br.close();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
 
-   static int Pas(int n, int k) {
-      if(n == k || k == 0) {
-         return 1;
-      }
-
-      return Pas(n - 1, k - 1) + Pas(n - 1, k);
-   }
+    public static int pascal(int N, int K){
+        if(N == K || K == 0) return 1;
+        return pascal(N-1, K-1) + pascal(N-1, K);
+    }
 }
