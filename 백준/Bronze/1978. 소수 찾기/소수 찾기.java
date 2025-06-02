@@ -1,34 +1,38 @@
 import java.io.*;
 import java.util.*;
 
+
 public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
 
-   public static void main(String[] args) throws IOException {
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int N = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
 
-      int n = Integer.parseInt(br.readLine());
-      int total = 0;
-      StringTokenizer st = new StringTokenizer(br.readLine());
-      for(int i = 0; i < n; i++) {
-         int a = Integer.parseInt(st.nextToken());
+        int cnt = 0;
+        for(int i=0; i<N; i++){
+            int num = Integer.parseInt(st.nextToken());
 
-         int cnt = 0;
-         for(int j = 1; j<= a; j++){
-            if (a % j == 0) {
-               cnt++;
+            if(num == 1)
+                continue;
+
+            boolean isPrime = true;
+            for(int j = 2; j<num; j++){
+                if(num % j == 0)
+                    isPrime = false;
             }
-         }
-         if(cnt == 2){
-            total++;
-         }
-      }
 
-      bw.write(total+"\n");
-      bw.flush();
-      br.close();
-      bw.close();
+            if(isPrime)
+                cnt++;
+        }
 
-   }
-
+        sb.append(cnt).append("\n");
+        br.close();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
 }
