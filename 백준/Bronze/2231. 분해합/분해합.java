@@ -1,29 +1,38 @@
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
+
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int input = sc.nextInt();
-		int ans = 0;
-		
-		for (int i=0; i < input; i++) {
-			int n = i;
-			int sum = 0;
-			
-			while(n != 0) {
-				sum += n % 10;
-				n /= 10;
-			}
-			
-			if (sum + i == input) {
-				ans = i;
-				break;
-			}
-				
-		}
-		
-		System.out.println(ans);
-	}
+    static final int MOD = 1234567891;
+    static final int R = 31;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+
+        int N = Integer.parseInt(br.readLine());
+        for(int i=1; i<=N; i++){
+            int num = i;
+            int sum = i;
+            while(num != 0){
+                sum += num % 10;
+                num /= 10;
+            }
+
+            if(sum == N){
+                sb.append(i);
+                break;
+            }
+
+            if(i == N){
+                sb.append(0);
+                break;
+            }
+        }
+
+        br.close();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
 }
-// 216 = 2 + 1 + 6 + 207
-// 207 = 2 + 0 + 7 + 198
