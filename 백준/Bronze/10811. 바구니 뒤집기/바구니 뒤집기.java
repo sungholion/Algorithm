@@ -19,7 +19,6 @@ public class Main {
             st = new StringTokenizer(br.readLine());
             int i = Integer.parseInt(st.nextToken());
             int j = Integer.parseInt(st.nextToken());
-            int mid = (i+j) / 2;
             for(int k = i, l = j ; k <= l; k++, l--){
                 int temp = basket[k];
                 basket[k] = basket[l];
@@ -27,9 +26,9 @@ public class Main {
             }
 
         }
-        for(int i = 1; i <= N; i++){
-            sb.append(basket[i] + " ");
-        }
+        
+        for(int i = 1; i <= N; i++)
+            sb.append(basket[i]).append(" ");
 
         bw.write(sb.toString());
         bw.flush();
