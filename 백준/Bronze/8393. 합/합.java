@@ -1,15 +1,22 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
- 
+import java.io.*;
+import java.util.*;
+
 public class Main {
-	public static void main(String[] args) throws IOException {
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
         
-		int N = Integer.parseInt(new BufferedReader(new InputStreamReader(System.in)).readLine());
-		int s = 0;
-        
-		for( int i = 1 ; i <= N ; i++ ) s+=i;
- 
-		System.out.println(s);
-	}
+        int n = Integer.parseInt(br.readLine());
+        int sum = 0;
+        for(int i = 1; i <= n; i++)
+            sum += i;
+        sb.append(sum).append("\n");
+  
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
+
+    }
 }
