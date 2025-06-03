@@ -1,41 +1,52 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class Main{
-    static int[] arr;
-    public static void main(String[] args) throws IOException {
+public class Main {
+    public static int[] arr;
+    public static void main(String[] args)throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
 
         int N = Integer.parseInt(br.readLine());
         arr = new int[N];
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for(int i=0; i<N; i++) arr[i] = Integer.parseInt(st.nextToken());
-        Arrays.sort(arr);
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<N; i++)
+            arr[i] = Integer.parseInt(st.nextToken());
+        Arrays.sort(arr);  // 이분 탐색하려면 정렬 되어있어야 함.
 
         int M = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
+        int key = -1;
         for(int i=0; i<M; i++){
-            if(binarySearch(Integer.parseInt(st.nextToken())) >=0) System.out.println(1);
-            else System.out.println(0);
+            key = Integer.parseInt(st.nextToken());
+            sb.append(binarysearch(key)).append("\n");
         }
+
+        br.close();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
     }
 
-    static int binarySearch(int x){
-        int start = 0, end = arr.length-1;
-        while(true){
-            if(start > end) break;
+    public static int binarysearch(int key){
+        int low = 0;
+        int high = arr.length - 1;
 
-            int mid = (start+end) / 2;
+        while(low <= high){
+            int mid = (low + high) / 2;
 
-            if(arr[mid] > x) end = mid-1;
-
-            else if(arr[mid] < x) start = mid + 1;
-
-            else return mid;
+            if(key < arr[mid]){
+                high = mid - 1;
+            }
+            else if(key > arr[mid]){
+                low = mid + 1;
+            }
+            else{
+                return 1;
+            }
         }
-        return -1;
+        return 0;
     }
 }
