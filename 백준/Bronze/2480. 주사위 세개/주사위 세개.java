@@ -2,37 +2,36 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
+        StringBuilder sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int n1 = Integer.parseInt(st.nextToken());
-        int n2 = Integer.parseInt(st.nextToken());
-        int n3 = Integer.parseInt(st.nextToken());
+        int A = Integer.parseInt(st.nextToken());
+        int B = Integer.parseInt(st.nextToken());
+        int C = Integer.parseInt(st.nextToken());
 
-        int res = 0;
-        if(n1 == n2 && n2 == n3){
-            res = 10000 + (n1 * 1000);
-        } else if(n1 == n2 && n2 != n3){
-            res = 1000 + (n1 * 100);
-        } else if(n1 == n3 && n2 != n3){
-            res = 1000 + (n1 * 100);
-        } else if(n2 == n3 && n1 != n2){
-            res = 1000 + (n2 * 100);
-        } else if(n1 != n2 && n2 != n3){
-            int max = n1;
-            if(n2 > max) max = n2;
-            if(n3 > max) max = n3;
-            res = 100 * max;
+        if(A == B && B == C){
+            sb.append(10000 + (A * 1000));
+        } else if(A == B){
+            sb.append(1000 + (A * 100));
+        } else if(A == C){
+            sb.append(1000 + (A * 100));
+        } else if(B == C){
+            sb.append(1000 + (B * 100));
+        } else{
+            int max = 0;
+            if(A > max) max = A;
+            if(B > max) max = B;
+            if(C > max) max = C;
+            sb.append(max * 100);
         }
 
-        bw.write(res + "\n");
-
-
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
         br.close();
+
     }
 }
