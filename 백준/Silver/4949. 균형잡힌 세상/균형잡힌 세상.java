@@ -2,53 +2,50 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-   public static void main(String[] args) throws IOException {
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
-      while(true){
-         String s = br.readLine();
-         Stack<Character> stack = new Stack<>();
+        String str;
+        while(!(str = br.readLine()).equals(".")){
+            Stack<Character> s = new Stack<>();
+            boolean tf = true;
 
-         if(s.length() == 1 && s.charAt(0) == '.') break;
-
-         boolean flag = true;
-         for(int i = 0; i < s.length(); i++){
-            char c = s.charAt(i);
-            if(c == '('){
-               stack.push(c);
-            } else if(c == ')'){
-               if(!stack.isEmpty()){
-                  char pop = stack.pop();
-                  if(pop != '(') flag = false;
-               } else {
-                  flag = false;
-               }
-
-            } else if(c == '['){
-               stack.push(c);
-            } else if(c == ']'){
-               if(!stack.isEmpty()){
-                  char pop = stack.pop();
-                  if(pop != '[') flag = false;
-               } else {
-                  flag = false;
-               }
+            for(int i = 0; i < str.length(); i++){
+                char c = str.charAt(i);
+                if(c == '(')
+                    s.push(c);
+                else if(c == ')'){
+                    if(s.isEmpty() || s.peek() != '('){
+                        tf = false;
+                        break;
+                    }
+                    else
+                        s.pop();
+                }
+                else if(c == '[')
+                    s.push(c);
+                else if(c == ']'){
+                    if(s.isEmpty() || s.peek() != '['){
+                        tf = false;
+                        break;
+                    }
+                    else
+                        s.pop();
+                } else  // 그냥 알파벳일때
+                    continue;
             }
-         }
 
-         if(!stack.isEmpty()){flag = false;}
-         if(s.charAt(s.length()-1) != '.') flag = false;
+            if(tf && s.isEmpty())
+                sb.append("yes\n");
+            else
+                sb.append("no\n");
+        }
 
-         if(flag){
-            bw.write("yes\n");
-         } else {
-            bw.write("no\n");
-         }
-      }
-
-      bw.flush();
-      bw.close();
-      br.close();
-   }
+        br.close();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
 }
