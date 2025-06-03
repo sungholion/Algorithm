@@ -1,28 +1,24 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
-import java.io.IOException;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
- 
+import java.io.*;
+import java.util.*;
+
 public class Main {
-	public static void main(String args[]) throws IOException {
- 
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		
-		int a = Integer.parseInt(br.readLine());
- 
-		StringTokenizer st;
-		for (int i = 1; i <= a; i++) {
-			st = new StringTokenizer(br.readLine()," ");
-			bw.write("Case #"+i+": ");
-			bw.write(Integer.parseInt(st.nextToken())
-				+Integer.parseInt(st.nextToken())+"\n");
-		}
-		br.close();
-		bw.flush();
-		bw.close();
-	}
- 
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+
+        int T = Integer.parseInt(br.readLine());
+        for (int i = 1; i <= T; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+            int A = Integer.parseInt(st.nextToken());
+            int B = Integer.parseInt(st.nextToken());
+            sb.append("Case #").append(i).append(": ").append(A+B).append("\n");
+        }
+
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
+
+    }
 }
