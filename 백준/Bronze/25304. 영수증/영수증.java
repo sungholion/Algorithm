@@ -1,20 +1,31 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
         int X = Integer.parseInt(br.readLine());
         int N = Integer.parseInt(br.readLine());
+        while (N-- > 0) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
 
-        int total = 0;
-        for(int i = 0; i < N; i++) {
-            st = new StringTokenizer(br.readLine());
-            total += Integer.parseInt(st.nextToken()) * Integer.parseInt(st.nextToken());
+            X -= a * b;
         }
-        if(X == total) System.out.println("Yes");
-        else System.out.println("No");
+
+        if(X == 0)
+            sb.append("Yes");
+        else
+            sb.append("No");
+
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
+
     }
 }
