@@ -1,42 +1,37 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Stack;
+import java.io.*;
+import java.util.*;
 
-public class Main{
-	public static void main(String[] args) throws IOException {
-	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	StringBuilder sb = new StringBuilder();
-	
-	Stack<Integer> s = new Stack<>();
-	
-	int n = Integer.parseInt(br.readLine());
-	
-	int pos = 0;
-	for(int loop=0; loop<n; loop++) {
-		int x = Integer.parseInt(br.readLine());
-		
-		if(x > pos) {
-			for(int i=pos+1; i<=x; i++) {
-				s.push(i);
-				sb.append("+").append("\n");
-			}
-			pos = x;
-		}
-		
-		else if(s.peek()!= x) {
-			System.out.println("NO");
-			return;
-		}
-		
-		s.pop();
-		sb.append("-").append("\n");
-		
-	}
-	
-	System.out.println(sb.toString());
-	
-	}
+public class Main {
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+
+        int n = Integer.parseInt(br.readLine());
+        int start = 0;
+        Stack<Integer> s = new Stack<>();
+        while(n-- > 0) {
+            int num = Integer.parseInt(br.readLine());
+
+            if(num > start){
+                for(int i = start + 1; i <= num; i++){
+                    s.push(i);
+                    sb.append('+').append("\n");
+                }
+                start = num;
+            } else if(s.peek() != num){
+                System.out.println("NO");
+                return;
+            }
+
+            s.pop();
+            sb.append('-').append("\n");
+        }
+
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
+
+    }
 }
