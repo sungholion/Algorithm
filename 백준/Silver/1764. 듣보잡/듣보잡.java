@@ -13,36 +13,22 @@ public class Main {
         int M = Integer.parseInt(st.nextToken());
 
         HashMap<String, Integer> map = new HashMap<>();
+        List<String> list = new ArrayList<>();
         for(int i = 0; i < N; i++) {
             String str = br.readLine();
-            map.put(str, map.getOrDefault(str, 0) + 1);
+            map.put(str, 1);
         }
 
         for(int i = 0; i < M; i++) {
             String str = br.readLine();
             map.put(str, map.getOrDefault(str, 0) + 1);
+            if(map.get(str) == 2)
+                list.add(str);
         }
-
-        int cnt = 0;
-        for(String x : map.keySet()) {
-            if(map.get(x) > 1) {
-                cnt++;
-            }
-        }
-
-        sb.append(cnt + "\n");
-        String[] s = new String[cnt];
-        int i = 0;
-        for(String x : map.keySet()) {
-            if(map.get(x) > 1) {
-                s[i++] = x;
-            }
-        }
-        Arrays.sort(s);
-        for(String x : s) {
-            sb.append(x + "\n");
-        }
-
+        Collections.sort(list);
+        sb.append(list.size()).append('\n');
+        for(String x : list)
+            sb.append(x).append('\n');
 
         br.close();
         bw.write(sb.toString());
