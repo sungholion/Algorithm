@@ -16,18 +16,14 @@ public class Main {
         }
         Arrays.sort(time);
 
-        int[] sum = new int[N];
+        int before = 0;
+        int sum = 0;
         for(int i = 0; i < N; i++) {
-            for(int j = 0; j <= i; j++) {
-                sum[i] += time[j];
-            }
+            sum += time[i] + before;
+            before += time[i];
         }
 
-        int ans = 0;
-        for(int x : sum)
-            ans += x;
-
-        sb.append(ans).append("\n");
+        sb.append(sum).append("\n");
 
         br.close();
         bw.write(sb.toString());
