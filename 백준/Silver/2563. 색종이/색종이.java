@@ -1,27 +1,35 @@
 import java.io.*;
 import java.util.*;
 
+
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int total = 0;  
-        int n = Integer.parseInt(br.readLine());  
-        
-        boolean[][] arr = new boolean[101][101];  
-        for (int i = 0; i < n; i++) {
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+
+        int N = Integer.parseInt(br.readLine());
+        boolean[][] arr = new boolean[101][101];
+        int sum = 0;
+        while (N-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
-            
-            for (int j = x; j < x+10; j++) {
-                for (int k = y; k < y+10; k++) {
-                    if (!arr[j][k]) {
-                        arr[j][k] = true;
-                        total++;
+
+            for(int i=x; i<x+10; i++){
+                for(int j=y; j<y+10; j++){
+                    if(!arr[i][j]){
+                        arr[i][j] = true;
+                        sum++;
                     }
                 }
             }
         }
-        System.out.print(total);
+
+        sb.append(sum);
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
     }
 }
