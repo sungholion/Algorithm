@@ -1,43 +1,39 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
- 
+import java.io.*;
+import java.util.*;
+
+
 public class Main {
- 
-	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
- 
-	public static void main(String[] args) throws IOException {
- 
-		int count = 0;
-		int N = Integer.parseInt(br.readLine());
- 
-		for (int i = 0; i < N; i++) {
-			if (check()) {
-				count++;
-			}
-		}
-		System.out.print(count);
-	}
- 
-	public static boolean check() throws IOException {
-		boolean[] check = new boolean[26];
-		int prev = 0;
-		String str = br.readLine();
-		
-		for(int i = 0; i < str.length(); i++) {
-			int now = str.charAt(i);
-			
-			
-			if (prev != now) {		
-				if (!check[now - 'a']) {
-					check[now - 'a'] = true;
-					prev = now;	
-				}
-				else {
-					return false;	
-				}
-			}
-		}    
-		return true;
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+        int N = Integer.parseInt(br.readLine());
+
+        int cnt = 0;
+        while (N-- > 0) {
+            String s = br.readLine();
+            boolean[] alpabet = new boolean[26];
+            boolean flag = true;
+            for (int i = 0; i < s.length()-1; i++) {
+                char c = s.charAt(i);
+                char c2 = s.charAt(i + 1);
+
+                alpabet[c-'a'] = true;
+                if((c2 != c) && (alpabet[c2-'a'])) {
+                    flag = false;
+                    break;
+                }
+            }
+
+            if(flag)
+                cnt++;
+
+        }
+
+        sb.append(cnt);
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
+    }
 }
