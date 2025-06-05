@@ -1,37 +1,35 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.util.StringTokenizer;
- 
+import java.io.*;
+import java.util.*;
+
+
 public class Main {
- 
-	public static void main(String[] args) throws IOException {
- 
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
- 
-		String str = br.readLine();
-		StringTokenizer st = new StringTokenizer(str, " ");
- 
-		int a = Integer.parseInt(st.nextToken());
-		int b = Integer.parseInt(st.nextToken());
-		int c = Integer.parseInt(st.nextToken());
- 
-		if (a >= b) {
-			if (a >= c) {
-				if (b >= c)
-					System.out.println(b);
-				else
-					System.out.println(c);
-			} else
-				System.out.println(a);
-		} else {
-			if (c <= b) {
-				if (c <= a)
-					System.out.println(a);
-				else
-					System.out.println(c);
-			} else
-				System.out.println(b);
-		}
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int A = Integer.parseInt(st.nextToken());
+        int B = Integer.parseInt(st.nextToken());
+        int C = Integer.parseInt(st.nextToken());
+
+        if(((A >= B) && (A >= C)) && (B >= C)){
+            sb.append(B);
+        } else if(((A >= B) && (A >= C)) && (C >= B)){
+            sb.append(C);
+        } else if(((B >= A) && (B >= C)) && (A >= C)){
+            sb.append(A);
+        } else if(((B >= A) && (B >= C)) && (C >= A)){
+            sb.append(C);
+        } else if(((C >= A) && (C >= B)) && (A >= B)){
+            sb.append(A);
+        } else if(((C >= A) && (C >= B)) && (B >= A)){
+            sb.append(B);
+        }
+
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
+    }
 }
