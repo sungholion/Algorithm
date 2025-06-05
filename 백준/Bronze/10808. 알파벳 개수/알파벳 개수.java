@@ -1,21 +1,27 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class Main{
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String alpa = "abcdefghijklmnopqrstuvwxyz";
-		int[] alpa_cnt = new int[26];
-		String str = br.readLine();
 
-		for(int i=0; i<str.length(); i++) {
-			for(int j=0; j<alpa.length(); j++) {
-				if(str.charAt(i) == alpa.charAt(j)) alpa_cnt[j]++;
-			}
-		}
-		
-		for(int i=0; i<alpa_cnt.length; i++) System.out.print(alpa_cnt[i] + " ");
-	}
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+        String s = br.readLine();
+        int[] alpa = new int[26];
+
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            alpa[c - 'a']++;
+        }
+
+        for(int x : alpa) {
+            sb.append(x).append(' ');
+        }
+
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
+    }
 }
