@@ -13,33 +13,18 @@ public class Main {
         dp = new Integer[N + 1];
         dp[0] = dp[1] = 0;
 
-        sb.append(makeOne(N));
+        sb.append(makeOne(N, 0));
         bw.write(sb.toString());
         bw.flush();
         bw.close();
         br.close();
     }
 
-    public static int makeOne(int N) {
-        if (dp[N] == null) {
-
-            if (N % 6 == 0) {
-                dp[N] = Math.min(makeOne(N - 1), Math.min(makeOne(N / 3), makeOne(N / 2))) + 1;
-            }
-
-            else if (N % 3 == 0) {
-                dp[N] = Math.min(makeOne(N / 3), makeOne(N - 1)) + 1;
-            }
-
-            else if (N % 2 == 0) {
-                dp[N] = Math.min(makeOne(N / 2), makeOne(N - 1)) + 1;
-            }
-
-            else {
-                dp[N] = makeOne(N - 1) + 1;
-            }
+    public static int makeOne(int N, int cnt) {
+        if (N < 2) {
+            return cnt;
         }
-        return dp[N];
+        return Math.min(makeOne(N / 2, cnt + 1 + (N % 2)), makeOne(N / 3, cnt + 1 + (N % 3)));
     }
 
 }
