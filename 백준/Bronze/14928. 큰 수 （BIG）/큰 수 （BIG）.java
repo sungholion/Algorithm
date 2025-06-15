@@ -1,14 +1,27 @@
-import java.util.Scanner;
+import java.io.*;
+import java.math.BigInteger;
+import java.util.*;
 
 public class Main {
-	public static void main (String[] args) {
-    	Scanner scanner = new Scanner(System.in);
-        String input = scanner.next();
-        long temp = 0;
-        for (int i = 0; i < input.length(); i++) {
-        	temp = (temp * 10 + (input.charAt(i) - '0')) % 20000303;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+
+        String str = br.readLine();
+
+        long remain = 0;
+        for(int i = 0; i < str.length(); i++) {
+            remain = (remain * 10 + (str.charAt(i) - '0')) % 20000303;
         }
-        
-        System.out.println(temp);
+
+        sb.append(remain);
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
     }
+
+
+
 }
