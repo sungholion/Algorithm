@@ -1,21 +1,20 @@
 class Solution {
     public int[] solution(int numer1, int denom1, int numer2, int denom2) {
-        int[] answer = {};
+       int numer3 = (numer1 * denom2) + (numer2 * denom1);
+       int denom3 = denom1 * denom2;
         
-        int comDenom = denom1 * denom2;
-        int num = numer1 * denom2 + numer2 * denom1;
-        int gcd = gcd(num, comDenom);
-        
-        answer = new int[]{num/gcd, comDenom/gcd};
-        return answer;
+       int gcd = getGCD(numer3, denom3);
+    
+       return new int[] {numer3 / gcd, denom3 / gcd};
     }
     
-    public int gcd(int a, int b){
-        while(b!=0){
+    private int getGCD(int a, int b){
+        while(b != 0){
             int temp = b;
             b = a % b;
             a = temp;
         }
         return a;
     }
+  
 }
