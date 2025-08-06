@@ -1,19 +1,9 @@
 class Solution {
     public int solution(int n) {
-        int answer = 0;
-
-        int pizza = 6;
-        while(true){
-            if(pizza % n == 0){
-                answer++;
-                break;
-            }
-            
-            pizza += 6;
-            answer++;
-            
+        int x = 1;
+        while((6 * x) % n != 0){
+            x++;
         }
-        
-        return answer;
+        return x;
     }
 }
