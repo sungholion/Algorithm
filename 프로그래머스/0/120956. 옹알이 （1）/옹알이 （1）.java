@@ -1,22 +1,17 @@
 class Solution {
     public int solution(String[] babbling) {
         int answer = 0;
-        String[] word = {"aya", "ye", "woo", "ma"};
-        String temp = "";
-        
-        for(String i : babbling){
-            for(String j : word){
-                if(i.contains(j)){
-                    temp = i.replace(j, " ");
-                    i = temp;
-                }
-            }
-            if(i.isBlank())
-                answer++;
+
+        for(String now : babbling) {
+            now = now.replaceFirst("aya", "0");
+            now = now.replaceFirst("ye", "0");
+            now = now.replaceFirst("woo", "0");
+            now = now.replaceFirst("ma", "0");
+            now = now.replaceAll("0", "");
+
+            if(now.isEmpty()) answer++;
         }
-        
-     
-        
+
         return answer;
     }
 }
