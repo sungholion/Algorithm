@@ -8,7 +8,6 @@ class Solution {
         hp %= 3;
         
         answer += hp;
-       
         
         return answer;
     }
