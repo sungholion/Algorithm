@@ -2,30 +2,40 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+
+        int[] music = new int[8];
         StringTokenizer st = new StringTokenizer(br.readLine());
-
-        int[] arr = new int[8];
-        String res = "";
-        for (int i = 0; i < arr.length; i++)
-            arr[i] = Integer.parseInt(st.nextToken());
-
-        for (int i = 0; i < arr.length - 1; i++){
-            if(arr[i] == arr[i+1] - 1)
-                res = "ascending\n";
-            else if(arr[i] == arr[i+1] + 1)
-                res = "descending\n";
-            else{
-                res = "mixed\n";
-                break;
-            }
+        for(int i = 0; i < music.length; i++) {
+            music[i] = Integer.parseInt(st.nextToken());
         }
 
-        bw.write(res);
-        br.close();
-        bw.flush();
-        bw.close();
+        if(music[0] == 1){
+            boolean isAsc = true;
+            for(int i = 1; i < music.length; i++) {
+                if(music[i] != music[i-1] + 1){
+                    isAsc = false;
+                    break;
+                }
+            }
+            if(isAsc) sb.append("ascending");
+            else sb.append("mixed");
+        } else if(music[0] == 8){
+            boolean isDesc = true;
+            for(int i = 1; i < music.length; i++) {
+                if(music[i] != music[i-1] - 1){
+                    isDesc = false;
+                    break;
+                }
+            }
+            if(isDesc) sb.append("descending");
+            else sb.append("mixed");
+        } else{
+            sb.append("mixed");
+        }
+
+        System.out.println(sb.toString());
     }
 }
