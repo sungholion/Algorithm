@@ -2,21 +2,17 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int A = Integer.parseInt(st.nextToken());
         int B = Integer.parseInt(st.nextToken());
 
-        br.close();
-        bw.write(String.valueOf(A+B) + "\n");
-        bw.write(String.valueOf(A-B) + "\n");
-        bw.write(String.valueOf(A*B) + "\n");
-        bw.write(String.valueOf(A/B) + "\n");
-        bw.write(String.valueOf(A%B) + "\n");
-        bw.flush();
-        bw.close();
+        System.out.println(A + B);
+        System.out.println(A - B);
+        System.out.println(A * B);
+        System.out.println(A / B); // 정수 나눗셈
+        System.out.println(A % B); // 나머지
     }
 }
