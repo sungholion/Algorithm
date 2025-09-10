@@ -1,29 +1,25 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
-    static final int MOD = 1234567891;
-    static final int R = 31;
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
 
         int L = Integer.parseInt(br.readLine());
         String str = br.readLine();
-        long sum = 0;
-        long pow = 1;
-
-        for(int i=0; i<str.length(); i++){
-            int a = str.charAt(i) - 'a' + 1;
-            sum = (sum + a * pow) % MOD;
-            pow = (pow * R) % MOD;
+        //--------------------------------------------------------- 입력
+        final int MOD = 1234567891;
+        long ans = 0;
+        long r = 1; 
+        for (int i = 0; i < L; i++) {
+            int n = (str.charAt(i) - 'a') + 1;
+            ans = (ans + n * r) % MOD;
+            r = (r * 31) % MOD; 
         }
-        sb.append(sum);
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        //--------------------------------------------------------- 풀이
+        sb.append(ans).append("\n");
+        System.out.println(sb.toString());
+        //--------------------------------------------------------- 출력
     }
 }
