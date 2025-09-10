@@ -1,45 +1,38 @@
 import java.io.*;
 import java.util.*;
 
-class Person{
-    int weight;
-    int height;
-
-    Person(int weight, int height){
-        this.weight = weight;
-        this.height = height;
-    }
-}
-
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        int N = Integer.parseInt(br.readLine());
-        Person[] p = new Person[N];
 
-        for(int i = 0; i < N; i++){
+        int N = Integer.parseInt(br.readLine());
+        int[] w = new int[N];
+        int[] h = new int[N];
+
+
+        for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            p[i] = new Person(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+            w[i] = Integer.parseInt(st.nextToken());
+            h[i] = Integer.parseInt(st.nextToken());
         }
 
-        for(int i = 0; i < N; i++){
-            int rank = 1;
-            for(int j = 0; j < N; j++){
-                if(i == j){
-                    continue;   // 같은 원소 비교 x
-                } else if((p[i].weight < p[j].weight) && (p[i].height < p[j].height)){
-                    rank++;
+        int[] rank = new int[N];
+        for(int i = 0; i < N; i++) {
+            rank[i] = 1;
+        }
+
+        for (int i = 0; i < N; i++) {
+            for(int j = 0; j < N; j++) {
+                if(w[j] > w[i] && h[j] > h[i]) {
+                    rank[i]++;
                 }
             }
-            sb.append(rank).append(" ");
-
         }
 
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        for(int r : rank)
+            sb.append(r).append(" ");
+
+        System.out.println(sb.toString());
     }
 }
