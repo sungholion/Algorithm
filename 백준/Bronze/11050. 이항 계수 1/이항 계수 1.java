@@ -2,25 +2,21 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine());
         StringBuilder sb = new StringBuilder();
 
+        StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
 
-        sb.append(pascal(N, K)).append("\n");
-
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        int ans = fact(N) / (fact(K) * fact(N - K));
+        System.out.println(ans);
     }
 
-    public static int pascal(int N, int K){
-        if(N == K || K == 0) return 1;
-        return pascal(N-1, K-1) + pascal(N-1, K);
+    static int fact(int x) {
+        int r = 1;
+        for (int i = 2; i <= x; i++) r *= i;
+        return r;
     }
 }
