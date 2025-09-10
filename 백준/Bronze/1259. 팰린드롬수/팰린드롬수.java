@@ -1,36 +1,24 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
-    static final int MOD = 1234567891;
-    static final int R = 31;
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
 
-        while(true){
-            String str = br.readLine();
-            if(str.equals("0")){
-                break;
-            }
-            int l = Math.round((float) str.length() / 2);
+        String str;
+        while(!(str = br.readLine()).equals("0")){
             boolean isPal = true;
-            for(int i=0; i<l; i++){
-                if(str.charAt(i) != str.charAt(str.length()-1-i)){
+            for(int i = 0; i < str.length() / 2; i++){
+                if(str.charAt(i) != str.charAt(str.length() -1 - i)){
                     isPal = false;
+                    break;
                 }
             }
-            if(isPal)
-                sb.append("yes\n");
-            else
-                sb.append("no\n");
+            if(isPal)sb.append("yes\n");
+            else sb.append("no\n");
         }
+        System.out.println(sb.toString());
 
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
     }
 }
