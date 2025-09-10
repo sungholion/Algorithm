@@ -1,38 +1,33 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
 
-        for(int i=0; i<3; i++){
-            String str = br.readLine();
-            int num = 0;
-            if(str.equals("Fizz") || str.equals("Buzz") || str.equals("FizzBuzz")){
-                continue;
-            } else {
-                num = Integer.parseInt(str);
-                num += 3 - i;
+        String str1 = br.readLine();
+        String str2 = br.readLine();
+        String str3 = br.readLine();
 
-                if((num % 3 == 0) && (num % 5 == 0)){
-                    sb.append("FizzBuzz");
-                } else if((num % 3 == 0) && (num % 5 != 0)){
-                    sb.append("Fizz");
-                } else if((num % 3 !=0) && (num % 5 == 0)){
-                    sb.append("Buzz");
-                } else{
-                    sb.append(num);
-                }
-                break;
-            }
+        int temp = 0;
+        if(Character.isDigit(str1.charAt(0))){
+            temp = Integer.parseInt(str1) + 3;
+        } else if(Character.isDigit(str2.charAt(0))){
+            temp = Integer.parseInt(str2) + 2;
+        } else if(Character.isDigit(str3.charAt(0))){
+            temp = Integer.parseInt(str3) + 1;
         }
 
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        if((temp % 3 == 0) && (temp % 5 == 0)){
+            System.out.println("FizzBuzz");
+        } else if((temp % 3 == 0) && (temp % 5 != 0)){
+            System.out.println("Fizz");
+        } else if((temp % 3 != 0) && (temp % 5 == 0)){
+            System.out.println("Buzz");
+        } else{
+            System.out.println(temp);
+        }
+
     }
 }
