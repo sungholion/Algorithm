@@ -1,29 +1,36 @@
 import java.io.*;
 import java.util.*;
 
+class Coord{
+    int x;
+    int y;
+
+    Coord(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+}
+
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        StringTokenizer st;
 
         int N = Integer.parseInt(br.readLine());
-        int[] score = new int[N];
-        for(int i=0; i<N; i++)
-            score[i] = Integer.parseInt(br.readLine());
-        Arrays.sort(score);
+        int[] arr = new int[N];
+        for(int i = 0; i < N; i++)
+            arr[i] = Integer.parseInt(br.readLine());
+        Arrays.sort(arr);
 
-        int exception = (int)Math.round((double) N * 0.15);
+        int cut = (int)Math.round(N * 0.15); // 앞뒤 절삭 개수
         int sum = 0;
-        for(int i = exception; i < N - exception; i++)
-            sum += score[i];
-        int res = (int)Math.round((double)sum/(N-(exception*2)));
+        for(int i = cut; i < N - cut; i++) {
+            sum += arr[i];
+        }
 
-        sb.append(res);
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        int avg = (int)Math.round((double)sum / (N - 2*cut));
+        sb.append(avg).append("\n");
+
+        System.out.println(sb.toString());
     }
 }
