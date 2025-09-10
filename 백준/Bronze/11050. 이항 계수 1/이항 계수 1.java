@@ -10,13 +10,16 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
 
-        int ans = fact(N) / (fact(K) * fact(N - K));
-        System.out.println(ans);
+        int[][] C = new int[N + 1][N + 1];
+
+        for (int n = 0; n <= N; n++) {
+            C[n][0] = C[n][n] = 1;           // 양 끝은 1
+            for (int k = 1; k < n; k++) {
+                C[n][k] = C[n - 1][k - 1] + C[n - 1][k];
+            }
+        }
+
+        System.out.println(C[N][K]);
     }
 
-    static int fact(int x) {
-        int r = 1;
-        for (int i = 2; i <= x; i++) r *= i;
-        return r;
-    }
 }
