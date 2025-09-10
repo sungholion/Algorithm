@@ -2,26 +2,34 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        StringTokenizer st = new StringTokenizer(br.readLine());
 
+        StringTokenizer st = new StringTokenizer(br.readLine());
         int A = Integer.parseInt(st.nextToken());
         int B = Integer.parseInt(st.nextToken());
-        sb.append(gcd(A,B)).append("\n");
-        sb.append((A*B)/gcd(A,B));
 
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        int gcd = 0, lcm = 0;
+        if(A > B){
+            gcd = getGCD(A, B);
+            lcm = getLCM(A, B);
+        } else{
+            gcd = getGCD(B, A);
+            lcm = getLCM(B, A);
+        }
+        sb.append(gcd).append("\n").append(lcm).append("\n");
+        System.out.println(sb.toString());
     }
-
-    public static int gcd(int a, int b) {
-        if(b == 0) return a;
-
-        return gcd(b, a % b);
+    private static int getGCD(int a, int b) {
+        while(b!=0){
+            int r =  a % b;
+            a = b;
+            b = r;
+        }
+        return a;
+    }
+    private static int getLCM(int a, int b) {
+        return (a*b) / getGCD(a, b);
     }
 }
