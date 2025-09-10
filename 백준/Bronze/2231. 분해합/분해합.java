@@ -7,7 +7,11 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        for(int i = 1; i<=N; i++){
+        int digits = String.valueOf(N).length();
+        int start = Math.max(1, N - 9 * digits); // 탐색 시작점 최적화
+
+        int ans = 0;
+        for(int i = start; i<N; i++){
             int sum = 0;
             int x = i;
             sum+= x;
@@ -18,16 +22,12 @@ public class Main {
             }
 
             if(sum == N){
-                sb.append(i).append("\n");
+                ans = i;
                 break;
             }
-            
-            if(i == N){
-                sb.append(0).append("\n");
-                break;
-            }
-        }
 
+        }
+        sb.append(ans).append("\n");
         System.out.println(sb.toString());
     }
 }
