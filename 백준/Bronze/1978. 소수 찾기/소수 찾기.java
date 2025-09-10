@@ -1,38 +1,33 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        StringTokenizer st;
-
-        int N = Integer.parseInt(br.readLine());
-        st = new StringTokenizer(br.readLine());
 
         int cnt = 0;
-        for(int i=0; i<N; i++){
-            int num = Integer.parseInt(st.nextToken());
 
-            if(num == 1)
-                continue;
-
+        int N = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i = 0; i < N; i++) {
+            int x = Integer.parseInt(st.nextToken());
             boolean isPrime = true;
-            for(int j = 2; j<num; j++){
-                if(num % j == 0)
-                    isPrime = false;
-            }
-
-            if(isPrime)
+            if(x == 1) continue;
+            if(x == 2){
                 cnt++;
+                continue;
+            }
+            for(int j=2; j<x; j++){
+                if(x % j == 0){
+                    isPrime = false;
+                    break;
+                }
+            }
+            if(isPrime)cnt++;
         }
 
-        sb.append(cnt).append("\n");
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        sb.append(cnt);
+        System.out.println(sb.toString());
     }
 }
