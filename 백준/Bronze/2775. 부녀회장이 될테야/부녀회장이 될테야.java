@@ -2,34 +2,27 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        int[][] apt = new int[15][15];
-
-        for(int i = 0; i < 15; i++){
-            apt[i][1] = 1;
-            apt[0][i] = i;
-        }
-
-        for(int i = 1; i < 15; i++){
-            for(int j = 2; j < 15; j++){
-                apt[i][j] = apt[i][j-1] + apt[i-1][j];
-            }
-        }
 
         int T = Integer.parseInt(br.readLine());
-        while(T-- > 0) {
+        while (T-- > 0) {
             int k = Integer.parseInt(br.readLine());
             int n = Integer.parseInt(br.readLine());
-            sb.append(apt[k][n]).append("\n");
+
+            int[][] arr = new int[k+1][n+1];
+            for(int i = 1; i <= n; i++) arr[0][i] = i;  // 0층 초기화
+            for(int i = 1; i <= k; i++){
+                for(int j = 1; j <= n; j++){
+                    for(int l = 1; l <= j; l++){
+                        arr[i][j] += arr[i-1][l];
+                    }
+                }
+            }
+            sb.append(arr[k][n]).append("\n");
+
         }
-
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        System.out.println(sb.toString());
     }
-
 }
