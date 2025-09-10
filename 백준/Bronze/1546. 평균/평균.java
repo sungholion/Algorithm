@@ -1,36 +1,28 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
-    static final int MOD = 1234567891;
-    static final int R = 31;
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        int[] score = new int[N];
+        int M = -1;
+        int[] scores = new int[N];
+        double avg = 0.0;
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int M = Integer.MIN_VALUE;
-        for(int i=0; i<N; i++){
-            int num = Integer.parseInt(st.nextToken());
-            if(num > M){
-                M = num;
-            }
-            score[i] = num;
+        for(int i = 0; i < N; i++) {
+            int x = Integer.parseInt(st.nextToken());
+            scores[i] = x;
+            if(x > M) M = x;
         }
 
-        double sum = 0;
-        for(int x : score){
-            sum += x / (double) M * 100;
-        }
+        for(int num : scores)
+            avg += ((double)num / M) * 100;
 
-        sb.append(sum / N);
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        avg /= N;
+        sb.append(avg).append("\n");
+        System.out.println(sb.toString());
+
     }
 }
