@@ -12,33 +12,25 @@ class Coord{
 }
 
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
+
         int N = Integer.parseInt(br.readLine());
         Coord[] coords = new Coord[N];
-
         for(int i = 0; i < N; i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
-            coords[i] = new Coord(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
-        }
-        Arrays.sort(coords, new Comparator<Coord>(){
-            public int compare(Coord o1, Coord o2){
-                if(o1.y == o2.y)
-                    return o1.x - o2.x;
-                else
-                    return o1.y - o2.y;
-            }
-        });
-
-        for(int i = 0; i < N; i++){
-            sb.append(coords[i].x).append(" ").append(coords[i].y).append("\n");
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            coords[i] = new Coord(x, y);
         }
 
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        Arrays.sort(coords, (a, b) -> {
+            if(a.y != b.y) return (a.y - b.y);
+            return a.x - b.x;});
+
+        for(Coord c : coords)
+            sb.append(c.x).append(" ").append(c.y).append("\n");
+        System.out.println(sb.toString());
     }
 }
