@@ -2,29 +2,22 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        Queue<Integer> q = new ArrayDeque<Integer>();
+        Deque<Integer> q = new LinkedList<>();
+
         for (int i = 1; i <= N; i++)
-            q.add(i);
-
-        while(true){
-            if(q.size() == 1){
-                sb.append(q.poll());
-                break;
-            }
-
+            q.offer(i);
+        
+        while(q.size() > 1){
             q.poll();
-            q.add(q.poll());
+            q.offer(q.poll());
         }
 
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        sb.append(q.poll());
+        System.out.println(sb);
     }
 }
