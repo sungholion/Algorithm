@@ -2,46 +2,33 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static int[] arr;
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
 
-        Stack<Integer> s = new Stack<>();
+        Deque<Integer> s = new ArrayDeque<>();
+
         int N = Integer.parseInt(br.readLine());
-        while(N-- > 0){
+        while (N-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            String com = st.nextToken();
-            if(com.equals("push")){
-                int num = Integer.parseInt(st.nextToken());
-                s.push(num);
-            } else if(com.equals("pop")){
-                if(s.isEmpty()){
-                    sb.append(-1).append("\n");
-                } else {
-                    sb.append(s.pop()).append("\n");
-                }
-            } else if(com.equals("size")){
+            String str = st.nextToken();
+            if(str.equals("push")){
+                int n = Integer.parseInt(st.nextToken());
+                s.push(n);
+            } else if(str.equals("pop")){
+                if(s.isEmpty()) sb.append("-1").append("\n");
+                else sb.append(s.pop()).append("\n");
+            } else if(str.equals("size")){
                 sb.append(s.size()).append("\n");
-            } else if(com.equals("empty")){
-                if(s.isEmpty()){
-                    sb.append(1).append("\n");
-                } else {
-                    sb.append(0).append("\n");
-                }
-            } else if(com.equals("top")){
-                if(s.isEmpty()){
-                    sb.append(-1).append("\n");
-                } else {
-                    sb.append(s.peek()).append("\n");
-                }
+            } else if(str.equals("empty")){
+                if(s.isEmpty()) sb.append("1").append("\n");
+                else sb.append("0").append("\n");
+            } else if(str.equals("top")){
+                if(s.isEmpty()) sb.append("-1").append("\n");
+                else sb.append(s.peek()).append("\n");
             }
         }
 
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        System.out.println(sb.toString());
     }
 }
