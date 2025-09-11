@@ -2,52 +2,30 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static int[] arr;
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
 
-        Deque<Integer> q = new ArrayDeque<>();
         int N = Integer.parseInt(br.readLine());
-        while(N-- > 0){
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            String com = st.nextToken();
-            if(com.equals("push")){
-                int num = Integer.parseInt(st.nextToken());
-                q.add(num);
-            } else if(com.equals("pop")){
-                if(q.isEmpty()){
-                    sb.append(-1).append("\n");
-                } else {
-                    sb.append(q.poll()).append("\n");
-                }
-            } else if(com.equals("size")){
-                sb.append(q.size()).append("\n");
-            } else if(com.equals("empty")){
-                if(q.isEmpty()){
-                    sb.append(1).append("\n");
-                } else {
-                    sb.append(0).append("\n");
-                }
-            } else if(com.equals("front")){
-                if(q.isEmpty()){
-                    sb.append(-1).append("\n");
-                } else {
-                    sb.append(q.peek()).append("\n");
-                }
-            } else if(com.equals("back")){
-                if(q.isEmpty()){
-                    sb.append(-1).append("\n");
-                } else {
-                    sb.append(q.peekLast()).append("\n");
-                }
+        Deque<Integer> q = new ArrayDeque<>();
+
+        while (N-- > 0) {
+            String line = br.readLine();
+            if (line.startsWith("push")) {
+                // 큐의 뒤에 넣기
+                q.addLast(Integer.parseInt(line.substring(5)));
+            } else if (line.equals("pop")) {
+                sb.append(q.isEmpty() ? -1 : q.pollFirst()).append('\n');
+            } else if (line.equals("size")) {
+                sb.append(q.size()).append('\n');
+            } else if (line.equals("empty")) {
+                sb.append(q.isEmpty() ? 1 : 0).append('\n');
+            } else if (line.equals("front")) {
+                sb.append(q.isEmpty() ? -1 : q.peekFirst()).append('\n');
+            } else if (line.equals("back")) {
+                sb.append(q.isEmpty() ? -1 : q.peekLast()).append('\n');
             }
         }
-
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        System.out.print(sb);
     }
 }
