@@ -2,62 +2,50 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
         StringTokenizer st;
 
         int N = Integer.parseInt(br.readLine());
-        int[] score = new int[N];
-
-        // 1. 산술평균
-        int sum = 0;
-        for(int i=0; i<N; i++){
-            score[i] = Integer.parseInt(br.readLine());
-            sum += score[i];
-        }
-        sb.append((int)Math.round((double)sum / N)).append("\n");
-
-        // 2. 중앙값
-        Arrays.sort(score);
-        sb.append(score[N/2]).append("\n");
-
-        // 3. 최빈값
+        int[] arr = new int[N];
         int[] cnt = new int[8001];
-        for(int i=0; i<N; i++){
-           cnt[score[i] + 4000]++;
-        }
 
-        int Max = 0;
-        for(int i=0; i<8001; i++){
-            if(cnt[i] > Max){
-                Max = cnt[i];
-            }
-        }
+        long sum = 0;
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < N; i++){
+            int x = Integer.parseInt(br.readLine());
+            arr[i] = x;
 
-        int mode = 0;
-        boolean second = false;
-        for(int i=0; i<8001; i++){
-            if(cnt[i] == Max){
-                if(!second){
-                    mode = i - 4000;
-                    second = true;
-                } else{
-                    mode = i - 4000;
+            sum += x; // 평균
+            cnt[x + 4000]++; // 최빈
+            if(x > max) max = x; // 최대
+            if(x < min) min = x; // 최소
+        }
+        Arrays.sort(arr);
+
+        int avg = (int)Math.round((double)sum / N); // 평균
+        int mid = arr[arr.length / 2];  // 중앙값
+        int maxFreq = 0;    //최빈값(두번째)
+        for(int c : cnt) if(c > maxFreq) maxFreq = c;
+        int freq = 0;
+        boolean firstFound = false;
+        for (int i = 0; i <= 8000; i++) {
+            if (cnt[i] == maxFreq) {
+                if (!firstFound) {
+                    freq = i - 4000;     // 첫 번째 최빈값
+                    firstFound = true;
+                } else {
+                    freq = i - 4000;     // 두 번째 최빈값
                     break;
                 }
             }
-
         }
-        sb.append(mode).append("\n");
+        int range = Math.abs(max - min);    // 범위
 
-        // 4. 범위
-        sb.append(score[N-1] - score[0]);
-
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        sb.append(avg).append("\n").append(mid).append("\n").append(freq).append("\n").append(range);
+        System.out.println(sb);
     }
 }
+
