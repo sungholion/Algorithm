@@ -1,51 +1,48 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        StringTokenizer st;
 
         int M = Integer.parseInt(br.readLine());
-        HashSet<Integer> set = new HashSet<>();
-        while (M-- > 0) {
-            st = new StringTokenizer(br.readLine());
-            String command = st.nextToken();
-            int x = 0;
+        int bitmask = 0; // 공집합 시작
 
-            if(command.equals("all")){
-                set.clear();
-                for(int i = 1; i <= 20; i++)
-                    set.add(i);
-            } else if(command.equals("empty")){
-                set.clear();
-            } else if(command.equals("add")){
-                x = Integer.parseInt(st.nextToken());
-                set.add(x);
-            } else if(command.equals("remove")){
-                x = Integer.parseInt(st.nextToken());
-                set.remove(x);
-            } else if(command.equals("check")){
-                x = Integer.parseInt(st.nextToken());
-                sb.append(set.contains(x) ? 1 : 0).append("\n");
-            } else if(command.equals("toggle")){
-                x = Integer.parseInt(st.nextToken());
-                if(set.contains(x)){
-                    set.remove(x);
-                } else {
-                    set.add(x);
-                }
+        for (int i = 0; i < M; i++) {
+            String[] cmd = br.readLine().split(" ");
+
+            switch (cmd[0]) {
+                case "add":
+                    int x1 = Integer.parseInt(cmd[1]);
+                    bitmask |= (1 << x1);
+                    break;
+
+                case "remove":
+                    int x2 = Integer.parseInt(cmd[1]);
+                    bitmask &= ~(1 << x2);
+                    break;
+
+                case "check":
+                    int x3 = Integer.parseInt(cmd[1]);
+                    sb.append((bitmask & (1 << x3)) != 0 ? "1\n" : "0\n");
+                    break;
+
+                case "toggle":
+                    int x4 = Integer.parseInt(cmd[1]);
+                    bitmask ^= (1 << x4);
+                    break;
+
+                case "all":
+                    bitmask = (1 << 21) - 1; // 1~20 모두 포함
+                    break;
+
+                case "empty":
+                    bitmask = 0;
+                    break;
             }
-
-
         }
 
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        System.out.print(sb);
     }
 }
