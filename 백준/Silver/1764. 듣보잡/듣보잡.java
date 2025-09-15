@@ -1,38 +1,28 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
-
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        HashMap<String, Integer> map = new HashMap<>();
-        List<String> list = new ArrayList<>();
-        for(int i = 0; i < N; i++) {
-            String str = br.readLine();
-            map.put(str, 1);
+        HashSet<String> heard = new HashSet<>(N * 2);
+        for (int i = 0; i < N; i++) {
+            heard.add(br.readLine());
         }
 
-        for(int i = 0; i < M; i++) {
-            String str = br.readLine();
-            map.put(str, map.getOrDefault(str, 0) + 1);
-            if(map.get(str) == 2)
-                list.add(str);
+        ArrayList<String> both = new ArrayList<>();
+        for (int i = 0; i < M; i++) {
+            String name = br.readLine();
+            if (heard.contains(name)) both.add(name);
         }
-        Collections.sort(list);
-        sb.append(list.size()).append('\n');
-        for(String x : list)
-            sb.append(x).append('\n');
 
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        Collections.sort(both);
+        StringBuilder sb = new StringBuilder();
+        sb.append(both.size()).append('\n');
+        for (String s : both) sb.append(s).append('\n');
+        System.out.print(sb.toString());
     }
 }
