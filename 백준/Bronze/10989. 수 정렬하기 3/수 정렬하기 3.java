@@ -7,17 +7,18 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        int[] count = new int[10001]; 
-
-        for (int i = 0; i < N; i++) {
-            int x = Integer.parseInt(br.readLine());
-            count[x]++; 
+        int[] cnt = new int[10001];
+        for(int i = 0; i < N; i++) {
+           cnt[Integer.parseInt(br.readLine())]++;
         }
 
-        for (int i = 1; i <= 10000; i++) {
-            while (count[i]-- > 0) 
-                sb.append(i).append('\n');
+        for(int i = 0; i < 10001; i++){
+            if(cnt[i] != 0)
+                while(cnt[i]-- > 0)
+                    sb.append(i).append("\n");
         }
-        System.out.println(sb.toString());
+
+        System.out.println(sb);
+
     }
 }
