@@ -7,19 +7,23 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int K = Integer.parseInt(st.nextToken());
 
-        int[][] C = new int[N + 1][N + 1];
+        int n = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
 
-        for (int n = 0; n <= N; n++) {
-            C[n][0] = C[n][n] = 1;           // 양 끝은 1
-            for (int k = 1; k < n; k++) {
-                C[n][k] = C[n - 1][k - 1] + C[n - 1][k];
-            }
-        }
+        // n!, k!, (n-k)! 계산
+        int factN = 1;
+        for (int i = 1; i <= n; i++) factN *= i;
 
-        System.out.println(C[N][K]);
+        int factK = 1;
+        for (int i = 1; i <= k; i++) factK *= i;
+
+        int factNK = 1;
+        for (int i = 1; i <= n - k; i++) factNK *= i;
+
+        // 공식 적용: n! / (k! * (n-k)!)
+        int result = factN / (factK * factNK);
+
+        System.out.println(result);
     }
-
 }
