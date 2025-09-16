@@ -7,12 +7,14 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        long A = Integer.parseInt(st.nextToken());
-        long B = Integer.parseInt(st.nextToken());
-        long V = Integer.parseInt(st.nextToken());
+        long A = Long.parseLong(st.nextToken()); 
+        long B = Long.parseLong(st.nextToken()); 
+        long V = Long.parseLong(st.nextToken()); 
 
-        long result = (V - B - 1) / (A - B) + 1;
-        sb.append(result);
-        System.out.println(sb.toString());
+        long days = (V - B) / (A - B);
+        if ((V - B) % (A - B) != 0) days++; 
+        
+        sb.append(days);
+        System.out.println(sb);
     }
 }
