@@ -1,30 +1,26 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(N * 2); 
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-            map.put(st.nextToken(), st.nextToken());
+            String site = st.nextToken();
+            String pw = st.nextToken();
+            map.put(site, pw);
         }
 
-        for(int i = 0; i < M; i++){
-            String s = br.readLine();
-            sb.append(map.get(s)).append("\n");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < M; i++) {
+            String q = br.readLine();
+            sb.append(map.get(q)).append('\n');
         }
-
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        System.out.print(sb.toString());
     }
 }
