@@ -1,88 +1,62 @@
 import java.io.*;
 import java.util.*;
 
-class Coord{
-    int x;
-    int y;
+public class Main {
+    static final int[] dy = {-1, 1, 0, 0};
+    static final int[] dx = {0, 0, -1, 1};
 
-    public Coord(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-}
-
-public class Main{
-    static int n, m, k;
-    static int[][] map;
-    static boolean[][] vis;
-    static int[] dx = {-1, 1, 0, 0};
-    static int[] dy = {0, 0, -1, 1};
-    static int cnt;
-
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
-        StringTokenizer st;
+        StringBuilder out = new StringBuilder();
+        int T = Integer.parseInt(br.readLine());
 
-        int t = Integer.parseInt(br.readLine());
+        while (T-- > 0) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int M = Integer.parseInt(st.nextToken()); 
+            int N = Integer.parseInt(st.nextToken()); 
+            int K = Integer.parseInt(st.nextToken());
 
-        for(int tc = 0; tc < t; tc++){
-            st = new StringTokenizer(br.readLine());
-            m = Integer.parseInt(st.nextToken());
-            n = Integer.parseInt(st.nextToken());
-            k = Integer.parseInt(st.nextToken());
+            boolean[][] grid = new boolean[N][M];
+            boolean[][] visited = new boolean[N][M];
 
-            map = new int[m][n];
-            vis = new boolean[m][n];
-
-            for(int kc = 0; kc < k; kc++){
+            for (int i = 0; i < K; i++) {
                 st = new StringTokenizer(br.readLine());
                 int x = Integer.parseInt(st.nextToken());
                 int y = Integer.parseInt(st.nextToken());
-
-                map[x][y] = 1;
+                grid[y][x] = true;
             }
 
-            cnt = 0;
-            for(int i=0; i<m; i++){
-                for(int j=0; j<n; j++){
-                    if(map[i][j] == 1 && !vis[i][j]){
-                        bfs(new Coord(i, j));
+            int count = 0;
+            for (int y = 0; y < N; y++) {
+                for (int x = 0; x < M; x++) {
+                    if (grid[y][x] && !visited[y][x]) {
+                        bfs(y, x, grid, visited, N, M);
+                        count++;
                     }
                 }
             }
-            sb.append(cnt).append("\n");
-
+            out.append(count).append('\n');
         }
-
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.print(out);
     }
 
-    static void bfs(Coord start){
-        Queue<Coord> q = new ArrayDeque<>();
+    static void bfs(int sy, int sx, boolean[][] grid, boolean[][] visited, int N, int M) {
+        ArrayDeque<int[]> q = new ArrayDeque<>();
+        visited[sy][sx] = true;
+        q.offer(new int[]{sy, sx});
 
-        vis[start.x][start.y] = true;
-        q.offer(start);
-        cnt++;
-        while(!q.isEmpty()){
-            Coord cur = q.poll();
+        while (!q.isEmpty()) {
+            int[] cur = q.poll();
+            int y = cur[0], x = cur[1];
 
-            for(int i=0; i<4; i++){
-                int nx = cur.x + dx[i];
-                int ny = cur.y + dy[i];
-
-                if(nx < 0 || ny < 0 || nx >= m || ny >= n || vis[nx][ny] || map[nx][ny] != 1){
-                    continue;
-                }
-
-                vis[nx][ny] = true;
-                q.offer(new Coord(nx, ny));
+            for (int dir = 0; dir < 4; dir++) {
+                int ny = y + dy[dir];
+                int nx = x + dx[dir];
+                if (ny < 0 || nx < 0 || ny >= N || nx >= M) continue;
+                if (!grid[ny][nx] || visited[ny][nx]) continue;
+                visited[ny][nx] = true;
+                q.offer(new int[]{ny, nx});
             }
         }
     }
-
 }
