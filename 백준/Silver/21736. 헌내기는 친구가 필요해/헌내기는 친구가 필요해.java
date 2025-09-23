@@ -1,102 +1,46 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-class Point{
-	int x;
-	int y;
-	
-	Point(int x, int y){
-		this.x = x;
-		this.y = y;
-	}
-}
+public class Main {
+    static int N, M;
+    static char[][] map;
+    static boolean[][] vis;
+    static int[] dx = {-1,1,0,0}, dy = {0,0,-1,1};
 
-public class Main{
-	static int n, m;
-	static char[][] map;
-	static boolean[][] visited;
-	static int[] dx = {-1, 1, 0, 0};
-	static int[] dy = {0, 0, -1, 1};
-	static int cnt;
-
-    public static void main(String[] args) throws IOException{
-//        System.setIn(new FileInputStream("src/input.txt"));
-    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        map = new char[N][M];
+        vis = new boolean[N][M];
+        int sx = -1, sy = -1;
 
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        map = new char[n][m];
-        visited = new boolean[n][m];
-        Point start = new Point(0, 0);
-        
-        for(int i=0; i<n; i++) {
-        	String str = br.readLine();
-        	for(int j=0; j<m; j++) {
-        		map[i][j] = str.charAt(j);
-        		if(map[i][j] == 'I') {
-        			start = new Point(i, j);
-        		}
-        	}
+        for (int i = 0; i < N; i++) {
+            String s = br.readLine();
+            for (int j = 0; j < M; j++) {
+                map[i][j] = s.charAt(j);
+                if (map[i][j] == 'I') { sx = i; sy = j; }
+            }
         }
-        
-        bfs(start);
-        
-        if(cnt == 0) {
-        	sb.append("TT");
+
+        int ans = 0;
+        ArrayDeque<int[]> q = new ArrayDeque<>();
+        q.offer(new int[]{sx, sy});
+        vis[sx][sy] = true;
+
+        while (!q.isEmpty()) {
+            int[] cur = q.poll();
+            int x = cur[0], y = cur[1];
+            if (map[x][y] == 'P') ans++;
+            for (int d = 0; d < 4; d++) {
+                int nx = x + dx[d], ny = y + dy[d];
+                if (nx<0||ny<0||nx>=N||ny>=M) continue;
+                if (vis[nx][ny] || map[nx][ny]=='X') continue;
+                vis[nx][ny] = true;
+                q.offer(new int[]{nx, ny});
+            }
         }
-        else {
-        	sb.append(cnt + "\n");
-        }
-        
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
-        
+        System.out.print(ans == 0 ? "TT" : ans);
     }
-    
-    static void bfs(Point node) {
-    	Queue<Point> q = new LinkedList<>();
-    	q.offer(node);
-    	visited[node.x][node.y] = true;
-    	
-    	while(!q.isEmpty()) {
-    		Point cur = q.poll();
-    		
-    		for(int i=0; i<4; i++) {
-    			int nx = cur.x + dx[i];
-    			int ny = cur.y + dy[i];
-    			
-    			if(!rangeCheck(nx, ny)) continue;
-    			
-    			if(map[nx][ny] == 'O') {
-    				q.offer(new Point(nx,ny));
-    				visited[nx][ny] = true;
-    			}
-    			
-    			else if(map[nx][ny] == 'P') {
-    				q.offer(new Point(nx,ny));
-    				visited[nx][ny] = true;
-    				cnt++;
-    			}
-    		}
-    	}
-    }
-    
-    static boolean rangeCheck(int x, int y) {
-    	if(x>=0 && y>=0 && x<n && y<m && !visited[x][y] && map[x][y]!='X') {
-    		return true;
-    	}
-    	return false;
-    }
-    
 }
