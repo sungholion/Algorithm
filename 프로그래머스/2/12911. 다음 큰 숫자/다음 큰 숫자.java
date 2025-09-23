@@ -1,36 +1,22 @@
 class Solution {
     public int solution(int n) {
-        int answer = 0;
+        String temp = Integer.toBinaryString(n);
+        int len = 0;
+        for(int i = 0; i<temp.length(); i++)
+            if(temp.charAt(i) == '1') len++;
         
-        String nStr = Integer.toBinaryString(n);
-        int nCnt = 0;
-        for(int i=0; i<nStr.length(); i++){
-            if(nStr.charAt(i) == '1'){
-                nCnt++;
+        int start = n + 1;
+        while(start <= 1000000){
+            temp = Integer.toBinaryString(start);
+            int cnt = 0;
+           for(int i = 0; i<temp.length(); i++)
+                if(temp.charAt(i) == '1') cnt++;
+            if(cnt == len){
+                return start;
             }
+            start++;
         }
-        // nStr = nStr.replaceAll("0", "");
-        // int nLength = nStr.length();
-    
-        while(true){
-            int temp = ++n;
-            
-            int tCnt = 0;
-            String tStr = Integer.toBinaryString(temp);
-            for(int i=0; i<tStr.length(); i++){
-                if(tStr.charAt(i) == '1'){
-                    tCnt++;
-                }
-            }
-            // int tLength = tStr.length();
-            
-            if(tCnt == nCnt){
-                answer = temp;
-                break;
-            }
-            
-        }
+        return start;
         
-        return answer;
     }
 }
