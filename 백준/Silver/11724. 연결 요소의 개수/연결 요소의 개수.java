@@ -1,55 +1,49 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
 public class Main {
-	
-	static int n;
-	static int m;
-	static int[][] g;
-	static boolean[] visited;
-	
-	public static void dfs(int v) {
-		if(visited[v] == true)
-			return;
-		
-		else {
-			visited[v] = true;
-			for(int i=1; i<=n; i++) {
-				if(g[v][i] == 1) {
-					dfs(i);
-				}
-			}
-		}
-		
-	}
-	
-	public static void main(String[] args) throws IOException{
-	 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			n = Integer.parseInt(st.nextToken());
-			m = Integer.parseInt(st.nextToken());
-			g = new int[n+1][n+1];
-			visited = new boolean[n+1];
-			
-			for(int i=0; i<m; i++) {
-				st = new StringTokenizer(br.readLine());
-				int u = Integer.parseInt(st.nextToken());
-				int v = Integer.parseInt(st.nextToken());
-				g[u][v] = g[v][u] = 1;
-			}
-			
-			int ans = 0;
-			
-			for(int i=1; i<=n; i++) {
-				if(visited[i] == false) {
-					dfs(i);
-					ans++;
-				}
-			}
-			
-			System.out.println(ans);
-			
-	}
+    static List<Integer>[] graph;
+    static boolean[] visited;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+
+        graph = new ArrayList[N + 1];
+        visited = new boolean[N + 1];
+
+        for (int i = 1; i <= N; i++) {
+            graph[i] = new ArrayList<>();
+        }
+
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            graph[u].add(v);
+            graph[v].add(u); 
+        }
+
+        int count = 0;
+        for (int i = 1; i <= N; i++) {
+            if (!visited[i]) {
+                dfs(i);
+                count++;
+            }
+        }
+
+        System.out.println(count);
+    }
+
+    static void dfs(int node) {
+        visited[node] = true;
+        for (int next : graph[node]) {
+            if (!visited[next]) {
+                dfs(next);
+            }
+        }
+    }
 }
