@@ -1,20 +1,14 @@
 class Solution {
+    static final int MOD = 1234567;
+
     public int solution(int n) {
-        int answer = 0;
-        
-        int f1 = 0;
-        int f2 = 1;
-        
-        int f3 = -1;
-        
-        for(int i=2; i<=n; i++){
-            f3 = f1 + f2;
-            f3 %= 1234567;
-            f1 = f2;
-            f2 = f3;
+        if (n == 0) return 0;
+        int a = 0, b = 1; 
+        for (int i = 2; i <= n; i++) {
+            int c = (a + b) % MOD;
+            a = b;
+            b = c;
         }
-        
-        answer = f3 % 1234567;
-        return answer;
+        return b; 
     }
 }
