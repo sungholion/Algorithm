@@ -1,27 +1,25 @@
 class Solution {
     public int solution(String name) {
-        int answer=0;
-        int len = name.length();
-        int move = len-1; // 좌우이동횟수
-        
-        for(int i=0; i<len;i++){
-            // 상하이동
-            if(name.charAt(i)<'N'){
-                answer += name.charAt(i)-'A';
-            }else{
-                answer += 'Z' - name.charAt(i)+1;
-            }
-            
-            // A의 마지막 위치구함
-            int conA = i+1;
-            while(conA <len && name.charAt(conA) =='A'){
-                conA++;
-            }
-			// 좌우이동
-            move = Math.min(move, i+(len-conA)+Math.min(i,len-conA));
+        int answer = 0;
+        int n = name.length();
+        for(int i=0; i<n; i++){
+            char ch = name.charAt(i);
+            int num = ch - 'A';
+            answer += Math.min(num, 26-num);
         }
         
-        return answer+move;
+        int move = n - 1;   // 오른쪽으로 끝까지
+        for(int i=0; i<n; i++){
+            int j = i + 1;
+            
+            while(j < n && name.charAt(j) == 'A') j++;
+            
+            int goAndBack = i + i + (n - j);
+            int backAndGo = (n - j) + (n - j) + i;
+
+            move = Math.min(move, Math.min(goAndBack, backAndGo));
+        }
+        
+        return answer + move;
     }
 }
-
