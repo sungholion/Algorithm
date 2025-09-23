@@ -1,20 +1,18 @@
+import java.util.*;
+
 class Solution {
     public String solution(String s) {
-        String answer = "";
+        StringTokenizer st = new StringTokenizer(s);
         
-        String[] arr = s.split(" ");
-        int min = Integer.parseInt(arr[0]);
-        int max = min;
-        
-        for(int i=1; i<arr.length; i++){
-            int num = Integer.parseInt(arr[i]);
-            min = Math.min(num, min);
-            max = Math.max(num, max);
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        while(st.hasMoreTokens()){
+            int num = Integer.parseInt(st.nextToken());
+            if(num < min)
+                min = num;
+            if(num > max)
+                max = num;
         }
-        
-        answer = min + " " + max;
-        
-        
-        return answer;
+        return (min + " " + max);
     }
 }
