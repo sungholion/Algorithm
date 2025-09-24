@@ -1,22 +1,20 @@
 class Solution {
-    public static int answer;
-    public static boolean[] visited;
-
-    public static int solution(int k, int[][] dungeons) {
-        answer = 0;
+    static int answer;
+    static boolean[] visited;
+    public int solution(int k, int[][] dungeons) {
         visited = new boolean[dungeons.length];
-        backTracking(0, k, dungeons);
+        dfs(k, dungeons, 0);
         return answer;
     }
-
-    public static void backTracking(int depth, int k, int[][] dungeons) {
-        for (int i = 0; i < dungeons.length; i++) {
-            if (!visited[i] && dungeons[i][0] <= k) {
+    static void dfs(int life, int[][] dungeons, int cnt){
+        answer = Math.max(answer, cnt);
+        
+        for(int i=0; i<dungeons.length; i++){
+            if(!visited[i] && life >= dungeons[i][0]){
                 visited[i] = true;
-                backTracking(depth + 1, k - dungeons[i][1], dungeons);
+                dfs(life-dungeons[i][1], dungeons, cnt+1);
                 visited[i] = false;
             }
         }
-        answer = Math.max(answer, depth);
     }
 }
