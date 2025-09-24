@@ -1,65 +1,51 @@
-import java.awt.image.ImageProducer;
 import java.io.*;
 import java.util.*;
 
-class Coord{
-    int x;
-    int y;
-
-    Coord(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-}
-
 public class Main {
-    static int[][] arr;
-    static int[][] vis;
-    static int[] dx = {-1, 1, 0, 0};
-    static int[] dy = {0, 0, -1, 1};
-    static int n, m;
-    public static void main(String[] args) throws IOException{
+    static int N, M;
+    static int[][] dist;
+    static char[][] map;
+    static final int[] dr = { -1, 1, 0, 0 };
+    static final int[] dc = { 0, 0, -1, 1 };
+
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        arr = new int[n][m];
-        vis = new int[n][m];
-
-
-        for(int i=0; i<n; i++){
-            String temp = br.readLine();
-            for(int j=0; j<m; j++){
-                arr[i][j] = temp.charAt(j) - '0';
-            }
+        map = new char[N][M];
+        for (int i = 0; i < N; i++) {
+            String line = br.readLine().trim();
+            for (int j = 0; j < M; j++) map[i][j] = line.charAt(j);
         }
 
-        bfs(new Coord(0,0));
-        System.out.println(vis[n-1][m-1]);
-
+        System.out.println(bfs());
     }
 
-    public static void bfs(Coord node){
-        Queue<Coord> q = new LinkedList<>();
-        q.offer(node);
-        vis[node.x][node.y] = 1;
+    static int bfs() {
+        dist = new int[N][M];
+        ArrayDeque<int[]> q = new ArrayDeque<>();
 
-        while(!q.isEmpty()){
-            Coord cur = q.poll();
+        dist[0][0] = 1;               
+        q.offer(new int[]{0, 0});
 
-            for(int i=0; i<4; i++){
-                int nx = cur.x + dx[i];
-                int ny = cur.y + dy[i];
+        while (!q.isEmpty()) {
+            int[] cur = q.poll();
+            int r = cur[0], c = cur[1];
 
-                if(nx < 0 || ny < 0 || nx >= n || ny >= m || vis[nx][ny] != 0 || arr[nx][ny] != 1){
-                    continue;
-                }
-                vis[nx][ny] = vis[cur.x][cur.y] + 1;
-                q.offer(new Coord(nx, ny));
+            if (r == N - 1 && c == M - 1) return dist[r][c]; 
+
+            for (int k = 0; k < 4; k++) {
+                int nr = r + dr[k];
+                int nc = c + dc[k];
+                if (nr < 0 || nr >= N || nc < 0 || nc >= M) continue;
+                if (map[nr][nc] == '0') continue;          
+                if (dist[nr][nc] != 0) continue;             
+                dist[nr][nc] = dist[r][c] + 1;
+                q.offer(new int[]{nr, nc});
             }
         }
+        return -1; 
     }
-
 }
