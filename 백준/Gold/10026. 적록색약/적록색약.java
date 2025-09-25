@@ -1,122 +1,85 @@
 import java.io.*;
 import java.util.*;
-
-class Coord{
-    int x;
-    int y;
-
-    public Coord(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-}
-
-public class Main{
-    static int n;
+public class Main {
+    static int N;
     static char[][] map;
     static boolean[][] vis;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
-
-    public static void main(String[] args) throws IOException {
+    static int normal, abnormal;
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
-
-        n = Integer.parseInt(br.readLine());
-        map = new char[n][n];
-
-        for(int i = 0; i<n; i++){
-            String temp = br.readLine();
-            for(int j=0; j<n; j++){
-                map[i][j] = temp.charAt(j);
+        N = Integer.parseInt(br.readLine());
+        map = new char[N][N];
+        for(int i=0; i<N; i++){
+            String str = br.readLine();
+            for(int j=0; j<N; j++){
+                map[i][j] = str.charAt(j);
             }
         }
 
-        vis = new boolean[n][n];
-        int cnt = 0;
-        for(int i = 0; i<n; i++){
-            for(int j=0; j<n; j++){
-                if(!vis[i][j]){
-                    cnt++;
-                    bfs(new Coord(i, j));
+        vis = new boolean[N][N];
+        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                if(vis[i][j]) continue;
+                if(map[i][j] == 'R'){
+                    normal++;
+                    bfs(i, j, 'R', false);
+                }
+                else if(map[i][j] == 'G'){
+                    normal++;
+                    bfs(i, j, 'G', false);
+                } else if(map[i][j] == 'B'){
+                    normal++;
+                    bfs(i, j, 'B', false);
                 }
             }
         }
-        sb.append(cnt).append(" ");
 
-        cnt = 0;
-        vis = new boolean[n][n];
-        for(int i = 0; i<n; i++){
-            for(int j=0; j<n; j++){
-                if(!vis[i][j]){
-                    cnt++;
-                    bfsRedGreen(new Coord(i, j));
+        vis = new boolean[N][N];
+        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                if(vis[i][j]) continue;
+                if(map[i][j] == 'R' || map[i][j] == 'G'){
+                    abnormal++;
+                    bfs(i, j, 'R', true);
+                } else if(map[i][j] == 'B'){
+                    abnormal++;
+                    bfs(i, j, 'B', true);
                 }
             }
         }
-        sb.append(cnt).append(" ");
 
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.println(normal + " " + abnormal);
     }
 
-    static void bfs(Coord start){
-        Queue<Coord> q = new ArrayDeque<>();
-
-        vis[start.x][start.y] = true;
-        q.offer(start);
-        char color = map[start.x][start.y];
+    private static void bfs(int x, int y, char color, boolean mode){
+        ArrayDeque<int[]> q = new ArrayDeque<>();
+        vis[x][y] = true;
+        q.offer(new int[]{x, y});
 
         while(!q.isEmpty()){
-            Coord cur = q.poll();
-
+            int[] cur = q.poll();
+            int cx = cur[0];
+            int cy = cur[1];
             for(int i=0; i<4; i++){
-                int nx = cur.x + dx[i];
-                int ny = cur.y + dy[i];
+                int nx = cx + dx[i];
+                int ny = cy + dy[i];
 
-                if(nx < 0 || ny < 0 || nx >= n || ny >= n || vis[nx][ny] || map[nx][ny] != color){
-                    continue;
+                if(nx < 0 || ny < 0 || nx >= N || ny >= N) continue;
+                if(vis[nx][ny]) continue;
+                if(!mode){  // 정상
+                    if(map[nx][ny] != color) continue;
+                } else {    //적록색약
+                    if(map[nx][ny] == 'B'){ // 만약에 B인데 B가 안나오면 안됌
+                        if(color != 'B') continue;
+                    } else{ // 만약 B가 아닌데 B가 나오면 안됌
+                        if(color == 'B') continue;
+                    }
                 }
-
                 vis[nx][ny] = true;
-                q.offer(new Coord(nx, ny));
+                q.offer(new int[]{nx, ny});
             }
         }
     }
-
-    static void bfsRedGreen(Coord start){
-        Queue<Coord> q = new ArrayDeque<>();
-
-        vis[start.x][start.y] = true;
-        q.offer(start);
-        char color = map[start.x][start.y];
-
-        while(!q.isEmpty()){
-            Coord cur = q.poll();
-
-            for(int i=0; i<4; i++){
-                int nx = cur.x + dx[i];
-                int ny = cur.y + dy[i];
-
-                if(nx < 0 || ny < 0 || nx >= n || ny >= n || vis[nx][ny]){
-                    continue;
-                }
-
-                if(color == 'R' && map[nx][ny] != 'B'){
-                    vis[nx][ny] = true;
-                    q.offer(new Coord(nx, ny));
-                } else if(color == 'G' && map[nx][ny] != 'B'){
-                    vis[nx][ny] = true;
-                    q.offer(new Coord(nx, ny));
-                } else if(color == 'B' && map[nx][ny] == 'B'){
-                    vis[nx][ny] = true;
-                    q.offer(new Coord(nx, ny));
-                }
-            }
-        }
-    }
-
 }
