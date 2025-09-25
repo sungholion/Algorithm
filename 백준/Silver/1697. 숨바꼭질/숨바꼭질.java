@@ -2,58 +2,42 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int n, k;
-    static int[] map = new int[100001];
-    static boolean[] vis = new boolean[100001];
+    static final int LIMIT = 100000;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(br.readLine());
-
-        n = Integer.parseInt(st.nextToken());
-        k = Integer.parseInt(st.nextToken());
-
-        bfs();
-        sb.append(map[k]).append("\n");
-
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+        System.out.println(bfs(N, K));
     }
 
-    static void bfs() {
-        Queue<Integer> q = new ArrayDeque<>();
-        vis[n] = true;
+    // 정석 BFS: dist로 방문+최단거리 관리, 큐는 ArrayDeque
+    static int bfs(int start, int target) {
+        if (start >= target) return start - target; // 뒤로만 가면 끝
 
-        q.offer(n);
+        int[] dist = new int[LIMIT + 1];
+        Arrays.fill(dist, -1);
+
+        ArrayDeque<Integer> q = new ArrayDeque<>();
+        dist[start] = 0;
+        q.offer(start);
 
         while (!q.isEmpty()) {
             int cur = q.poll();
 
-            for (int i = 0; i < 3; i++) {
-                if (cur == k) {
-                    return;
-                }
+            // 1차원에서의 3가지 이동(상하좌우 대신)
+            int[] nexts = {cur - 1, cur + 1, cur << 1};
 
-                if (i == 0 && (cur - 1) >= 0 && !vis[cur - 1]) {
-                    map[cur - 1] = map[cur] + 1;
-                    vis[cur - 1] = true;
-                    q.offer(cur - 1);
-                } else if (i == 1 && (cur + 1) < map.length && !vis[cur + 1]) {
-                    map[cur + 1] = map[cur] + 1;
-                    vis[cur + 1] = true;
-                    q.offer(cur + 1);
-                } else if (i == 2 && (cur * 2) < map.length && !vis[cur * 2]) {
-                    map[cur * 2] = map[cur] + 1;
-                    vis[cur * 2] = true;
-                    q.offer(cur * 2);
-                }
+            for (int nx : nexts) {
+                if (nx < 0 || nx > LIMIT) continue;
+                if (dist[nx] != -1) continue;    // 이미 방문(최단 확정)
 
+                dist[nx] = dist[cur] + 1;
+                if (nx == target) return dist[nx]; // 최초 도달 = 최단
+                q.offer(nx);
             }
         }
-        return;
+        return dist[target]; // 이론상 도달 가능
     }
 }
