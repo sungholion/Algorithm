@@ -1,49 +1,54 @@
-import java.util.*;
 import java.io.*;
-
+import java.util.*;
 public class Main {
-    static List<Integer>[] graph;
+    static int N, M;
+    static List<Integer>[] g;
     static boolean[] visited;
-
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-
-        graph = new ArrayList[N + 1];
-        visited = new boolean[N + 1];
-
-        for (int i = 1; i <= N; i++) {
-            graph[i] = new ArrayList<>();
+        g = new ArrayList[N+1];
+        for(int i=1; i<=N; i++){
+            g[i] = new ArrayList<>();
         }
+        visited = new boolean[N+1];
 
-        for (int i = 0; i < M; i++) {
+        for(int i=0; i<M; i++){
             st = new StringTokenizer(br.readLine());
-            int u = Integer.parseInt(st.nextToken());
-            int v = Integer.parseInt(st.nextToken());
-            graph[u].add(v);
-            graph[v].add(u); 
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            g[a].add(b); g[b].add(a);
         }
 
-        int count = 0;
-        for (int i = 1; i <= N; i++) {
-            if (!visited[i]) {
-                dfs(i);
-                count++;
+        int cnt = 0;
+        for(int i = 1; i<=N; i++){
+            if(!visited[i]){
+                cnt++;
+                bfs(i);
             }
         }
 
-        System.out.println(count);
-    }
+        System.out.println(cnt);
+        }
 
-    static void dfs(int node) {
-        visited[node] = true;
-        for (int next : graph[node]) {
-            if (!visited[next]) {
-                dfs(next);
+        static void bfs(int v){
+            Queue<Integer> q = new ArrayDeque<>();
+            q.offer(v);
+            visited[v] = true;
+
+            while(!q.isEmpty()){
+                int cur = q.poll();
+                for(int next : g[cur]){
+                    if(!visited[next]){
+                        visited[next] = true;
+                        q.offer(next);
+                    }
+                }
             }
         }
+
     }
-}
