@@ -2,62 +2,62 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int[][] arr;
-    static boolean[] vis;
-    static int n;
-    public static void main(String[] args) throws IOException{
+    static ArrayList<Integer>[] g;
+    static boolean[] visited;
+    static StringBuilder sb = new StringBuilder();
+
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        int v = Integer.parseInt(st.nextToken());
+        int N = Integer.parseInt(st.nextToken()); // 정점 수
+        int M = Integer.parseInt(st.nextToken()); // 간선 수
+        int V = Integer.parseInt(st.nextToken()); // 시작 정점
 
-        arr = new int[n+1][n+1];
+        g = new ArrayList[N + 1];
+        for (int i = 1; i <= N; i++) g[i] = new ArrayList<>();
 
-        for(int i=0; i<m; i++){
+        for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int v1 = Integer.parseInt(st.nextToken());
-            int v2 = Integer.parseInt(st.nextToken());
-            arr[v1][v2] = 1;
-            arr[v2][v1] = 1;
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            g[a].add(b);
+            g[b].add(a); // 무방향
         }
 
-        vis = new boolean[n+1];
-        dfs(v);
-        System.out.println();
+        // 번호가 작은 것부터 방문
+        for (int i = 1; i <= N; i++) Collections.sort(g[i]);
 
-        vis = new boolean[n+1];
-        bfs(v);
+        visited = new boolean[N + 1];
+        dfs(V);
+        sb.append('\n');
 
+        Arrays.fill(visited, false);
+        bfs(V);
+
+        System.out.print(sb.toString());
     }
 
-    public static void dfs(int node){
-        vis[node] = true;
-        System.out.print(node + " ");
-
-        for(int i=1; i<=n; i++){
-            if(arr[node][i] == 1 && !vis[i]){
-                dfs(i);
-            }
+    static void dfs(int v) {
+        visited[v] = true;
+        sb.append(v).append(' ');
+        for (int nx : g[v]) {
+            if (!visited[nx]) dfs(nx);
         }
-
     }
 
-    public static void bfs(int node){
-        Queue<Integer> q = new LinkedList<>();
-        vis[node] = true;
-        q.offer(node);
+    static void bfs(int start) {
+        Queue<Integer> q = new ArrayDeque<>();
+        visited[start] = true;
+        q.add(start);
 
-        while(!q.isEmpty()){
-            int cur = q.poll();
-            System.out.print(cur + " ");
-
-            for(int i=1; i<=n; i++){
-                if(arr[cur][i] == 1 && !vis[i]){
-                    vis[i] = true;
-                    q.offer(i);
+        while (!q.isEmpty()) {
+            int v = q.poll();
+            sb.append(v).append(' ');
+            for (int nx : g[v]) {
+                if (!visited[nx]) {
+                    visited[nx] = true;
+                    q.add(nx);
                 }
             }
         }
