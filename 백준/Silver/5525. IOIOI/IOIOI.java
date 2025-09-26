@@ -1,37 +1,31 @@
 import java.io.*;
 import java.util.*;
-
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
         int M = Integer.parseInt(br.readLine());
-        String S = br.readLine();
 
+        String str = br.readLine();
+        int totalCnt = 0;
         int cnt = 0;
-        int ans = 0;
-        for(int i = 1; i < M - 1; i++){
-            if(S.charAt(i-1) == 'I' && S.charAt(i) == 'O' && S.charAt(i+1) == 'I'){
+
+        int i = 0;
+        while(i < M - 2){
+            if(str.charAt(i) == 'I' && str.charAt(i + 1) == 'O' && str.charAt(i + 2) == 'I'){
                 cnt++;
-                if(cnt == N){
-                    cnt--;
-                    ans++;
-                }
-                i++;
-            } else{
-                cnt = 0;
+                if(cnt >= N) totalCnt++;
+                i+= 2;
             }
-
-
+            else{
+                cnt = 0;
+                i++;
+            }
         }
 
-        sb.append(ans);
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.println(totalCnt);
     }
 }
+
