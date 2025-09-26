@@ -1,39 +1,29 @@
 import java.io.*;
 import java.util.*;
-
-
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
+
         int N = Integer.parseInt(br.readLine());
-
         int cnt = 0;
-        while (N-- > 0) {
-            String s = br.readLine();
-            boolean[] alpabet = new boolean[26];
-            boolean flag = true;
-            for (int i = 0; i < s.length()-1; i++) {
-                char c = s.charAt(i);
-                char c2 = s.charAt(i + 1);
-
-                alpabet[c-'a'] = true;
-                if((c2 != c) && (alpabet[c2-'a'])) {
-                    flag = false;
+        while(N-- > 0) {
+            String str = br.readLine();
+            int l = str.length();
+            boolean[] vis = new boolean[26];
+            boolean isGroup = true;
+            vis[str.charAt(0) - 'a'] = true;
+            for(int i=1; i<l; i++) {
+                char c = str.charAt(i);
+                if(c != str.charAt(i-1) && vis[c-'a']) {
+                    isGroup = false;
                     break;
                 }
+                vis[c-'a'] = true;
             }
-
-            if(flag)
-                cnt++;
-
+            if(isGroup) cnt++;
         }
 
-        sb.append(cnt);
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.println(cnt);
     }
 }
+
