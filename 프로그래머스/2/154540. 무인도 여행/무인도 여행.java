@@ -1,65 +1,63 @@
 import java.util.*;
 class Solution {
     static int n, m;
-    static int[][] island;
-    static boolean[][] visited;
+    static int[][] g;
+    static boolean[][] vis;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
-    static List<Integer> life = new ArrayList<>();
+    static List<Integer> list = new ArrayList<>();
     public int[] solution(String[] maps) {
-        int[] answer = {};
         n = maps.length;
         m = maps[0].length();
-        island = new int[n][m];
-        visited = new boolean[n][m];
-    
+        g = new int[n][m];
+        vis = new boolean[n][m];
         for(int i=0; i<n; i++){
-            String temp = maps[i];
             for(int j=0; j<m; j++){
-                char ch = temp.charAt(j);
-                if(ch == 'X') island[i][j] = 0;
-                else island[i][j]= ch - '0';
+                char ch = maps[i].charAt(j);
+                if(ch == 'X') g[i][j] = -1;
+                else g[i][j] = ch - '0';
             }
         }
         
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
-                if(!visited[i][j] && island[i][j] != 0){
+                if(!vis[i][j] && g[i][j] != -1){
                     bfs(i, j);
                 }
             }
         }
+        if(list.size() == 0) return new int[]{-1};
+        int[] answer = new int[list.size()];
         
-        if(life.size() == 0) return new int[]{-1};
-        Collections.sort(life);
-        answer = new int[life.size()];
-        for(int i=0; i<life.size(); i++)
-            answer[i] = life.get(i);
+        Collections.sort(list);
+        for(int i=0; i<list.size(); i++)
+            answer[i] = list.get(i);
+        
         return answer;
     }
     
     static void bfs(int x, int y){
         ArrayDeque<int[]> q = new ArrayDeque<>();
-        visited[x][y] = true;
         q.offer(new int[]{x, y});
-        int cnt = island[x][y];
+        vis[x][y] = true;
+        int cnt = g[x][y];
         
         while(!q.isEmpty()){
             int[] cur = q.poll();
-            int r = cur[0];
-            int c = cur[1];
+            int cx = cur[0];
+            int cy = cur[1];
+            
             for(int i=0; i<4; i++){
-                int nx = r + dx[i];
-                int ny = c + dy[i];
+                int nx = cx + dx[i];
+                int ny = cy + dy[i];
                 
                 if(nx < 0 || ny < 0 || nx >= n || ny >= m) continue;
-                if(visited[nx][ny] || island[nx][ny] == 0) continue;
-                visited[nx][ny] = true;
+                if(vis[nx][ny] || g[nx][ny] == -1) continue;
+                vis[nx][ny] = true;
                 q.offer(new int[]{nx, ny});
-                cnt += island[nx][ny];
-                
+                cnt+= g[nx][ny];
             }
         }
-        life.add(cnt);
+        list.add(cnt);
     }
 }
