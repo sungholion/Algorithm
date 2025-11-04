@@ -1,18 +1,17 @@
 import java.io.*;
-import java.util.*;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-
         int A = Integer.parseInt(st.nextToken());
         int B = Integer.parseInt(st.nextToken());
-
+        
         System.out.println(A + B);
         System.out.println(A - B);
         System.out.println(A * B);
-        System.out.println(A / B); // 정수 나눗셈
-        System.out.println(A % B); // 나머지
+        System.out.println(A / B);
+        System.out.println(A % B);
     }
 }
