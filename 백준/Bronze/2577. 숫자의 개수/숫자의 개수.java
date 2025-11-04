@@ -2,32 +2,23 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
         int A = Integer.parseInt(br.readLine());
         int B = Integer.parseInt(br.readLine());
         int C = Integer.parseInt(br.readLine());
-        int total = A * B * C;
+        long res = A * B * C;
+        int[] arr = new int[10];
 
-        int[] numbers = new int[10];
-        String str = String.valueOf(total);
-
-        for(int i = 0; i <= 9; i++){
-            for(int j=0; j<str.length(); j++){
-                char c = str.charAt(j);
-                if(c - '0' == i){
-                    numbers[i]++;
-                }
-            }
+        String str = String.valueOf(res);
+        for(int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            int x = c - '0';
+            arr[x]++;
         }
 
-        for(int x : numbers)
-            bw.write(x + "\n");
+        for(int x : arr)
+            System.out.println(x);
 
-        br.close();
-        bw.flush();
-        bw.close();
     }
 }
