@@ -2,18 +2,14 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+        int A  = Integer.parseInt(br.readLine());
+        int B  = Integer.parseInt(br.readLine());
+        int C  = Integer.parseInt(br.readLine());
 
-        int A = Integer.parseInt(br.readLine());
-        int B = Integer.parseInt(br.readLine());
-        int C = Integer.parseInt(br.readLine());
-
-        int res1 = A + B - C;
-        String temp = (A + "" + B);
-        int res2 = Integer.parseInt(temp) - C;
-        sb.append(res1 + "\n" + res2 + "\n");
-        System.out.println(sb);
+        System.out.println(A + B - C);
+        int temp = Integer.parseInt(A + "" + B);
+        System.out.println(temp - C);
     }
 }
