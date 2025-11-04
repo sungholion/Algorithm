@@ -1,25 +1,17 @@
-import com.sun.source.tree.UsesTree;
-
 import java.io.*;
 import java.util.*;
-
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
-
         int T = Integer.parseInt(br.readLine());
-
-        while(T-- > 0){
+        StringBuilder sb = new StringBuilder();
+        
+        for(int i = 0; i < T; i++) {
             String str = br.readLine();
-            sb.append(str.charAt(0)).append(str.charAt(str.length()-1)).append("\n");
+            int idx = str.length() - 1;
+            sb.append(str.charAt(0)).append(str.charAt(idx)).append("\n");
         }
-
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+        System.out.println(sb.toString());
     }
 }
