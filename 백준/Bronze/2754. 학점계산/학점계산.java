@@ -1,35 +1,27 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
+        String str = br.readLine();
 
-        String grade = br.readLine();
+        Map<String, String> map = new HashMap<>();
+        map.put("A+", "4.3");
+        map.put("A0", "4.0");
+        map.put("A-", "3.7");
+        map.put("B+", "3.3");
+        map.put("B0", "3.0");
+        map.put("B-", "2.7");
+        map.put("C+", "2.3");
+        map.put("C0", "2.0");
+        map.put("C-", "1.7");
+        map.put("D+", "1.3");
+        map.put("D0", "1.0");
+        map.put("D-", "0.7");
+        map.put("F",  "0.0");
 
-        // 학점별 평점 저장용 Map
-        Map<String, Double> gradeMap = new HashMap<>();
-        gradeMap.put("A+", 4.3);
-        gradeMap.put("A0", 4.0);
-        gradeMap.put("A-", 3.7);
-        gradeMap.put("B+", 3.3);
-        gradeMap.put("B0", 3.0);
-        gradeMap.put("B-", 2.7);
-        gradeMap.put("C+", 2.3);
-        gradeMap.put("C0", 2.0);
-        gradeMap.put("C-", 1.7);
-        gradeMap.put("D+", 1.3);
-        gradeMap.put("D0", 1.0);
-        gradeMap.put("D-", 0.7);
-        gradeMap.put("F", 0.0);
+        System.out.println(map.get(str));
 
-        sb.append(gradeMap.get(grade));
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
     }
 }
