@@ -2,30 +2,28 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
         int T = Integer.parseInt(br.readLine());
+        for(int t = 0; t < T; t++) {
+            String s = br.readLine();
 
-        while (T-- > 0) {
-            String str = br.readLine();
-            int sum = 0;
             int cnt = 0;
-
-            for (int i = 0; i < str.length(); i++) {
-                if(str.charAt(i) == 'O'){
+            int score = 0;
+            for(int i = 0; i < s.length(); i++) {
+                char c = s.charAt(i);
+                if(c == 'O'){
                     cnt++;
-                    sum += cnt;
-                } else{
+                    score += cnt;
+                }
+                else if(c == 'X'){
                     cnt = 0;
                 }
             }
-            bw.write(sum + "\n");
+            sb.append(score).append("\n");
         }
-
-        br.close();
-        bw.flush();
-        bw.close();
+        System.out.println(sb.toString());
     }
 }
