@@ -2,27 +2,22 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        int M = -1;
-        int[] scores = new int[N];
-        double avg = 0.0;
+        int[] arr = new int[N];
+        double total = 0;
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for(int i = 0; i < N; i++) {
-            int x = Integer.parseInt(st.nextToken());
-            scores[i] = x;
-            if(x > M) M = x;
+        for(int i = 0; i < N; i++) arr[i] = Integer.parseInt(st.nextToken());
+        Arrays.sort(arr);
+
+        for(int i = 0; i < N; i++){
+            total += ((double)arr[i] / arr[N-1]) * 100;
         }
+        System.out.println(total / (double) N);
 
-        for(int num : scores)
-            avg += ((double)num / M) * 100;
-
-        avg /= N;
-        sb.append(avg).append("\n");
-        System.out.println(sb.toString());
 
     }
 }
