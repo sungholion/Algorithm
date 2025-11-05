@@ -2,29 +2,24 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
+        StringBuilder sb = new StringBuilder();
         int T = Integer.parseInt(br.readLine());
-
-        while(T-- > 0) {
+        for (int i = 0; i < T; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            String ans = "";
-            int R = Integer.parseInt(st.nextToken());
-            String str = st.nextToken();
+            int N = Integer.parseInt(st.nextToken());
+            String s = st.nextToken();
 
-            for(int i = 0; i < str.length(); i++){
-                for(int j = 0; j < R; j++){
-                    ans += str.charAt(i);
+            for (int j = 0; j < s.length(); j++) {
+                for (int k = 0; k < N; k++) {
+                    sb.append(s.charAt(j));
                 }
             }
-            bw.write(ans + "\n");
-
+            sb.append("\n");
         }
 
-        br.close();
-        bw.flush();
-        bw.close();
+        System.out.println(sb.toString());
+
     }
 }
