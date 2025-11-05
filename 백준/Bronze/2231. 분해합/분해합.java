@@ -2,32 +2,24 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        int digits = String.valueOf(N).length();
-        int start = Math.max(1, N - 9 * digits); // 탐색 시작점 최적화
-
-        int ans = 0;
-        for(int i = start; i<N; i++){
-            int sum = 0;
+        int res = 0;
+        for(int i = 1; i <= N; i++) {
             int x = i;
-            sum+= x;
-
-            while(x!=0){
-                sum += x % 10;
-                x/= 10;
+            int total = x;
+            while(x > 0){
+                total += x % 10;
+                x /= 10;
             }
-
-            if(sum == N){
-                ans = i;
+            if(total == N){
+                res = i;
                 break;
             }
-
         }
-        sb.append(ans).append("\n");
-        System.out.println(sb.toString());
+        System.out.println(res);
     }
 }
