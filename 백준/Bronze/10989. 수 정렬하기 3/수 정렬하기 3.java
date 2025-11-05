@@ -2,23 +2,23 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        int[] cnt = new int[10001];
+        int[] arr = new int[10001];
         for(int i = 0; i < N; i++) {
-           cnt[Integer.parseInt(br.readLine())]++;
+            int x = Integer.parseInt(br.readLine());
+            arr[x]++;
         }
 
-        for(int i = 0; i < 10001; i++){
-            if(cnt[i] != 0)
-                while(cnt[i]-- > 0)
-                    sb.append(i).append("\n");
+        for(int i = 1; i < 10001; i++) {
+            for(int j = 0; j < arr[i]; j++){
+                sb.append(i).append("\n");
+            }
         }
 
-        System.out.println(sb);
-
+        System.out.println(sb.toString());
     }
 }
