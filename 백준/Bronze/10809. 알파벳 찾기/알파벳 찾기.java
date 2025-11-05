@@ -2,29 +2,26 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        String str = br.readLine();
+        StringBuilder sb = new StringBuilder();
 
-        int[] alphabet = new int[26];
-        for(int i = 0; i < alphabet.length; i++){
-            alphabet[i] = -1;
+        String s = br.readLine();
+        int[] alpa = new int[26];
+        for(int i=0; i<alpa.length; i++) {
+            alpa[i] = -1;
         }
 
-        for(int i = 0; i < str.length(); i++){
-            char c = str.charAt(i);
+        for(int i=0; i<s.length(); i++) {
+            char c = s.charAt(i);
             int idx = c - 'a';
-
-            if(alphabet[idx] == -1)
-                alphabet[idx] = i;
+            if(alpa[idx] == -1) alpa[idx] = i;
         }
 
-        for(int x : alphabet)
-            bw.write(x + " ");
+        for(int i=0; i<alpa.length; i++) {
+            sb.append(alpa[i]).append(" ");
+        }
+        System.out.println(sb.toString());
 
-        br.close();
-        bw.flush();
-        bw.close();
     }
 }
