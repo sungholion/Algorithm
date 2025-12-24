@@ -2,36 +2,31 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int A = Integer.parseInt(st.nextToken());
         int B = Integer.parseInt(st.nextToken());
         int C = Integer.parseInt(st.nextToken());
+        int res = 0;
 
-        if(A == B && B == C){
-            sb.append(10000 + (A * 1000));
+        if(A == B && B == C){   // 모두 같을 떄
+            res = 10000 + A * 1000;
+        } else if(A != B && B != C && A!= C){    // 모두 다를 때
+            int max = A;
+            if (B > max) max = B;
+            if (C > max) max = C;
+            res = max * 100;
         } else if(A == B){
-            sb.append(1000 + (A * 100));
+            res = 1000 + A * 100;
         } else if(A == C){
-            sb.append(1000 + (A * 100));
+            res = 1000 + A * 100;
         } else if(B == C){
-            sb.append(1000 + (B * 100));
-        } else{
-            int max = 0;
-            if(A > max) max = A;
-            if(B > max) max = B;
-            if(C > max) max = C;
-            sb.append(max * 100);
+            res = 1000 + B * 100;
         }
 
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
-
+        System.out.print(res);
     }
 }
