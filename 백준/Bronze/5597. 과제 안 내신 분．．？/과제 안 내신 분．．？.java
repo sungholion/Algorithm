@@ -4,13 +4,18 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int[] arr = new int[31];
-        for(int i = 0; i< 28; i++){
-            int idx = Integer.parseInt(br.readLine());
-            arr[idx]++;
+        StringBuilder sb = new StringBuilder();
+
+        boolean[] student = new boolean[31];
+        for(int t=0; t<28; t++){
+            int x = Integer.parseInt(br.readLine());
+            student[x] = true;
         }
-        for(int i=1; i<= 30; i++){
-            if(arr[i] == 0) System.out.println(i);
+
+        for(int i=1; i<31; i++){
+            if(!student[i]) System.out.println(i);
         }
+
+
     }
 }
