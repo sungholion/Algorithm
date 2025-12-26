@@ -1,44 +1,42 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        Map<String, Double> map = new HashMap<>();
-        map.put("A+", 4.5);
-        map.put("A0", 4.0);
-        map.put("B+", 3.5);
-        map.put("B0", 3.0);
-        map.put("C+", 2.5);
-        map.put("C0", 2.0);
-        map.put("D+", 1.5);
-        map.put("D0", 1.0);
-        map.put("F", 0.0);
 
-        int N = 20;
-        double value_sum = 0;
         double sum = 0;
-        while(N-- > 0){
+        int creditSum = 0;
+        for(int i=0; i<20; i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
-            String name = st.nextToken();
-            double value = Double.parseDouble(st.nextToken());
+            st.nextToken(); // 과목명은 필요 없음
+            int credit = st.nextToken().charAt(0) - '0'; // 학점
             String grade = st.nextToken();
+            if(!grade.equals("P"))  // P면 계산 제외
+                creditSum += credit;
 
-            if(grade.equals("P"))
-                continue;
-
-            value_sum += value;
-            sum += value * map.get(grade);
+            if(grade.equals("A+")){
+                sum += 4.5 * credit;
+            } else if(grade.equals("A0")){
+                sum += 4.0 * credit;
+            } else if(grade.equals("B+")){
+                sum += 3.5 * credit;
+            } else if(grade.equals("B0")){
+                sum += 3.0 * credit;
+            } else if(grade.equals("C+")){
+                sum += 2.5 * credit;
+            } else if(grade.equals("C0")){
+                sum += 2.0 * credit;
+            } else if(grade.equals("D+")){
+                sum += 1.5 * credit;
+            } else if(grade.equals("D0")){
+                sum += 1.0 * credit;
+            } else if(grade.equals("F")){
+                sum += 0;
+            }
         }
 
-        sb.append(sum/value_sum).append("\n");
-
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.println(sum / creditSum);
     }
 }
