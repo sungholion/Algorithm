@@ -2,32 +2,23 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
-        int cnt = 0;
-
         int N = Integer.parseInt(br.readLine());
         StringTokenizer st = new StringTokenizer(br.readLine());
+        int res = 0;
         for(int i = 0; i < N; i++) {
             int x = Integer.parseInt(st.nextToken());
-            boolean isPrime = true;
-            if(x == 1) continue;
-            if(x == 2){
-                cnt++;
-                continue;
-            }
-            for(int j=2; j<x; j++){
-                if(x % j == 0){
-                    isPrime = false;
-                    break;
-                }
-            }
-            if(isPrime)cnt++;
+            if(isPrime(x)) res++;
         }
-
-        sb.append(cnt);
-        System.out.println(sb.toString());
+        System.out.println(res);
+    }
+    static boolean isPrime(int n){
+        if(n < 2) return false;
+        for(int i = 2; i <= Math.sqrt(n); i++)
+            if (n % i == 0) return false;
+        return true;
     }
 }
