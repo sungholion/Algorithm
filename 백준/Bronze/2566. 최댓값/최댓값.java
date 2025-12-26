@@ -1,37 +1,36 @@
 import java.io.*;
 import java.util.*;
 
+class Coord{
+    int x;
+    int y;
+    int val;
+
+    Coord(int x, int y, int val){
+        this.x = x;
+        this.y = y;
+        this.val = val;
+    }
+}
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
 
-        int n = 9;
-
-        int[][] arr = new int[n][n];
-        int max = Integer.MIN_VALUE;
-        int maxRow = -1;
-        int maxCol = -1;
-        for(int i = 0; i < n; i++){
+        int max = -1;
+        Coord ans = new Coord(-1, -1, -1);
+        for(int i = 0; i < 9; i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
-            for(int j = 0; j < n; j++){
-                arr[i][j] = Integer.parseInt(st.nextToken());
-                if(arr[i][j] > max){
-                    max = arr[i][j];
-                    maxRow = i + 1;
-                    maxCol = j + 1;
+            for(int j = 0; j < 9; j++){
+                int n = Integer.parseInt(st.nextToken());
+                if(n > max){
+                    max = n;
+                    ans = new Coord(i, j, max);
                 }
             }
         }
-
-        sb.append(max).append("\n");
-        sb.append(maxRow).append(" ").append(maxCol).append("\n");
-
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        sb.append(ans.val).append("\n").append(ans.x+1).append(" ").append(ans.y+1);
+        System.out.print(sb);
     }
 }
