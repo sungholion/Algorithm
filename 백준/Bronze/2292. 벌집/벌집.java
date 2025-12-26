@@ -7,13 +7,12 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        int layer = 1;
-        int bee = 1;
-        while(N > bee){
-            bee += 6 * layer;
-            layer++;
+        int ans = 1;
+        int plus = 1;
+        while(plus < N){
+            plus += 6 * ans;
+            ans++;
         }
-        System.out.println(layer);
-
+        System.out.println(ans);
     }
 }
