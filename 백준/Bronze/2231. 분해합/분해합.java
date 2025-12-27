@@ -6,20 +6,23 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
-        int N = Integer.parseInt(br.readLine());
-        int res = 0;
-        for(int i = 1; i <= N; i++) {
-            int x = i;
-            int total = x;
-            while(x > 0){
-                total += x % 10;
-                x /= 10;
+        int n = Integer.parseInt(br.readLine());
+
+        boolean ok = false;
+        for (int i = 1; i < n; i++) {
+            int temp = i;
+            int sum = temp;
+            while(temp > 0){
+                sum += temp % 10;
+                temp /= 10;
             }
-            if(total == N){
-                res = i;
+            if(sum == n){
+                System.out.print(i);
+                ok = true;
                 break;
             }
         }
-        System.out.println(res);
+
+        if(!ok) System.out.print(0);
     }
 }
