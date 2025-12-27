@@ -4,21 +4,22 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int A = Integer.parseInt(br.readLine());
-        int B = Integer.parseInt(br.readLine());
-        int C = Integer.parseInt(br.readLine());
-        long res = A * B * C;
-        int[] arr = new int[10];
+        StringBuilder sb = new StringBuilder();
 
-        String str = String.valueOf(res);
-        for(int i = 0; i < str.length(); i++) {
-            char c = str.charAt(i);
-            int x = c - '0';
-            arr[x]++;
+        long A = Long.parseLong(br.readLine());
+        long B = Long.parseLong(br.readLine());
+        long C = Long.parseLong(br.readLine());
+
+        long sum = A * B * C;
+        String ans = String.valueOf(sum);
+        int[] arr = new int[10];
+        for(int i = 0; i < ans.length(); i++) {
+            arr[ans.charAt(i) - '0']++;
         }
 
         for(int x : arr)
-            System.out.println(x);
+            sb.append(x).append("\n");
+        System.out.print(sb);
 
     }
 }
