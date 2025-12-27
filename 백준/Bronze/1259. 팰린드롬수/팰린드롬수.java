@@ -6,18 +6,22 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
-        String str;
-        while(!(str = br.readLine()).equals("0")){
-            boolean isPal = true;
-            for(int i = 0; i < str.length() / 2; i++){
-                if(str.charAt(i) != str.charAt(str.length() - i - 1)){
-                    isPal = false;
+        while(true){
+            String N = br.readLine();
+            if(N.equals("0")) break;
+
+            boolean isPalindrome = true;
+            for(int i=0; i<N.length()/2; i++){
+                if(N.charAt(i) != N.charAt(N.length()-1-i)){
+                    isPalindrome = false;
                     break;
                 }
             }
-            if(isPal) sb.append("yes\n");
-            else sb.append("no\n");
+            if(isPalindrome) sb.append("yes").append("\n");
+            else sb.append("no").append("\n");
         }
-        System.out.println(sb.toString());
+
+        System.out.print(sb.toString());
+
     }
 }
