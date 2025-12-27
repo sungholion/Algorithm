@@ -12,25 +12,24 @@ class Coord{
 }
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
         Coord[] coords = new Coord[N];
-        for(int i = 0; i < N; i++){
+        for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            int x = Integer.parseInt(st.nextToken());
-            int y = Integer.parseInt(st.nextToken());
-            coords[i] = new Coord(x, y);
+            coords[i] = new Coord(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
         }
-
         Arrays.sort(coords, (a, b) -> {
-            if(a.x != b.x) return (a.x - b.x);
-            return a.y - b.y;});
+            if(a.x == b.x) return a.y - b.y;
+            return a.x - b.x;
+        });
 
-        for(Coord c : coords)
-            sb.append(c.x).append(" ").append(c.y).append("\n");
-        System.out.println(sb.toString());
+        for(int i = 0; i < N; i++){
+            sb.append(coords[i].x + " ").append(coords[i].y).append("\n");
+        }
+        System.out.print(sb.toString());
     }
 }
