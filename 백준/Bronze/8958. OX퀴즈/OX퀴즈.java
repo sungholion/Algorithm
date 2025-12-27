@@ -8,22 +8,20 @@ public class Main {
 
         int T = Integer.parseInt(br.readLine());
         for(int t = 0; t < T; t++) {
-            String s = br.readLine();
-
-            int cnt = 0;
-            int score = 0;
-            for(int i = 0; i < s.length(); i++) {
-                char c = s.charAt(i);
+            String str= br.readLine();
+            int prefix = 0;
+            int sum = 0;
+            for(int i = 0; i < str.length(); i++) {
+                char c = str.charAt(i);
                 if(c == 'O'){
-                    cnt++;
-                    score += cnt;
-                }
-                else if(c == 'X'){
-                    cnt = 0;
+                    prefix++;
+                    sum+= prefix;
+                } else {
+                    prefix = 0;
                 }
             }
-            sb.append(score).append("\n");
+            sb.append(sum).append("\n");
         }
-        System.out.println(sb.toString());
+        System.out.print(sb);
     }
 }
