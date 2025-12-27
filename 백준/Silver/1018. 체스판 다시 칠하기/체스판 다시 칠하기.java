@@ -2,56 +2,66 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static char[][] white = {
-            {'W','B','W','B','W','B','W','B'},
-            {'B','W','B','W','B','W','B','W'},
-            {'W','B','W','B','W','B','W','B'},
-            {'B','W','B','W','B','W','B','W'},
-            {'W','B','W','B','W','B','W','B'},
-            {'B','W','B','W','B','W','B','W'},
-            {'W','B','W','B','W','B','W','B'},
-            {'B','W','B','W','B','W','B','W'}
-    };
-
     static char[][] black = {
-            {'B','W','B','W','B','W','B','W'},
-            {'W','B','W','B','W','B','W','B'},
-            {'B','W','B','W','B','W','B','W'},
-            {'W','B','W','B','W','B','W','B'},
-            {'B','W','B','W','B','W','B','W'},
-            {'W','B','W','B','W','B','W','B'},
-            {'B','W','B','W','B','W','B','W'},
-            {'W','B','W','B','W','B','W','B'}
+            {'B', 'W', 'B', 'W', 'B', 'W', 'B', 'W'},
+            {'W', 'B', 'W', 'B', 'W', 'B', 'W', 'B'},
+            {'B', 'W', 'B', 'W', 'B', 'W', 'B', 'W'},
+            {'W', 'B', 'W', 'B', 'W', 'B', 'W', 'B'},
+            {'B', 'W', 'B', 'W', 'B', 'W', 'B', 'W'},
+            {'W', 'B', 'W', 'B', 'W', 'B', 'W', 'B'},
+            {'B', 'W', 'B', 'W', 'B', 'W', 'B', 'W'},
+            {'W', 'B', 'W', 'B', 'W', 'B', 'W', 'B'}
     };
-
-    public static void main(String[] args) throws Exception {
+    static char[][] white = {
+            {'W', 'B', 'W', 'B', 'W', 'B', 'W', 'B'},
+            {'B', 'W', 'B', 'W', 'B', 'W', 'B', 'W'},
+            {'W', 'B', 'W', 'B', 'W', 'B', 'W', 'B'},
+            {'B', 'W', 'B', 'W', 'B', 'W', 'B', 'W'},
+            {'W', 'B', 'W', 'B', 'W', 'B', 'W', 'B'},
+            {'B', 'W', 'B', 'W', 'B', 'W', 'B', 'W'},
+            {'W', 'B', 'W', 'B', 'W', 'B', 'W', 'B'},
+            {'B', 'W', 'B', 'W', 'B', 'W', 'B', 'W'}
+    };
+    static char[][] arr;
+    static int min = Integer.MAX_VALUE;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
-
-        char[][] map = new char[N][M];
-        for (int i = 0; i < N; i++) map[i] = br.readLine().toCharArray();
-
-        int ans = Integer.MAX_VALUE;
-
-        for (int sr = 0; sr <= N - 8; sr++) {
-            for (int sc = 0; sc <= M - 8; sc++) {
-                int cntW = 0; 
-                int cntB = 0; 
-
-                for (int r = 0; r < 8; r++) {
-                    for (int c = 0; c < 8; c++) {
-                        if (map[sr + r][sc + c] != white[r][c]) cntW++;
-                        if (map[sr + r][sc + c] != black[r][c]) cntB++;
-                    }
-                }
-
-                ans = Math.min(ans, Math.min(cntW, cntB));
+        arr = new char[N][M];
+        for(int i = 0; i < N; i++) {
+            String str = br.readLine();
+            for(int j = 0; j < M; j++) {
+                arr[i][j] = str.charAt(j);
             }
         }
 
-        System.out.println(ans);
+        for(int i = 0; i <= N - 8; i++) {
+            for(int j = 0; j <= M - 8; j++) {
+                find(i, j);
+            }
+        }
+        System.out.print(min);
+
+    }
+    static void find(int x, int y){
+        int sum = 0;
+        for(int i=0; i<8; i++){
+            for(int j=0; j<8; j++){
+                if(black[i][j] != arr[x+i][y+j]) sum++;
+            }
+        }
+        if(sum < min) min = sum;
+
+        sum = 0;
+        for(int i=0; i<8; i++){
+            for(int j=0; j<8; j++){
+                if(white[i][j] != arr[x+i][y+j]) sum++;
+            }
+        }
+        if(sum < min) min = sum;
     }
 }
