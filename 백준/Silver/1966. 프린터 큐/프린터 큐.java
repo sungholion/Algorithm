@@ -2,53 +2,56 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static int[] arr;
-    public static void main(String[] args)throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
+    static class Document {
+        int idx;     
+        int priority;  
 
+        Document(int idx, int priority) {
+            this.idx = idx;
+            this.priority = priority;
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int T = Integer.parseInt(br.readLine());
+
         while (T-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int N = Integer.parseInt(st.nextToken());
             int M = Integer.parseInt(st.nextToken());
 
-            LinkedList<int[]> q = new LinkedList<>();
             st = new StringTokenizer(br.readLine());
+            Queue<Document> queue = new LinkedList<>();
 
-            for (int i = 0; i < N; i++)
-                q.offer(new int[] { i, Integer.parseInt(st.nextToken()) });
+            for (int i = 0; i < N; i++) {
+                int priority = Integer.parseInt(st.nextToken());
+                queue.add(new Document(i, priority)); 
+            }
 
-            int cnt = 0;
-            while (!q.isEmpty()) {
-                int[] front = q.poll();	
-                boolean isMax = true;	// front 원소가 가장 큰 원소인지를 판단
+            int count = 0;
+
+            while (true) {
+                Document front = queue.poll(); 
                 
-                for(int i = 0; i < q.size(); i++) {
-                    if(front[1] < q.get(i)[1]) {
-                        q.offer(front);
-                        for(int j = 0; j < i; j++) 
-                            q.offer(q.poll());
-                        
-                        isMax = false;
+                boolean hasHigher = false;
+                for (Document doc : queue) {
+                    if (doc.priority > front.priority) {
+                        hasHigher = true;
                         break;
                     }
                 }
-                
-                if(!isMax) 
-                    continue;
-                
-                cnt++;
-                if(front[0] == M) 
-                    break;
-            }
-            sb.append(cnt).append("\n");
-        }
 
-        br.close();
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
+                if (hasHigher) {
+                    queue.add(front);
+                } else {
+                    count++;
+                    if (front.idx == M) {
+                        System.out.println(count);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
