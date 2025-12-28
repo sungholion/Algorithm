@@ -2,50 +2,35 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-        StringTokenizer st;
 
-        int N = Integer.parseInt(br.readLine());
-        int[] arr = new int[N];
+        int n = Integer.parseInt(br.readLine());
+        int[] arr = new int[n];
+        int sum = 0;
         int[] cnt = new int[8001];
-
-        long sum = 0;
-        int max = Integer.MIN_VALUE;
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i < N; i++){
-            int x = Integer.parseInt(br.readLine());
-            arr[i] = x;
-
-            sum += x; // 평균
-            cnt[x + 4000]++; // 최빈
-            if(x > max) max = x; // 최대
-            if(x < min) min = x; // 최소
+        for (int i = 0; i < n; i++){
+            arr[i] = Integer.parseInt(br.readLine());
+            sum += arr[i];
+            cnt[arr[i] + 4000]++;
         }
         Arrays.sort(arr);
-
-        int avg = (int)Math.round((double)sum / N); // 평균
-        int mid = arr[arr.length / 2];  // 중앙값
-        int maxFreq = 0;    //최빈값(두번째)
-        for(int c : cnt) if(c > maxFreq) maxFreq = c;
-        int freq = 0;
-        boolean firstFound = false;
-        for (int i = 0; i <= 8000; i++) {
-            if (cnt[i] == maxFreq) {
-                if (!firstFound) {
-                    freq = i - 4000;     // 첫 번째 최빈값
-                    firstFound = true;
-                } else {
-                    freq = i - 4000;     // 두 번째 최빈값
-                    break;
-                }
-            }
+        sb.append(Math.round((double)sum / n)).append('\n');
+        sb.append(arr[n/2]).append("\n");
+        int maxFreq = 0;
+        for (int c : cnt) 
+            if (c > maxFreq) maxFreq = c;
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 8001; i++) {
+            if (cnt[i] == maxFreq) list.add(i - 4000);
         }
-        int range = Math.abs(max - min);    // 범위
 
-        sb.append(avg).append("\n").append(mid).append("\n").append(freq).append("\n").append(range);
+        if (list.size() == 1) sb.append(list.get(0)).append('\n');
+        else sb.append(list.get(1)).append('\n'); 
+        
+        sb.append(arr[n-1] - arr[0]).append("\n");
+
         System.out.println(sb);
     }
 }
-
