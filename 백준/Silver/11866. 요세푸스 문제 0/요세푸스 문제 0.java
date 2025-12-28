@@ -1,27 +1,27 @@
+import com.sun.jdi.IntegerValue;
+
 import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
+        sb.append("<");
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
-        sb.append("<");
-
-        Queue<Integer> q = new LinkedList<>();
-        for(int i =1 ; i<=N; i++) q.offer(i);
-
-        while(!q.isEmpty()) {
-            for(int i=0; i<K-1; i++) q.offer(q.poll());
-            sb.append(q.poll());
-            if(!q.isEmpty()) sb.append(", ");
+        ArrayDeque<Integer> q = new ArrayDeque<>();
+        for(int i = 1; i<= N; i++) q.addLast(i);
+        while(q.size() > 1) {
+            for(int i = 0; i< K-1; i++){
+                q.addLast(q.pollFirst());
+            }
+            sb.append(q.pollFirst()).append(", ");
         }
+        sb.append(q.pollFirst()).append(">");
 
-        sb.append(">");
-        System.out.println(sb);
+        System.out.print(sb);
     }
 }
-
