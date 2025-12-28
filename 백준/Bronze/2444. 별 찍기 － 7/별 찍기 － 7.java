@@ -1,33 +1,38 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
+
+        /*
+        공백 4 3 2 1 0 1 2 3 4
+        1 3 5 7 9 7 5 3 1
+        줄바꿈
+         */
         int N = Integer.parseInt(br.readLine());
-
-        for (int i = 1; i <= N; i++) {
-            for(int j = 0; j < N - i; j++)
-                sb.append(' ');
-            for(int j = 0; j < (2 * i - 1); j++)
-                    sb.append('*');
-            sb.append('\n');
+        for(int i = 1; i <= N; i++){ // 줄 바꿈 0 1 2 3 4
+            for(int j = N; j > i; j--){ // 공백 4 3 2 1
+                sb.append(" ");
+            }
+            for(int k = 0; k < 2 * i - 1; k++){ // 별
+                sb.append("*");
+            }
+            sb.append("\n");
         }
 
-        for (int i = N - 1; i >= 1; i--) {
-            for(int j = 0; j < N - i; j++)
-                sb.append(' ');
-            for(int j = 0; j < (2 * i - 1); j++)
-                sb.append('*');
-            sb.append('\n');
+        for(int i = N - 1; i >= 1; i--){ // 줄 바꿈 0 1 2 3 4
+            for(int j = N; j > i; j--){ // 공백 4 3 2 1
+                sb.append(" ");
+            }
+            for(int k = 0; k < 2 * i - 1; k++){ // 별
+                sb.append("*");
+            }
+            sb.append("\n");
         }
 
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.print(sb.toString());
+
     }
 }
