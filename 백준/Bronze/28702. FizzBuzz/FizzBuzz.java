@@ -5,24 +5,28 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-        int x = 0;
-        String str1 = br.readLine();
-        String str2 = br.readLine();
-        String str3 = br.readLine();
-        if(str1.charAt(0) != 'F' && str1.charAt(0) != 'B'){
-            x = Integer.parseInt(str1) + 3;
-        } else if(str2.charAt(0) != 'F' && str2.charAt(0) != 'B'){
-            x = Integer.parseInt(str2) + 2;
-        } else if(str3.charAt(0) != 'F' && str3.charAt(0) != 'B'){
-            x = Integer.parseInt(str3) + 1;
+
+        int num = 0, idx = 0;
+        for(int i = 0; i< 3; i++){
+            String str = br.readLine();
+            if(Character.isDigit(str.charAt(0))){
+                num = Integer.parseInt(str);
+                idx = i;
+                break;
+            }
+        }
+        int answer = num + (3-idx);
+
+        if(answer % 3 == 0 && answer % 5 == 0){
+            sb.append("FizzBuzz");
+        } else if(answer % 3 == 0 && answer % 5 != 0){
+            sb.append("Fizz");
+        } else if(answer % 3 != 0 && answer % 5 == 0){
+            sb.append("Buzz");
+        } else{
+            sb.append(answer);
         }
 
-        if((x % 3 == 0) && (x % 5 == 0)) sb.append("FizzBuzz");
-        else if((x % 3 == 0) && (x % 5 != 0)) sb.append("Fizz");
-        else if((x % 3 != 0) && (x % 5 == 0)) sb.append("Buzz");
-        else sb.append(x);
-
-        System.out.println(sb);
-
+        System.out.print(sb.toString());
     }
 }
