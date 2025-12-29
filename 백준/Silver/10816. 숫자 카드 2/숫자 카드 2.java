@@ -9,24 +9,16 @@ public class Main {
         int N = Integer.parseInt(br.readLine());
         HashMap<Integer, Integer> map = new HashMap<>();
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for(int i = 0; i < N; i++) {
-            int x = Integer.parseInt(st.nextToken());
-            if(map.containsKey(x)) {
-                map.put(x, map.get(x) + 1);
-            } else {
-                map.put(x, 1);
-            }
+        for(int t = 0; t < N; t++) {
+            int num = Integer.parseInt(st.nextToken());
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
         int M = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
-        for(int i = 0; i < M; i++) {
-            int x = Integer.parseInt(st.nextToken());
-            if(map.containsKey(x)) {
-                sb.append(map.get(x)).append(" ");
-            } else sb.append(0).append(" ");
+        for(int t = 0; t < M; t++) {
+            int num = Integer.parseInt(st.nextToken());
+            sb.append(map.getOrDefault(num, 0)).append(" ");
         }
-
-
         System.out.print(sb);
     }
 }
