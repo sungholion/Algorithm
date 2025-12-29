@@ -1,29 +1,30 @@
 import java.io.*;
 import java.util.*;
-public class Main {
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int N = Integer.parseInt(br.readLine());
-        int cnt = 0;
-        while(N-- > 0) {
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+
+        int T  = Integer.parseInt(br.readLine());
+        int res = 0;
+        // 1. 빈도 체크, 출현 체크
+        boolean isAnswer = true;
+        for(int t = 0; t < T; t++) {
             String str = br.readLine();
-            int l = str.length();
             boolean[] vis = new boolean[26];
-            boolean isGroup = true;
-            vis[str.charAt(0) - 'a'] = true;
-            for(int i=1; i<l; i++) {
-                char c = str.charAt(i);
-                if(c != str.charAt(i-1) && vis[c-'a']) {
-                    isGroup = false;
+            isAnswer = true;
+            for(int i = 0; i < str.length() - 1; i++) {
+                char cur = str.charAt(i);
+                char next = str.charAt(i + 1);
+                if(cur != next && vis[next - 'a']){
+                    isAnswer = false;
                     break;
                 }
-                vis[c-'a'] = true;
+                vis[cur - 'a'] = true;
             }
-            if(isGroup) cnt++;
+            if(isAnswer) res++;
         }
-
-        System.out.println(cnt);
+        System.out.println(res);
     }
 }
-
