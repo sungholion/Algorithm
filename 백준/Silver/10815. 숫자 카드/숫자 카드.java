@@ -1,0 +1,25 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+
+        int N = Integer.parseInt(br.readLine());
+        HashMap<Integer, Integer> map = new HashMap<>();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int t = 0; t < N; t++) {
+            int num = Integer.parseInt(st.nextToken());
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        int M = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+        for(int t = 0; t < M; t++) {
+            int num = Integer.parseInt(st.nextToken());
+            if(map.containsKey(num)) sb.append("1 ");
+            else sb.append("0 ");
+        }
+        System.out.print(sb);
+    }
+}
