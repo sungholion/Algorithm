@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
@@ -10,26 +10,26 @@ public class Main {
         int A = Integer.parseInt(st.nextToken());
         int B = Integer.parseInt(st.nextToken());
 
-        int gcd = 0, lcm = 0;
-        if(A > B){
-            gcd = getGCD(A, B);
-            lcm = getLCM(A, B);
-        } else{
-            gcd = getGCD(B, A);
-            lcm = getLCM(B, A);
-        }
-        sb.append(gcd).append("\n").append(lcm).append("\n");
-        System.out.println(sb.toString());
+        System.out.println(gcd(A, B));
+        System.out.println(lcd(A, B));
     }
-    private static int getGCD(int a, int b) {
-        while(b!=0){
-            int r =  a % b;
+    static int gcd(int a, int b) {
+        if(a < b){
+            int temp = a;
             a = b;
-            b = r;
+            b = temp;
         }
+
+        int temp = 0;
+        while(b != 0){
+            temp = a % b;
+            a = b;
+            b = temp;
+        }
+
         return a;
     }
-    private static int getLCM(int a, int b) {
-        return (a*b) / getGCD(a, b);
+    static int lcd(int a, int b) {
+        return a * b / gcd(a, b);
     }
 }
