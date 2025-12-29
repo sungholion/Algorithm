@@ -7,12 +7,13 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        int ans = 1;
-        int plus = 1;
-        while(plus < N){
-            plus += 6 * ans;
-            ans++;
+        int cnt = 1;
+        int cur = 1;
+        while(N > cur){
+            cur += 6 * cnt;
+            cnt++;
         }
-        System.out.println(ans);
+        sb.append(cnt);
+        System.out.print(sb.toString());
     }
 }
