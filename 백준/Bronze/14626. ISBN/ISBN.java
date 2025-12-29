@@ -2,30 +2,39 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
         String str = br.readLine();
-        int loc = -1;
+        int sum = 0;
+        int idx = 0;
         for(int i = 0; i < str.length(); i++) {
-            if(str.charAt(i) == '*'){
-                loc = i;
-                break;
+            char c = str.charAt(i);
+            if(c == '*'){
+                idx = i;
+            } else {
+                int num = c - '0';
+                sum += i % 2 == 0 ? num : 3 * num;
             }
         }
 
-        for(int i = 0; i<=9; i++){
-            int sum = 0;
-            for(int j = 0; j<str.length(); j++){
-                int w = j % 2 == 0 ? 1 : 3;
-                int d = j == loc ? i : str.charAt(j) - '0';
-                sum += d * w;
-            }
-            if(sum % 10 == 0){
-                System.out.println(i);
-                return;
+        for(int i = 0; i <= 9; i++){
+            if(idx % 2 == 0){
+                if(((sum + i) % 10) == 0){
+                    sb.append(i);
+                    break;
+                }
+            } else {
+                if((sum + 3 * i) % 10 == 0){
+                    sb.append(i);
+                    break;
+                }
+
             }
         }
+
+        System.out.print(sb.toString());
+
     }
 }
