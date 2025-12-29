@@ -9,24 +9,20 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
-
-        String[] numToName = new String[N + 1];
-        Map<String, Integer> nameToNum = new HashMap<>(); 
-
-        for (int i = 1; i <= N; i++) {
-            String name = br.readLine();
-            numToName[i] = name;
-            nameToNum.put(name, i);
+        String[] getNum = new String[N+1];
+        HashMap<String, Integer> map = new HashMap<>();
+        for(int i = 1; i <= N; i++) {
+            String str = br.readLine();
+            getNum[i] = str;
+            map.put(str, i);
         }
+        for(int i = 1; i <= M; i++) {
+            String str = br.readLine();
+            if(Character.isDigit(str.charAt(0))){
+                sb.append(getNum[Integer.parseInt(str)]).append("\n");
+            } else {
+                sb.append(map.get(str)).append("\n");
 
-        for (int i = 0; i < M; i++) {
-            String query = br.readLine();
-
-            if (Character.isDigit(query.charAt(0))) { 
-                int num = Integer.parseInt(query);
-                sb.append(numToName[num]).append("\n");
-            } else { 
-                sb.append(nameToNum.get(query)).append("\n");
             }
         }
 
