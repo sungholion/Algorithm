@@ -1,61 +1,71 @@
 import java.io.*;
 import java.util.*;
 
+class Coord{
+    int x;
+    int y;
+
+    Coord(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+}
+
 public class Main {
-    static final int[] dy = {-1, 1, 0, 0};
-    static final int[] dx = {0, 0, -1, 1};
-
-    public static void main(String[] args) throws Exception {
+    static int N, M;
+    static int[][] map;
+    static boolean[][] vis;
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
+    static int cnt = 0;
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder out = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
+
         int T = Integer.parseInt(br.readLine());
-
-        while (T-- > 0) {
+        for(int t = 0; t < T; t++){
             StringTokenizer st = new StringTokenizer(br.readLine());
-            int M = Integer.parseInt(st.nextToken()); 
-            int N = Integer.parseInt(st.nextToken()); 
+            M = Integer.parseInt(st.nextToken());
+            N = Integer.parseInt(st.nextToken());
             int K = Integer.parseInt(st.nextToken());
-
-            boolean[][] grid = new boolean[N][M];
-            boolean[][] visited = new boolean[N][M];
-
-            for (int i = 0; i < K; i++) {
+            map = new int[N][M];
+            vis = new boolean[N][M];
+            for(int k = 0; k < K; k++){
                 st = new StringTokenizer(br.readLine());
-                int x = Integer.parseInt(st.nextToken());
                 int y = Integer.parseInt(st.nextToken());
-                grid[y][x] = true;
+                int x = Integer.parseInt(st.nextToken());
+                map[x][y] = 1;
             }
-
-            int count = 0;
-            for (int y = 0; y < N; y++) {
-                for (int x = 0; x < M; x++) {
-                    if (grid[y][x] && !visited[y][x]) {
-                        bfs(y, x, grid, visited, N, M);
-                        count++;
+            for(int i = 0; i < N; i++){
+                for(int j = 0; j < M; j++){
+                    if(map[i][j] == 1 && !vis[i][j]){
+                        cnt++;
+                        bfs(new int[]{i, j});
                     }
                 }
             }
-            out.append(count).append('\n');
+            sb.append(cnt).append("\n");
+            cnt = 0;
         }
-        System.out.print(out);
+        System.out.print(sb.toString());
     }
-
-    static void bfs(int sy, int sx, boolean[][] grid, boolean[][] visited, int N, int M) {
+    static void bfs(int[] point){
         ArrayDeque<int[]> q = new ArrayDeque<>();
-        visited[sy][sx] = true;
-        q.offer(new int[]{sy, sx});
+        q.add(point);
+        vis[point[0]][point[1]] = true;
 
-        while (!q.isEmpty()) {
+        while(!q.isEmpty()){
             int[] cur = q.poll();
-            int y = cur[0], x = cur[1];
-
-            for (int dir = 0; dir < 4; dir++) {
-                int ny = y + dy[dir];
-                int nx = x + dx[dir];
-                if (ny < 0 || nx < 0 || ny >= N || nx >= M) continue;
-                if (!grid[ny][nx] || visited[ny][nx]) continue;
-                visited[ny][nx] = true;
-                q.offer(new int[]{ny, nx});
+            for(int i = 0; i < 4; i++){
+                int nx = cur[0] + dx[i];
+                int ny = cur[1] + dy[i];
+                if(nx < 0 || ny < 0 || nx >= N || ny >= M){
+                    continue;
+                }
+                if(map[nx][ny] == 1 && !vis[nx][ny]){
+                    q.offer(new int[]{nx, ny});
+                    vis[nx][ny] = true;
+                }
             }
         }
     }
