@@ -2,22 +2,25 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine().trim());
+        StringBuilder sb = new StringBuilder();
 
-        int[] P = new int[N];
+        int N = Integer.parseInt(br.readLine());
+        int[] arr = new int[N];
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) P[i] = Integer.parseInt(st.nextToken());
-
-        Arrays.sort(P); 
-        long total = 0;   
-        long prefix = 0; 
-        for (int x : P) {
-            prefix += x;   
-            total  += prefix;
+        for(int i = 0; i < N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
         }
+        Arrays.sort(arr);
+        int time = arr[0];
+        for(int i = 1; i < N; i++) {
+            for(int j = 0; j <= i; j++){
+                time += arr[j];
+            }
+        }
+        sb.append(time);
 
-        System.out.println(total);
+        System.out.print(sb);
     }
 }
