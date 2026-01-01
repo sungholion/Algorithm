@@ -3,49 +3,50 @@ import java.util.*;
 
 public class Main {
     static int N, M;
-    static int[][] dist;
-    static char[][] map;
-    static final int[] dr = { -1, 1, 0, 0 };
-    static final int[] dc = { 0, 0, -1, 1 };
-
-    public static void main(String[] args) throws Exception {
+    static int[][] map;
+    static int[][] visited;
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
+    static ArrayList<Integer> list = new ArrayList<>();
+    static StringBuilder sb;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        sb = new StringBuilder();
+
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-
-        map = new char[N][M];
-        for (int i = 0; i < N; i++) {
-            String line = br.readLine().trim();
-            for (int j = 0; j < M; j++) map[i][j] = line.charAt(j);
-        }
-
-        System.out.println(bfs());
-    }
-
-    static int bfs() {
-        dist = new int[N][M];
-        ArrayDeque<int[]> q = new ArrayDeque<>();
-
-        dist[0][0] = 1;               
-        q.offer(new int[]{0, 0});
-
-        while (!q.isEmpty()) {
-            int[] cur = q.poll();
-            int r = cur[0], c = cur[1];
-
-            if (r == N - 1 && c == M - 1) return dist[r][c]; 
-
-            for (int k = 0; k < 4; k++) {
-                int nr = r + dr[k];
-                int nc = c + dc[k];
-                if (nr < 0 || nr >= N || nc < 0 || nc >= M) continue;
-                if (map[nr][nc] == '0') continue;          
-                if (dist[nr][nc] != 0) continue;             
-                dist[nr][nc] = dist[r][c] + 1;
-                q.offer(new int[]{nr, nc});
+        map = new int[N][M];
+        visited = new int[N][M];
+        for(int i = 0; i < N; i++) {
+            String str = br.readLine();
+            for(int j = 0; j < M; j++) {
+                map[i][j] = str.charAt(j) - '0';
             }
         }
-        return -1; 
+
+        bfs(new int[]{0,0});
+        sb.append(visited[N-1][M-1]);
+        System.out.print(sb);
+    }
+
+    static void bfs(int[] point){
+        ArrayDeque<int[]> q = new ArrayDeque<>();
+        q.offer(point);
+        visited[point[0]][point[1]] = 1;
+
+        while(!q.isEmpty()){
+            int[] cur = q.poll();
+            for(int i = 0; i < 4; i++){
+                int nx = cur[0] + dx[i];
+                int ny = cur[1] + dy[i];
+
+                if(nx >= N || nx < 0 || ny >= M || ny < 0) continue;
+                if(map[nx][ny] == 1 && visited[nx][ny] == 0){
+                    visited[nx][ny] = visited[cur[0]][cur[1]] + 1;
+                    q.offer(new int[]{nx, ny});
+                }
+            }
+        }
     }
 }
