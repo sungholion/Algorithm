@@ -3,60 +3,62 @@ import java.util.*;
 
 public class Main {
     static int N;
-    static char[][] grid;
+    static int[][] map;
     static boolean[][] visited;
-    static final int[] dx = {-1, 1, 0, 0};
-    static final int[] dy = {0, 0, -1, 1};
-
-    public static void main(String[] args) throws Exception {
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
+    static ArrayList<Integer> list = new ArrayList<>();
+    static StringBuilder sb;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine().trim());
-        grid = new char[N][N];
+        sb = new StringBuilder();
+        N = Integer.parseInt(br.readLine());
+        map = new int[N][N];
         visited = new boolean[N][N];
-
-        for (int i = 0; i < N; i++) {
-            String s = br.readLine().trim();
-            for (int j = 0; j < N; j++) {
-                grid[i][j] = s.charAt(j); // '0' or '1'
+        for(int i = 0; i < N; i++) {
+            String str = br.readLine();
+            for(int j = 0; j < N; j++) {
+                map[i][j] = str.charAt(j) - '0';
             }
         }
 
-        List<Integer> sizes = new ArrayList<>();
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (!visited[i][j] && grid[i][j] == '1') {
-                    sizes.add(bfs(i, j));
+
+        int cnt = 0;
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                if(map[i][j] == 1 && !visited[i][j]){
+                    cnt++;
+                    bfs(new int[]{i, j});
                 }
             }
         }
-
-        Collections.sort(sizes);
-        StringBuilder sb = new StringBuilder();
-        sb.append(sizes.size()).append('\n');
-        for (int sz : sizes) sb.append(sz).append('\n');
+        sb.append(cnt).append("\n");
+        Collections.sort(list);
+        for(int x : list)
+            sb.append(x).append("\n");
         System.out.print(sb);
     }
 
-    static int bfs(int sx, int sy) {
-        Queue<int[]> q = new ArrayDeque<>();
-        visited[sx][sy] = true;
-        q.offer(new int[]{sx, sy});
+    static void bfs(int[] point){
+        ArrayDeque<int[]> q = new ArrayDeque<>();
+        visited[point[0]][point[1]] = true;
+        q.offer(point);
+
         int cnt = 1;
-
-        while (!q.isEmpty()) {
+        while(!q.isEmpty()){
             int[] cur = q.poll();
-            int x = cur[0], y = cur[1];
+            for(int i = 0; i < 4; i++){
+                int nx = cur[0] + dx[i];
+                int ny = cur[1] + dy[i];
 
-            for (int dir = 0; dir < 4; dir++) {
-                int nx = x + dx[dir];
-                int ny = y + dy[dir];
-                if (nx < 0 || ny < 0 || nx >= N || ny >= N) continue;
-                if (visited[nx][ny] || grid[nx][ny] == '0') continue;
-                visited[nx][ny] = true;
-                q.offer(new int[]{nx, ny});
-                cnt++;
+                if(nx >= N || nx < 0 || ny >= N || ny < 0) continue;
+                if(map[nx][ny] == 1 && !visited[nx][ny]){
+                    visited[nx][ny] = true;
+                    q.offer(new int[]{nx, ny});
+                    cnt++;
+                }
             }
         }
-        return cnt;
+        list.add(cnt);
     }
 }
