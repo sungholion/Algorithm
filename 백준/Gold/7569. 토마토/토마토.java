@@ -1,113 +1,84 @@
 import java.io.*;
 import java.util.*;
 
-class Coord{
-    int x;
-    int y;
-    int z;
-
-    public Coord(int x, int y, int z){
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-}
-
 public class Main {
-    static int M, N, H;
+    static int N, M, H;
     static int[][][] map;
+    static int[][][] visited;
     static int[] dx = {-1, 1, 0, 0, 0, 0};
     static int[] dy = {0, 0, -1, 1, 0, 0};
     static int[] dz = {0, 0, 0, 0, -1, 1};
-    static Queue<Coord> q = new ArrayDeque<>();
-
-    public static void main(String[] args) throws IOException{
+    static ArrayDeque<int[]> q = new ArrayDeque<>();
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        StringTokenizer st = new StringTokenizer(br.readLine());
 
+        StringTokenizer st = new StringTokenizer(br.readLine());
         M = Integer.parseInt(st.nextToken());
         N = Integer.parseInt(st.nextToken());
         H = Integer.parseInt(st.nextToken());
-
         map = new int[H][N][M];
+        visited = new int[H][N][M];
 
-        for(int i=0; i<H; i++){
-            for(int j=0; j<N; j++){
+        int ripedCnt = 0; int nonRipedCnt = 0; int noCnt = 0;
+        for(int h = 0; h < H; h++) {
+            for(int i = 0; i < N; i++) {
                 st = new StringTokenizer(br.readLine());
-                for(int k=0; k<M; k++){
-                    map[i][j][k] = Integer.parseInt(st.nextToken());
+                for(int j = 0; j < M; j++) {
+                    int x = Integer.parseInt(st.nextToken());
+                    map[h][i][j] = x;
+                    if(x == 1) {
+                        ripedCnt++;
+                        q.offer(new int[]{h, i, j});
+                        visited[h][i][j] = 1;
+                    }
+                    else if(x == -1) noCnt++;
+                    else if(x == 0) nonRipedCnt++;
                 }
             }
+
         }
 
-        for(int i=0; i<H; i++){
-            for(int j=0; j<N; j++){
-                for(int k=0; k<M; k++){
-                    if(map[i][j][k] == 1){
-                        q.offer(new Coord(i, j, k));
+        if((ripedCnt + noCnt) == (H * N * M)){
+            System.out.println("0");
+            return;
+        }
+
+        bfs();
+        int time = Integer.MIN_VALUE;
+        for(int h = 0; h < H; h++) {
+            for(int i = 0; i < N; i++) {
+                for(int j = 0; j < M; j++) {
+                    if(visited[h][i][j] > time) time = visited[h][i][j];
+                    if(map[h][i][j] == 0){
+                        System.out.println("-1");
+                        return;
                     }
                 }
             }
         }
+        sb.append(time - 1);
 
-        sb.append(bfs()).append("\n");
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.print(sb.toString());
     }
-
-    static int bfs(){
+    static void bfs() {
+        int cnt = 0;
         while(!q.isEmpty()){
-            Coord cur = q.poll();
+            int[] cur = q.poll();
+            int z = cur[0];
+            int x = cur[1];
+            int y = cur[2];
+            for(int i = 0; i < 6; i++){
+                int nz = z + dz[i];
+                int nx = x + dx[i];
+                int ny = y + dy[i];
 
-            for(int i=0; i<6; i++){
-                int nx = cur.x + dx[i];
-                int ny = cur.y + dy[i];
-                int nz = cur.z + dz[i];
-
-                if(nx < 0 || ny < 0 || nz < 0 || nx >= H || ny >= N || nz >= M || map[nx][ny][nz] != 0){
-                    continue;
-                }
-
-                map[nx][ny][nz] = map[cur.x][cur.y][cur.z] + 1;
-                q.offer(new Coord(nx, ny, nz));
-            }
-
-        }
-
-        int max = Integer.MIN_VALUE;
-
-        if(checkTomato()){
-            return -1;
-        } else{
-            for(int i=0; i<H; i++){
-                for(int j=0; j<N; j++){
-                    for(int k=0; k<M; k++){
-                        if(map[i][j][k] > max){
-                            max = map[i][j][k];
-                        }
-                    }
-                }
+                if(nx < 0 || ny < 0 || nz < 0 || nx >= N || ny >= M || nz >= H) continue;
+                if(map[nz][nx][ny] != 0) continue; // 이미 방문했는지, 안익은 토마토인지 체크
+                visited[nz][nx][ny] = visited[cur[0]][cur[1]][cur[2]] + 1;
+                map[nz][nx][ny] = 1;
+                q.offer(new int[]{nz, nx, ny});
             }
         }
-
-        return max - 1;
     }
-
-    static boolean checkTomato(){
-        for(int i=0; i<H; i++){
-            for(int j=0; j<N; j++){
-                for(int k=0; k<M; k++){
-                    if(map[i][j][k] == 0){
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
 }
