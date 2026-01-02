@@ -2,43 +2,62 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    static int N, M;
+    static int[][] map; 
+
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        List<Integer>[] g = new ArrayList[N+1];
-        for (int i=1;i<=N;i++) g[i] = new ArrayList<>();
-        for (int i=0;i<M;i++){
+
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+
+        map = new int[N + 1][N + 1]; // 1-indexed
+        for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            g[a].add(b); g[b].add(a);
+            map[a][b] = 1;
+            map[b][a] = 1;
         }
 
-        int bestNode = 1, bestSum = Integer.MAX_VALUE;
-        int[] dist = new int[N+1];
+        int answer = 0;
+        int minSum = Integer.MAX_VALUE;
+        for (int i = 1; i <= N; i++) {
+            int sum = bfs(i);
+            if (sum < minSum) {
+                minSum = sum;
+                answer = i;
+            }
+        }
 
-        for (int s = 1; s <= N; s++) {
-            Arrays.fill(dist, -1);
-            ArrayDeque<Integer> q = new ArrayDeque<>();
-            q.offer(s); dist[s] = 0;
-            int sum = 0;
+        System.out.println(answer);
+    }
 
-            while (!q.isEmpty()) {
-                int cur = q.poll();
-                for (int nxt : g[cur]) {
-                    if (dist[nxt] != -1) continue;
-                    dist[nxt] = dist[cur] + 1;
-                    sum += dist[nxt];
-                    q.offer(nxt);
+    static int bfs(int start) {
+        Queue<Integer> q = new LinkedList<>();
+        boolean[] visited = new boolean[N + 1];
+        int[] dist = new int[N + 1];
+
+        q.offer(start);
+        visited[start] = true;
+
+        while (!q.isEmpty()) {
+            int cur = q.poll();
+
+            for (int next = 1; next <= N; next++) {
+                if (map[cur][next] == 1 && !visited[next]) {
+                    visited[next] = true;
+                    dist[next] = dist[cur] + 1;
+                    q.offer(next);
                 }
             }
-            if (sum < bestSum) {
-                bestSum = sum;
-                bestNode = s;
-            }
         }
-        System.out.print(bestNode);
+
+        int sum = 0;
+        for (int i = 1; i <= N; i++) {
+            sum += dist[i];
+        }
+        return sum;
     }
 }
