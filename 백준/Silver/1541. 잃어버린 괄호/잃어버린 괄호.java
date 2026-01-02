@@ -1,31 +1,30 @@
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String s = br.readLine();
+        StringBuilder sb = new StringBuilder();
 
-        // '-' 기준으로 식을 덩어리로 나눈다
-        String[] parts = s.split("-");
-
-        // 첫 번째 덩어리는 그냥 합산
-        int result = sumOf(parts[0]);
-
-        // 두 번째 덩어리부터는 몽땅 더해서 빼준다
-        for (int i = 1; i < parts.length; i++) {
-            result -= sumOf(parts[i]);
+        String str = br.readLine();
+        int num = 0;
+        boolean minus = false;
+        int res = 0;
+        for(int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if(Character.isDigit(c)) {
+                num = num * 10 + c - '0';
+            } else {
+                if (minus) res -= num;
+                else res += num;
+                num = 0;
+                if(c == '-') minus = true;
+            }
         }
 
-        System.out.println(result);
-    }
-
-    // "10+20+30" 같은 덩어리를 받아서 더해주는 함수
-    private static int sumOf(String expr) {
-        int sum = 0;
-        String[] nums = expr.split("\\+");
-        for (String n : nums) {
-            sum += Integer.parseInt(n);
-        }
-        return sum;
+        if(minus) res -= num;
+        else res += num;
+        sb.append(res);
+        System.out.print(sb);
     }
 }
