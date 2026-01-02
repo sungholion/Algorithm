@@ -1,96 +1,74 @@
 import java.io.*;
 import java.util.*;
 
-class Coord{
-    int x;
-    int y;
-
-    public Coord(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-}
-
-public class Main{
-    static int m, n;
+public class Main {
+    static int N, M;
     static int[][] map;
+    static int[][] visited;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
-    static Queue<Coord> q = new ArrayDeque<>();
-
-    public static void main(String[] args) throws IOException{
+    static ArrayDeque<int[]> q = new ArrayDeque<>();
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        StringTokenizer st;
 
-        st = new StringTokenizer(br.readLine());
-        m = Integer.parseInt(st.nextToken());
-        n = Integer.parseInt(st.nextToken());
-        map = new int[n][m];
-
-        for(int i=0; i<n; i++){
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        M = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
+        map = new int[N][M];
+        visited = new int[N][M];
+        int ripedCnt = 0;
+        int nonRipedCnt = 0;
+        int noCnt = 0;
+        for(int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-            for(int j=0; j<m; j++){
-                map[i][j] = Integer.parseInt(st.nextToken());
+            for(int j = 0; j < M; j++) {
+                int x = Integer.parseInt(st.nextToken());
+                map[i][j] = x;
+                if(x == 1) {
+                    ripedCnt++;
+                    q.offer(new int[]{i, j});
+                }
+                else if(x == -1) noCnt++;
+                else if(x == 0) nonRipedCnt++;
             }
         }
 
-        for(int i=0; i<n; i++){
-            for(int j=0; j<m; j++){
-                if (map[i][j] == 1) {
-                    q.offer(new Coord(i, j));
+        if((ripedCnt + noCnt) == (N * M)){
+            System.out.println("0");
+            return;
+        }
+
+        int cnt = bfs();
+        if(cnt == (nonRipedCnt)){
+            int time = Integer.MIN_VALUE;
+            for(int i = 0; i < N; i++) {
+                for(int j = 0; j < M; j++) {
+                    if(visited[i][j] > time) time = visited[i][j];
                 }
             }
+            sb.append(time);
+        } else {
+            sb.append(-1);
         }
 
-        sb.append(bfs()).append("\n");
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.print(sb.toString());
     }
-
-    static int bfs(){
+    static int bfs() {
+        int cnt = 0;
         while(!q.isEmpty()){
-            Coord cur = q.poll();
+            int[] cur = q.poll();
+            for(int i = 0; i < 4; i++){
+                int nx = cur[0] + dx[i];
+                int ny = cur[1] + dy[i];
 
-            for(int i=0; i<4; i++){
-                int nx = cur.x + dx[i];
-                int ny = cur.y + dy[i];
-
-                if(nx < 0 || ny < 0 || nx >= n || ny >= m || map[nx][ny] != 0){
-                    continue;
-                }
-
-                map[nx][ny] = map[cur.x][cur.y] + 1;
-                q.offer(new Coord(nx, ny));
+                if(nx < 0 || ny < 0 || nx >= N || ny >= M || map[nx][ny] != 0) continue;    // 맵 벗어낫는지, 이동할 수 있는 칸인지 체크
+                if(visited[nx][ny] != 0) continue; // 이미 방문했는지 체크
+                visited[nx][ny] = visited[cur[0]][cur[1]] + 1;
+                q.offer(new int[]{nx, ny});
+                cnt++;
             }
         }
-        
-        int max = Integer.MIN_VALUE;
-        if(tomatoPresent()){
-            return -1;
-        } else{
-            for(int i=0; i<n; i++){
-                for(int j=0; j<m; j++){
-                    if(max < map[i][j]){
-                        max = map[i][j];
-                    }
-                }
-            }
-        }
-        return max - 1;
-    }
-
-    private static boolean tomatoPresent(){
-        for(int i=0; i<n; i++){
-            for(int j=0; j<m; j++){
-                if(map[i][j] == 0){
-                    return true;
-                }
-            }
-        }
-        return false;
+        return cnt;
     }
 }
