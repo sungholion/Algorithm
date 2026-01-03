@@ -2,61 +2,46 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static int white;    // 흰색 count
-    public static int blue;     // 파란색 count
-    public static int[][] origin;
+    static int N;
+    static int[][] map;
+    static int w = 0, b = 0;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
-        StringTokenizer st;
+        N = Integer.parseInt(br.readLine());
+        map = new int[N][N];
 
-        int N = Integer.parseInt(br.readLine());
-        origin  = new int[N][N];
-
-        for (int i = 0; i < N; i++) {   // 입력
-            st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < N; j++)
-                origin[i][j] = Integer.parseInt(st.nextToken());
+        for (int i = 0; i < N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < N; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }
         }
 
-        paper(0, 0, N);
-        sb.append(white).append("\n");
-        sb.append(blue).append("\n");
-
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        divide(0, 0, N);
+        System.out.println(w);
+        System.out.println(b);
     }
 
-    public static void paper(int row, int col, int size) {
-
-        if(isFull(row, col, size)){
-            if(origin[row][col] == 0){
-                white++;
-            }
-            else
-                blue++;
+    static void divide(int x, int y, int size) {
+        if (checkSameColor(x, y, size)) {
+            if (map[x][y] == 0) w++;
+            else b++;
             return;
         }
 
-        int tmpSize = size / 2;
-        paper(row, col, tmpSize);
-        paper(row + tmpSize, col, tmpSize);
-        paper(row, col + tmpSize, tmpSize);
-        paper(row + tmpSize, col + tmpSize, tmpSize);
-
+        int half = size / 2;
+        divide(x, y, half);                  
+        divide(x, y + half, half);           
+        divide(x + half, y, half);           
+        divide(x + half, y + half, half);    
     }
 
-    public static boolean isFull(int row, int col, int size) {
-        int color = origin[row][col];
-
-        for(int i = row; i < row + size; i++){
-            for(int j = col; j < col + size; j++){
-                if(origin[i][j] != color){
-                    return false;
-                }
+    static boolean checkSameColor(int x, int y, int size) {
+        int color = map[x][y];
+        for (int i = x; i < x + size; i++) {
+            for (int j = y; j < y + size; j++) {
+                if (map[i][j] != color) return false;
             }
         }
         return true;
