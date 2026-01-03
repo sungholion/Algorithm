@@ -1,43 +1,31 @@
 import java.io.*;
 import java.util.*;
-class Meeting{
-    int start;
-    int end;
 
-    Meeting(int start, int end){
-        this.start = start;
-        this.end = end;
-    }
-
-}
-public class Main {
-    public static void main(String[] args) throws Exception {
+public class Main{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N = Integer.parseInt(br.readLine());
-        Meeting[] meetings = new Meeting[N];
-        for(int i = 0; i < N; i++){
+        ArrayList<int[]> list = new ArrayList<>();
+        for(int i = 1; i <= N; i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
             int start = Integer.parseInt(st.nextToken());
             int end = Integer.parseInt(st.nextToken());
-            meetings[i] = new Meeting(start, end);
+            list.add(new int[]{start, end});
         }
-
-        Arrays.sort(meetings, (a, b) -> {
-            if(a.end != b.end) return Integer.compare(a.end, b.end);
-            return Integer.compare(a.start, b.start);
+        Collections.sort(list, (a, b) -> {
+            if(a[1] == b[1]){return a[0]-b[0];}
+            return a[1] - b[1];
         });
 
         int cnt = 0;
-        int last = 0;
-        for(int i = 0; i < meetings.length; i++){
-            if(meetings[i].start >= last){
+        int cur = 0;
+        for(int[] arr : list){
+            if(arr[0] >= cur){
                 cnt++;
-                last = meetings[i].end;
+                cur = arr[1];
             }
         }
-
         System.out.println(cnt);
-
     }
 }
