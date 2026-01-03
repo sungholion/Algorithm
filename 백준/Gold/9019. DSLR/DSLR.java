@@ -25,38 +25,59 @@ public class Main{
     }
 
     static String bfs(int a, int b){
-        ArrayDeque<Point> q = new ArrayDeque<>();
+        ArrayDeque<Integer> q = new ArrayDeque<>();
         boolean[] visited = new boolean[10000];
-        q.offer(new Point(a, ""));
+        int[] prev = new int[10000];
+        char[] how = new char[10000];
+        q.offer(a);
         visited[a] = true;
 
         while(!q.isEmpty()){
-            Point cur = q.poll();
-            if(cur.x == b) return cur.order;
+            int cur = q.poll();
+            if(cur == b) break;
 
-            int d = D(cur.x);
+            int d = D(cur);
             if(!visited[d]){
                 visited[d] = true;
-                q.offer(new Point(d, cur.order + "D"));
+                prev[d] = cur;
+                how[d] = 'D';
+                q.offer(d);
             }
-            int s = S(cur.x);
+
+            int s = S(cur);
             if(!visited[s]){
                 visited[s] = true;
-                q.offer(new Point(s, cur.order + "S"));
+                prev[s] = cur;
+                how[s] = 'S';
+                q.offer(s);
             }
-            int l = L(cur.x);
+
+            int l = L(cur);
             if(!visited[l]){
                 visited[l] = true;
-                q.offer(new Point(l, cur.order + "L"));
+                prev[l] = cur;
+                how[l] = 'L';
+                q.offer(l);
             }
-            int r = R(cur.x);
+
+            int r = R(cur);
             if(!visited[r]){
                 visited[r] = true;
-                q.offer(new Point(r, cur.order + "R"));
+                prev[r] = cur;
+                how[r] = 'R';
+                q.offer(r);
             }
         }
-        return "";
+
+        StringBuilder sb = new StringBuilder();
+        int cur = b;
+        while(cur != a){
+            sb.append(how[cur]);
+            cur = prev[cur];
+        }
+        return sb.reverse().toString();
     }
+
 
     static int D(int n){
         return (n * 2) % 10000;
