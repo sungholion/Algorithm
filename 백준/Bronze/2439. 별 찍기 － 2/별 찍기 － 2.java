@@ -6,12 +6,16 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
-        int T = Integer.parseInt(br.readLine());
-        for(int i = 0; i < T; i++) {
-            for(int k = 1; k < T - i; k++) sb.append(" ");
-            for(int j=0; j <= i; j++) sb.append("*");
+        int N = Integer.parseInt(br.readLine());
+        for (int i = 0; i < N; i++) {
+            for(int j = N - 1; j - i > 0; j--){
+                sb.append(" ");
+            }
+            for(int k = 0; k <= i; k++){
+                sb.append("*");
+            }
             sb.append("\n");
         }
-        System.out.print(sb.toString());
+        System.out.println(sb);
     }
 }
