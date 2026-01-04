@@ -1,31 +1,31 @@
 import java.io.*;
 import java.util.*;
+
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
         int M = Integer.parseInt(br.readLine());
-
         String str = br.readLine();
-        int totalCnt = 0;
-        int cnt = 0;
 
-        int i = 0;
-        while(i < M - 2){
-            if(str.charAt(i) == 'I' && str.charAt(i + 1) == 'O' && str.charAt(i + 2) == 'I'){
-                cnt++;
-                if(cnt >= N) totalCnt++;
-                i+= 2;
-            }
-            else{
-                cnt = 0;
+        int count = 0; // 연속된 IOI 개수
+        int answer = 0;
+
+        for (int i = 1; i < M - 1; i++) {
+            if (str.charAt(i - 1) == 'I' && str.charAt(i) == 'O' && str.charAt(i + 1) == 'I') {
+                count++;
+                if (count == N) { 
+                    answer++;
+                    count--; 
+                }
                 i++;
+            } else {
+                count = 0; 
             }
         }
 
-        System.out.println(totalCnt);
+        System.out.println(answer);
+
     }
 }
-
