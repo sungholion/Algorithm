@@ -7,16 +7,19 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        int[] arr = new int[N];
-        double total = 0;
+        double max = -1;
+        double[] arr = new double[N];
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for(int i = 0; i < N; i++) arr[i] = Integer.parseInt(st.nextToken());
-        Arrays.sort(arr);
-
-        for(int i = 0; i < N; i++){
-            total += ((double)arr[i] / arr[N-1]) * 100;
+        for(int i = 0; i < N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+            if(arr[i] > max) {max = arr[i];}
         }
-        System.out.println(total / (double) N);
+        double sum = 0;
+        for(int i = 0; i < N; i++) {
+            arr[i] = arr[i] / max * 100;
+            sum += arr[i];
+        }
+        System.out.println(sum / N);
 
 
     }
