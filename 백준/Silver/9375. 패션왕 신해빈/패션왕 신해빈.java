@@ -4,39 +4,25 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
 
         int T = Integer.parseInt(br.readLine());
-
-        while (T-- > 0) {
+        for(int t = 0; t < T; t++) {
+            int n = Integer.parseInt(br.readLine());
             Map<String, Integer> map = new HashMap<>();
-            int N = Integer.parseInt(br.readLine());
-            while (N-- > 0) {
+            for(int i = 0; i < n; i++) {
                 StringTokenizer st = new StringTokenizer(br.readLine());
-                st.nextToken(); // 이름은 중복 안됌
-                String kind = st.nextToken();
-                if(map.containsKey(kind)) {
-                    map.put(kind, map.get(kind)+1); // 종류 같으면 1 추가
-                }
-                else{
-                    map.put(kind, 1);
-                }
+                st.nextToken();
+                String type = st.nextToken();
+                map.put(type, map.getOrDefault(type, 0) + 1);
             }
-
-            int ans = 1;    // 안입는 경우도 count
-
-            for(int v : map.values()) 
-                ans *= (v + 1);
-            
-            ans--;      // 전체 다 안입는 경우는 제외
-
-            sb.append(ans).append("\n");
+            int res = 1;
+            for(String key : map.keySet()){
+                res *= map.get(key) + 1;
+            }
+            sb.append(res - 1).append("\n");
         }
+        System.out.print(sb);
 
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
     }
 }
