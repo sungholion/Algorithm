@@ -22,46 +22,47 @@ public class Main {
             {'W', 'B', 'W', 'B', 'W', 'B', 'W', 'B'},
             {'B', 'W', 'B', 'W', 'B', 'W', 'B', 'W'}
     };
-    static char[][] arr;
+    static int N, M;
+    static char[][] map;
     static int min = Integer.MAX_VALUE;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        arr = new char[N][M];
-        for(int i = 0; i < N; i++) {
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        map = new char[N][M];
+        for (int i = 0; i < N; i++) {
             String str = br.readLine();
             for(int j = 0; j < M; j++) {
-                arr[i][j] = str.charAt(j);
+                map[i][j] = str.charAt(j);
             }
         }
 
-        for(int i = 0; i <= N - 8; i++) {
-            for(int j = 0; j <= M - 8; j++) {
+        for(int i = 0; i <= N - 8; i++){
+            for(int j = 0; j <= M - 8; j++){
                 find(i, j);
             }
         }
-        System.out.print(min);
+        sb.append(min);
 
+        System.out.print(sb);
     }
-    static void find(int x, int y){
-        int sum = 0;
-        for(int i=0; i<8; i++){
-            for(int j=0; j<8; j++){
-                if(black[i][j] != arr[x+i][y+j]) sum++;
+    static void find(int n, int m){
+        int cnt = 0;
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                if(map[i+n][j+m] != black[i][j]) cnt++;
             }
         }
-        if(sum < min) min = sum;
-
-        sum = 0;
-        for(int i=0; i<8; i++){
-            for(int j=0; j<8; j++){
-                if(white[i][j] != arr[x+i][y+j]) sum++;
+        if(cnt < min) min = cnt;
+        cnt = 0;
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                if(map[i+n][j+m] != white[i][j]) cnt++;
             }
         }
-        if(sum < min) min = sum;
+        if(cnt < min) min = cnt;
     }
 }
