@@ -7,21 +7,21 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        int cnt = 0;
+        int ans = 0;
 
-        while(true){
+        while(true) {
             if(N % 5 == 0){
-                cnt += N / 5;
-                System.out.print(cnt);
-                break;
+                ans += N / 5;
+                System.out.println(ans);
+                return;
             }
-            N -= 3;
-            cnt++;
-
+            N-= 3;
+            ans++;
             if(N < 0){
                 System.out.println(-1);
-                break;
+                return;
             }
         }
     }
+
 }
