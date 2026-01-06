@@ -1,59 +1,40 @@
 import java.util.*;
-import java.io.*;
-
-class Coord{
-    int x;
-    int y;
-    
-    public Coord(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-}
 
 class Solution {
-    static int[][] vis;
-    static int[] dx = {-1, 1, 0, 0};
-    static int[] dy = {0, 0, -1, 1};
-    static int n, m;
     public int solution(int[][] maps) {
-        int answer = 0;
+        int n = maps.length;
+        int m = maps[0].length;
         
-        n = maps.length;
-        m = maps[0].length;
-        vis = new int[n][m];
+        int[] dx = {1, -1, 0, 0};
+        int[] dy = {0, 0, 1, -1};
         
-        Coord start = new Coord(0, 0);
-        bfs(maps, start);
+        int[][] visited = new int[n][m];
         
-        answer = vis[n-1][m-1];
-        if(answer == 0){
-            answer = -1;
-        }
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[]{0, 0});
+        visited[0][0] = 1; 
         
-        return answer;
-    }
-    
-    public void bfs(int[][] maps, Coord start){
-        Queue<Coord> q = new ArrayDeque<>();
-        vis[start.x][start.y] = 1;
-        q.offer(start);
-        
-        while(!q.isEmpty()){
-            Coord cur = q.poll();
+        while (!q.isEmpty()) {
+            int[] now = q.poll();
+            int x = now[0];
+            int y = now[1];
             
-            for(int i=0; i<4; i++){
-                int nx = cur.x + dx[i];
-                int ny = cur.y + dy[i];
+            if (x == n - 1 && y == m - 1) {
+                return visited[x][y];
+            }
+            for (int i = 0; i < 4; i++) {
+                int nx = x + dx[i];
+                int ny = y + dy[i];
                 
-                if(nx < 0 || ny < 0 || nx >= n || ny >= m || 
-                   maps[nx][ny] == 0 || vis[nx][ny] != 0){
-                    continue;
+                if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
+                    if (maps[nx][ny] == 1 && visited[nx][ny] == 0) {
+                        visited[nx][ny] = visited[x][y] + 1;
+                        q.offer(new int[]{nx, ny});
+                    }
                 }
-                
-                vis[nx][ny] = vis[cur.x][cur.y] + 1;
-                q.offer(new Coord(nx, ny));
             }
         }
+        
+        return -1;
     }
 }
