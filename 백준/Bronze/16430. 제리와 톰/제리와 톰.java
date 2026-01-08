@@ -2,11 +2,15 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int p = Integer.parseInt(st.nextToken());
-        int q = Integer.parseInt(st.nextToken());
-        System.out.print(q-p + " " + q);
+        int A = Integer.parseInt(st.nextToken());
+        int B = Integer.parseInt(st.nextToken());
+        sb.append(B-A).append(" ").append(B);
+
+        System.out.print(sb.toString());
     }
 }
