@@ -1,15 +1,16 @@
-import java.util.Scanner;
-import java.util.Stack;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
-        Scanner sc = new Scanner(System.in);
+        String str = br.readLine();
+        sb.append(":fan::fan::fan:\n");
+        sb.append(":fan::" + str + "::fan:\n");
+        sb.append(":fan::fan::fan:\n");
 
-        String str = sc.next();
-
-        System.out.println(":fan::fan::fan:");
-        System.out.println(":fan::" + str + "::fan:");
-        System.out.println(":fan::fan::fan:");
+        System.out.print(sb.toString());
     }
 }
