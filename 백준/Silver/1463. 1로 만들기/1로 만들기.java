@@ -1,30 +1,27 @@
-import java.io.*;
-import java.util.*;
-
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Main {
-    static Integer[] dp;
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
-
+        
         int N = Integer.parseInt(br.readLine());
-        dp = new Integer[N + 1];
-        dp[0] = dp[1] = 0;
+        int[] dp = new int[N + 1];
 
-        sb.append(makeOne(N, 0));
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
-    }
+        dp[1] = 0; 
 
-    public static int makeOne(int N, int cnt) {
-        if (N < 2) {
-            return cnt;
+        for (int i = 2; i <= N; i++) {
+            dp[i] = dp[i - 1] + 1;
+
+            if (i % 2 == 0) {
+                dp[i] = Math.min(dp[i], dp[i / 2] + 1);
+            }
+
+            if (i % 3 == 0) {
+                dp[i] = Math.min(dp[i], dp[i / 3] + 1);
+            }
         }
-        return Math.min(makeOne(N / 2, cnt + 1 + (N % 2)), makeOne(N / 3, cnt + 1 + (N % 3)));
-    }
 
+        System.out.println(dp[N]);
+    }
 }
