@@ -1,36 +1,24 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
-    public static void main(String[] args) throws IOException {
+class Main{
+    public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
+        int n = Integer.parseInt(br.readLine());
 
-        int N = Integer.parseInt(br.readLine());
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
 
-        int[] dp = new int[N + 1];
-        dp[1] = 1;
+        for (int i = 1; i <= n; i++) {
+            dp[i] = i;
 
-        int min = Integer.MAX_VALUE;
-
-        for(int i = 2; i <= N; i++) {
-            min = Integer.MAX_VALUE;
-
-            for(int j = 1; j * j <= i; j++) {
-                int temp = i - j * j;
-                min = Math.min(min, dp[temp]);
+            for (int j = 1; j * j <= i; j++) {
+                int square = j * j;
+                dp[i] = Math.min(dp[i], dp[i - square] + 1);
             }
-
-            dp[i] = min + 1;
         }
 
-        sb.append(dp[N]);
-
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.println(dp[n]);
     }
 
 }
