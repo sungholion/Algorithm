@@ -1,23 +1,17 @@
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
-        int n = Integer.parseInt(br.readLine());
-        long res = 1;
-        if(n == 0){
-            bw.write("1\n");
-        } else{
-            for(int i = n; i>0; i--){
-                res *= i;
-            }
-            bw.write(res + "\n");
-        }
+        long n = Integer.parseInt(br.readLine());
+        System.out.println(factorial(n));
 
-        bw.flush();
-        bw.close();
-        br.close();
+    }
+    static long factorial(long n){
+        if(n <= 1) return 1;
+        return n * factorial(n-1);
     }
 }
