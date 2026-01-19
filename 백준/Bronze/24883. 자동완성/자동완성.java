@@ -1,17 +1,13 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void main(String[] args) throws IOException {
-        String ch = br.readLine();
-        String result = "Naver Whale";
-        if (ch.equals("N") || ch.equals("n")) {
-            result = "Naver D2";
-        }
-        System.out.print(result);
+        String str = br.readLine();
+        char ch = str.charAt(0);
+        if(ch == 'n' || ch == 'N') System.out.print("Naver D2");
+        else System.out.print("Naver Whale");
     }
-
 }
