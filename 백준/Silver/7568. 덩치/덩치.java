@@ -1,38 +1,45 @@
 import java.io.*;
 import java.util.*;
 
+class Person{
+    int kg;
+    int cm;
+    int rank;
+
+    Person(int kg, int cm){
+        this.kg = kg;
+        this.cm = cm;
+        this.rank = 1;
+    }
+}
+
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        int[] w = new int[N];
-        int[] h = new int[N];
+        Person[] persons = new Person[N];
 
-
-        for (int i = 0; i < N; i++) {
+        for(int i = 0; i < N; i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
-            w[i] = Integer.parseInt(st.nextToken());
-            h[i] = Integer.parseInt(st.nextToken());
+            int kg = Integer.parseInt(st.nextToken());
+            int cm = Integer.parseInt(st.nextToken());
+            persons[i] = new Person(kg, cm);
         }
 
-        int[] rank = new int[N];
-        for(int i = 0; i < N; i++) {
-            rank[i] = 1;
-        }
-
-        for (int i = 0; i < N; i++) {
-            for(int j = 0; j < N; j++) {
-                if(w[j] > w[i] && h[j] > h[i]) {
-                    rank[i]++;
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                if(persons[i].cm < persons[j].cm && persons[i].kg < persons[j].kg){
+                    persons[i].rank++;
                 }
             }
         }
 
-        for(int r : rank)
-            sb.append(r).append(" ");
+        for(int i = 0; i < N; i++){
+            sb.append(persons[i].rank).append(" ");
+        }
 
-        System.out.println(sb.toString());
+        System.out.print(sb.toString());
     }
 }
