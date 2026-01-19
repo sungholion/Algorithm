@@ -1,17 +1,15 @@
+import java.io.*;
 import java.math.BigInteger;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        Scanner sc = new Scanner(System.in);
-        StringBuilder sb = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        BigInteger A = new BigInteger(st.nextToken());
+        BigInteger B = new BigInteger(st.nextToken());
 
-        BigInteger numA = sc.nextBigInteger();
-        BigInteger numB = sc.nextBigInteger();
-
-        sb.append(numA.multiply(numB));
-        System.out.println(sb.toString());
+        System.out.print(A.multiply(B));
     }
 }
