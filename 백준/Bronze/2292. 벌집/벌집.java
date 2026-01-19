@@ -1,19 +1,19 @@
 import java.io.*;
+import java.math.BigInteger;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
-        int cnt = 1;
-        int cur = 1;
-        while(N > cur){
-            cur += 6 * cnt;
-            cnt++;
+
+        int layer = 1;
+        int bee = 1;
+        while(N > bee){
+            bee += layer * 6;
+            layer++;
         }
-        sb.append(cnt);
-        System.out.print(sb.toString());
+        System.out.print(layer);
     }
 }
