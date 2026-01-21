@@ -1,18 +1,16 @@
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
-        int N = sc.nextInt();
-
-        if (N % 5 > 0) {
-            System.out.println((N / 5 + 1));
-
-        }
-        else {
-            System.out.println(N / 5);
-        }
-
+        int N = Integer.parseInt(br.readLine());
+        int t = N / 5;
+        if(N % 5 != 0) t++;
+        sb.append(t);
+        System.out.println(sb);
     }
+
 }
