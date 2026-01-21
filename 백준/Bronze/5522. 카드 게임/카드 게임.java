@@ -4,11 +4,15 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int total = 0;
-        
-        for (int i = 1; i <= 5; i++) {
-            total += Integer.parseInt(br.readLine());  
+        StringBuilder sb = new StringBuilder();
+
+        int sum = 0;
+        String str;
+        while((str = br.readLine()) != null){
+            sum += Integer.parseInt(str);
         }
-        System.out.print(total);
+        sb.append(sum);
+        System.out.println(sb);
     }
+
 }
