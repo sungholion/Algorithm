@@ -4,17 +4,14 @@ public class Solution {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String a = sc.next();
-        String answer = "";
-        
-        for(int i=0; i<a.length(); i++){
-            char c = a.charAt(i);
-            if(Character.isUpperCase(c)){
-                answer += Character.toLowerCase(c);
-            } else{
-                answer += Character.toUpperCase(c);
-            }
-            }
-        System.out.println(answer);   
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i< a.length(); i++){
+            char ch = a.charAt(i);
+            if(Character.isLowerCase(ch))
+                sb.append(Character.toUpperCase(ch));
+            else
+                sb.append(Character.toLowerCase(ch));
+        }
+        System.out.print(sb.toString());
     }
-       
 }
