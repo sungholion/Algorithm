@@ -2,38 +2,42 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine().trim());     
-        int m = Integer.parseInt(br.readLine().trim());     
+        StringBuilder sb = new StringBuilder();
 
-        List<Integer>[] g = new ArrayList[n + 1];
-        for (int i = 1; i <= n; i++) g[i] = new ArrayList<>();
-
-        for (int i = 0; i < m; i++) {
+        int N = Integer.parseInt(br.readLine());
+        int M = Integer.parseInt(br.readLine());
+        List<Integer>[] list = new ArrayList[N + 1];
+        boolean[] visited = new boolean[N + 1];
+        for(int i = 1; i <= N; i++) {
+            list[i] = new ArrayList<>();
+        }
+        for(int i = 0; i < M; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            g[a].add(b);
-            g[b].add(a);
+            list[a].add(b);
+            list[b].add(a);
         }
 
-        boolean[] vis = new boolean[n + 1];
-        Queue<Integer> q = new ArrayDeque<>();
-        vis[1] = true;
+        ArrayDeque<Integer> q = new ArrayDeque<>();
         q.offer(1);
+        visited[1] = true;
+        int cnt = 0;
 
-        int infected = 0;
-        while (!q.isEmpty()) {
+        while(!q.isEmpty()) {
             int cur = q.poll();
-            for (int nxt : g[cur]) {
-                if (!vis[nxt]) {
-                    vis[nxt] = true;
-                    q.offer(nxt);
-                    infected++;
+            for(int next : list[cur]) {
+                if(!visited[next]) {
+                    q.offer(next);
+                    visited[next] = true;
+                    cnt++;
                 }
             }
         }
-        System.out.println(infected);
+        System.out.println(cnt);
+
     }
+
 }
