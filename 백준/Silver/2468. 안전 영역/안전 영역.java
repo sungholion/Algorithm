@@ -1,91 +1,62 @@
 import java.io.*;
 import java.util.*;
 
-class Coord{
-    int x;
-    int y;
-
-    public Coord(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-}
-
-public class Main{
-    static int n;
+public class Main {
+    static int N;
     static int[][] map;
     static boolean[][] vis;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
     static int maxH = Integer.MIN_VALUE;
-
-    public static void main(String[] args) throws IOException {
+    static int maxSafe = Integer.MIN_VALUE;
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
-        StringTokenizer st;
 
-        n = Integer.parseInt(br.readLine());
-        map = new int[n][n];
-
-        for(int i = 0; i<n; i++){
-            st = new StringTokenizer(br.readLine());
-            for(int j=0; j<n; j++){
-                map[i][j] = Integer.parseInt(st.nextToken());
-                if(map[i][j] > maxH){
-                    maxH = map[i][j];
-                }
+        N = Integer.parseInt(br.readLine());
+        map = new int[N][N];
+        for(int i = 0; i < N; i++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for(int j = 0; j < N; j++){
+                int num =  Integer.parseInt(st.nextToken());
+                maxH = Math.max(num, maxH);
+                map[i][j] = num;
             }
         }
 
-        int maxCnt = 0;
         for(int h = 0; h <= maxH; h++){
-            vis = new boolean[n][n];
             int cnt = 0;
-
-            for(int i=0; i<n; i++){
-                for(int j=0; j<n; j++){
-                    if(map[i][j] > h &&  !vis[i][j]){
+            vis = new boolean[N][N];
+            for(int i = 0; i < N; i++){
+                for(int j = 0; j < N; j++){
+                    if(map[i][j] > h && !vis[i][j]){
                         cnt++;
-                        bfs(new Coord(i, j), h);
+                        bfs(new int[]{i,j}, h);
                     }
                 }
             }
-
-            if(cnt > maxCnt){
-                maxCnt = cnt;
-            }
-
+            maxSafe = Math.max(maxSafe, cnt);
         }
-
-        sb.append(maxCnt).append("\n");
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.println(maxSafe);
     }
 
-    static void bfs(Coord start, int h){
-        Queue<Coord> q = new ArrayDeque<>();
-
-        vis[start.x][start.y] = true;
-        q.offer(start);
+    static void bfs(int[] pos, int h){
+        ArrayDeque<int[]> q = new ArrayDeque<>();
+        q.offer(new int[]{pos[0],pos[1]});
+        vis[pos[0]][pos[1]] = true;
 
         while(!q.isEmpty()){
-            Coord cur = q.poll();
+            int[] cur = q.poll();
 
-            for(int i=0; i<4; i++){
-                int nx = cur.x + dx[i];
-                int ny = cur.y + dy[i];
+            for(int i = 0; i < 4; i++){
+                int nx = cur[0] + dx[i];
+                int ny = cur[1] + dy[i];
 
-                if(nx < 0 || ny < 0 || nx >= n || ny >= n || vis[nx][ny] || map[nx][ny] <= h){
-                    continue;
+                if(nx < 0 || ny < 0 || nx >= N || ny >= N) continue;
+                if(map[nx][ny] > h && !vis[nx][ny]){
+                    q.offer(new int[]{nx,ny});
+                    vis[nx][ny] = true;
                 }
-
-                vis[nx][ny] = true;
-                q.offer(new Coord(nx, ny));
             }
         }
     }
-
 }
