@@ -3,81 +3,106 @@ import java.util.*;
 
 public class Main {
     static int N, M;
-    static int[][] orgMap; // 원본 지도
-    static int[][] copyMap;
-    static int maxSize = Integer.MIN_VALUE; // 안전구역 최대넓이
-    static ArrayDeque<int[]> orgBirus = new ArrayDeque<>(); // 불 위치
-    static ArrayList<int[]> canGo = new ArrayList<>(); // 빈 칸 위치
+    static int[][] mapOrg;
+    static ArrayList<int[]> emptySpaces = new ArrayList<>();
+    static ArrayDeque<int[]> virusOrg = new ArrayDeque<>();
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
+    static int maxSize = Integer.MIN_VALUE;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
-        // 1. 입력
+        // 1. 입력 받기 / 벽 세울 위치 및 바이러스 위치 저장
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        orgMap = new int[N][M];
-        for (int i = 0; i < N; i++) {
+        mapOrg =  new int[N][M];
+        for(int i = 0; i < N; i++){
             st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < M; j++) {
-                int num = Integer.parseInt(st.nextToken());
-                if(num == 0) canGo.add(new int[]{i, j});
-                else if(num == 2) orgBirus.offer(new int[]{i, j});
-                orgMap[i][j] = num;
+            for(int j = 0; j < M; j++){
+                int x = Integer.parseInt(st.nextToken());
+                mapOrg[i][j] = x;
+
+                if(x == 0){
+                    emptySpaces.add(new int[]{i, j});
+                } else if(x == 2){
+                    virusOrg.offer(new int[]{i, j});
+                }
+
             }
         }
 
-
-        // 2 . 벽 후보 3개 뽑아서 맵 복사
-        for(int i = 0; i < canGo.size() - 2; i++){
-            for(int j = i + 1; j < canGo.size() - 1; j++){
-                for(int k = j + 1; k < canGo.size(); k++){
-                    copyMap = new int[orgMap.length][];
-                    for(int c = 0; c < orgMap.length; c++){
-                        copyMap[c] = orgMap[c].clone();
-                    }
-                    int[] a = canGo.get(i);
-                    int[] b = canGo.get(j);
-                    int[] c = canGo.get(k);
-                    copyMap[a[0]][a[1]] = 1;
-                    copyMap[b[0]][b[1]] = 1;
-                    copyMap[c[0]][c[1]] = 1;
-
-                    // 3. 바이러스 퍼뜨리기
-                    ArrayDeque<int[]> copyBirus = new ArrayDeque<>(orgBirus);
-                    while(!copyBirus.isEmpty()){
-                        int[] cur =  copyBirus.poll();
-
-                        for(int f = 0; f < 4; f++){
-                            int nx = cur[0] + dx[f];
-                            int ny = cur[1] + dy[f];
-
-                            if(nx < 0 || ny < 0 || nx >= N || ny >= M) continue;
-                            if(copyMap[nx][ny] == 0){
-                                copyMap[nx][ny] = 2;
-                                copyBirus.offer(new int[]{nx, ny});
-                            }
-                        }
-                    }
-
-
-                    // 넓이 갱신
-                    int cnt = 0;
-                    for(int s = 0; s < N; s++){
-                        for(int e = 0; e < M; e++){
-                            if(copyMap[s][e] == 0){
-                                cnt++;
-                            }
-                        }
-                    }
-                    if(cnt > maxSize){
-                        maxSize = cnt;
-                    }
+        // 2. 벽 세우고 -> 바이러스 퍼뜨리고 -> 안전영역 최댓값 갱신
+        int size = emptySpaces.size();
+        for(int i = 0; i < size - 2; i++){
+            for(int j = i + 1; j < size - 1; j++){
+                for(int k = j + 1; k < size; k++){
+                    simulateWithWalls(i, j, k);
                 }
             }
-
         }
-        System.out.println(maxSize);
+        sb.append(maxSize);
+        System.out.println(sb);
+    }
+
+    static void  simulateWithWalls(int i, int j, int k){
+        int[][] map = getCopyMap(mapOrg);  // 벽을 세울 맵 복사
+
+        int[] a = emptySpaces.get(i);
+        int[] b = emptySpaces.get(j);
+        int[] c = emptySpaces.get(k);
+
+        buildWall(map, a);  // 해당 위치 벽 세우기
+        buildWall(map, b);
+        buildWall(map, c);
+
+        spreadVirus(map);
+        int curSafe = countSafeArea(map);
+        maxSize = Math.max(maxSize, curSafe);
+    }
+
+    static int[][] getCopyMap(int[][] map){
+        int[][] copyMap = new int[N][M];
+        for(int i = 0; i < N; i++){
+            copyMap[i] = map[i].clone();
+        }
+        return copyMap;
+    }
+
+    static void buildWall(int[][] map, int[] wallPos){
+        map[wallPos[0]][wallPos[1]] = 1;
+    }
+
+    static void spreadVirus(int[][] map){
+        ArrayDeque<int[]> virus = new ArrayDeque<>(virusOrg);
+
+        while(!virus.isEmpty()){
+            int[] cur = virus.poll();
+
+            for(int i = 0; i < 4; i++){
+                int nx =  cur[0] + dx[i];
+                int ny =  cur[1] + dy[i];
+
+                if(nx < 0 || ny < 0 || nx >= N || ny >= M) continue;
+                if(map[nx][ny] == 0){
+                    map[nx][ny] = 2;
+                    virus.offer(new int[]{nx, ny});
+                }
+            }
+        }
+    }
+
+    static int countSafeArea(int[][] map){
+        int count = 0;
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < M; j++){
+                if(map[i][j] == 0){
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }
