@@ -1,87 +1,64 @@
 import java.io.*;
 import java.util.*;
 
-class Coord{
-    int x;
-    int y;
+public class Main {
+    static int N;
+    static boolean[][] vis;
+    static int[] dx = {-2, -1, 1, 2, -2, -1, 1, 2};
+    static int[] dy = {1, 2, 2, 1, -1, -2, -2, -1};
+    static int sx, sy, tx, ty;
 
-    public Coord(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-}
-
-public class Main{
-    static int l;
-    static int [][] map;
-    static boolean [][] vis;
-    static int[] dx = {2, 2, -2, -2, 1, 1, -1, -1};
-    static int[] dy = {-1, 1, -1, 1, -2, 2, -2, 2};
-    static Coord start;
-    static Coord end;
-
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        StringTokenizer st;
 
-        int t = Integer.parseInt(br.readLine());
+        int T = Integer.parseInt(br.readLine());
+        while (T-- > 0) {
+            N = Integer.parseInt(br.readLine());
+            vis = new boolean[N][N];
 
-        for(int tc=0; tc<t; tc++){
-            l = Integer.parseInt(br.readLine());
-            map = new int[l][l];
-            vis = new boolean[l][l];
-
-            st = new StringTokenizer(br.readLine());
-            int startX = Integer.parseInt(st.nextToken());
-            int startY = Integer.parseInt(st.nextToken());
-            start = new Coord(startX, startY);
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            sx = Integer.parseInt(st.nextToken());
+            sy = Integer.parseInt(st.nextToken());
 
             st = new StringTokenizer(br.readLine());
-            int endX = Integer.parseInt(st.nextToken());
-            int endY = Integer.parseInt(st.nextToken());
-            end = new Coord(endX, endY);
+            tx = Integer.parseInt(st.nextToken());
+            ty = Integer.parseInt(st.nextToken());
 
             sb.append(bfs()).append("\n");
-
         }
 
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.print(sb);
     }
 
-    static int bfs(){
-        Queue<Coord> q = new ArrayDeque<>();
+    static int bfs() {
+        if (sx == tx && sy == ty) return 0;
 
-        vis[start.x][start.y] = true;
-        q.offer(start);
+        ArrayDeque<int[]> q = new ArrayDeque<>();
+        int[][] dist = new int[N][N];
 
-        while(!q.isEmpty()){
-            Coord cur = q.poll();
+        q.offer(new int[]{sx, sy});
+        vis[sx][sy] = true;
 
-            if((cur.x == end.x) && (cur.y == end.y)){
-                return map[cur.x][cur.y];
-            }
+        while (!q.isEmpty()) {
+            int[] cur = q.poll();
+            int x = cur[0], y = cur[1];
 
-            for(int i=0; i<8; i++){
-                int nx = cur.x + dx[i];
-                int ny = cur.y + dy[i];
+            for (int i = 0; i < 8; i++) {
+                int nx = x + dx[i];
+                int ny = y + dy[i];
 
-                if(nx < 0 || ny < 0 || nx >= l || ny >= l || vis[nx][ny]){
-                    continue;
-                }
+                if (nx < 0 || ny < 0 || nx >= N || ny >= N) continue;
+                if (vis[nx][ny]) continue;
 
                 vis[nx][ny] = true;
-                q.offer(new Coord(nx, ny));
-                map[nx][ny] = map[cur.x][cur.y] + 1;
+                dist[nx][ny] = dist[x][y] + 1;
+
+                if (nx == tx && ny == ty) return dist[nx][ny];
+
+                q.offer(new int[]{nx, ny});
             }
         }
-
-        return 0;
+        return -1; // 여기까지는 사실상 안 옴
     }
-
-
 }
