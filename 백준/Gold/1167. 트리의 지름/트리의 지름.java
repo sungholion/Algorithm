@@ -1,0 +1,60 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static class Node{
+        int idx,cnt;
+        Node(int idx, int cnt){
+            this.idx = idx;
+            this.cnt = cnt;
+        }
+    }
+    static ArrayList<Node>list[];
+    static int n;
+    static int max = 0;
+    static boolean visited[];
+    static int max_idx = 0;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        n = Integer.parseInt(br.readLine());
+        list = new ArrayList[n+1];
+        for(int i=0; i<=n; i++)
+            list[i] = new ArrayList<>();
+        for(int i=0; i<n-1; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int from = Integer.parseInt(st.nextToken());
+            while (true) {
+                int to = Integer.parseInt(st.nextToken());
+                if (to == -1) break;
+                int w = Integer.parseInt(st.nextToken());
+
+                list[from].add(new Node(to, w));
+                list[to].add(new Node(from, w));
+            }
+
+        }
+        visited = new boolean[n+1];
+        visited[1] = true;
+        dfs(1,0);
+
+        visited = new boolean[n+1];
+        visited[max_idx] = true;
+        dfs(max_idx,0);
+        System.out.println(max);
+
+    }
+    public static void dfs(int idx, int cnt) {
+        if(max < cnt) {
+            max = cnt;
+            max_idx = idx;
+        }
+
+        for(Node a : list[idx]) {
+            if(!visited[a.idx]) {
+                visited[a.idx] = true;
+                dfs(a.idx, cnt+a.cnt);
+            }
+        }
+    }
+}
