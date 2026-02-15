@@ -1,22 +1,19 @@
-import java.util.*;
-
 class Solution {
     public long solution(long n) {
-        // 각 자리수를 배열에 하나씩 넣기
-        // 배열 정렬
-        // 배열에서 하나씩 꺼내서 문자열에 더하기
-        // 문자열 long으로 바꾸기
-        String str = String.valueOf(n);
-        int[] arr = new int[str.length()];
-        for(int i=0; i<arr.length; i++)
-            arr[i] = str.charAt(i) - '0';
-        Arrays.sort(arr);
+        long[] cnt = new long[10];
+        while(n != 0){
+            long x = n % 10;
+            cnt[(int)x]+= 1;
+            n /= 10;
+        }
+        StringBuilder sb = new StringBuilder();
+        for(int i = 9; i >= 0; i--){
+            while(cnt[i] > 0){
+                sb.append(i);
+                cnt[i]--;
+            }
+        }
         
-        String temp = "";
-        for(int i=arr.length-1; i>= 0; i--)
-            temp += arr[i] + "";
-        
-        long answer = Long.parseLong(temp);
-        return answer;
+        return Long.parseLong(sb.toString());
     }
 }
