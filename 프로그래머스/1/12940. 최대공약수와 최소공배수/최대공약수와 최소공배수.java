@@ -1,10 +1,11 @@
 class Solution {
     public int[] solution(int n, int m) {
-        if(n > m) return new int[]{getGcd(n, m), getLcm(n, m)};
-        else return new int[]{getGcd(m, n), getLcm(m, n)};
+        int[] answer = new int[2];
+        answer[0] = gcd(n, m);
+        answer[1] = lcm(n, m);
+        return answer;
     }
-    
-    static int getGcd(int a, int b){
+    static int gcd(int a, int b){
         while(b != 0){
             int temp = a % b;
             a = b;
@@ -12,8 +13,7 @@ class Solution {
         }
         return a;
     }
-    
-    static int getLcm(int a, int b){
-        return (a * b) / getGcd(a, b);
+    static int lcm(int a, int b){
+        return (a * b) / gcd(a, b);
     }
 }
