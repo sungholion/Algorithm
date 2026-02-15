@@ -1,13 +1,9 @@
 class Solution {
     public long solution(long n) {
-        // x = 제곱근(sqrt)로 구한 값을 int로 바꾸고
-        // n을 x로 나눴을 때 x와 같은지 비교
         long answer = 0;
+        double temp = (long) Math.sqrt(n);
         
-        long x = (long)Math.sqrt(n);
-        if((x * x) == n) answer = (long)Math.pow((x+1), 2);
-        else answer = -1;
-        
-        return answer;
+        if(temp * temp == n) return (long) ((temp + 1) * (temp + 1));
+        else return -1;
     }
 }
