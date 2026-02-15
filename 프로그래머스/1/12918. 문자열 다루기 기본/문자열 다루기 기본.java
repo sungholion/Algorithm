@@ -1,12 +1,12 @@
 class Solution {
     public boolean solution(String s) {
-        if((s.length() == 4) || (s.length() == 6)){
-            for(int i=0; i<s.length(); i++){
-                if(Character.isDigit(s.charAt(i)) == false)
-                    return false;
+        int len = s.length();
+        if(len != 4 && len != 6) return false;
+        for(int i = 0; i < len; i++){
+            if(!Character.isDigit(s.charAt(i))){
+                return false;
             }
-            return true;
-        } 
-        else return false;
+        }
+        return true;
     }
 }
