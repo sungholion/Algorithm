@@ -1,14 +1,16 @@
 class Solution {
     boolean solution(String s) {
         boolean answer = true;
+        int pCnt = 0;
+        int yCnt = 0;
         
-        int cntP = 0, cntY = 0;
-        for(int i=0; i<s.length(); i++){
-            char ch = s.charAt(i);
-            if(ch == 'p' || ch == 'P') cntP++;
-            if(ch == 'y' || ch == 'Y') cntY++;
+        for(char ch : s.toCharArray()){
+            if(ch == 'p' || ch == 'P') pCnt++;
+            if(ch == 'y' || ch == 'Y') yCnt++;
         }
-        answer = cntP == cntY ? true : false;
+        
+        if(pCnt != yCnt) answer = false;
+
         return answer;
     }
 }
