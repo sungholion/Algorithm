@@ -6,16 +6,14 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         String str = br.readLine();
-        int[] alpa = new int[26];
+        int[] freq = new int[26];
 
         for(int i = 0; i < str.length(); i++) {
-            char ch = str.charAt(i);
-            int num = ch - 'a';
-            alpa[num]++;
+            freq[str.charAt(i) - 'a']++;
         }
 
         for(int i = 0; i < 26; i++) {
-            sb.append(alpa[i] + " ");
+            sb.append(freq[i]).append(" ");
         }
         System.out.println(sb);
 
