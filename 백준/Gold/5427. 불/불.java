@@ -1,127 +1,86 @@
 import java.io.*;
 import java.util.*;
 
-class Coord{
-    int x;
-    int y;
-
-    public Coord(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-}
-
-public class Main{
-
-    static int h,w;
+public class Main {
+    static int w, h;
     static char[][] map;
-    static boolean[][] vis;
+    static int[][] fireTime;
+    static int[][] personTime;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
-    static Queue<Coord> fire;
-    static StringBuilder sb;
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        sb = new StringBuilder();
-        StringTokenizer st;
+        int T = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
 
-        int t = Integer.parseInt(br.readLine());
-
-        for(int tc = 0; tc < t; tc++){
-            st = new StringTokenizer(br.readLine());
+        while (T-- > 0) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
             w = Integer.parseInt(st.nextToken());
             h = Integer.parseInt(st.nextToken());
 
             map = new char[h][w];
-            fire = new ArrayDeque<>();  // 이전 테스트케이스의 fire가 남아 있을 수 있으므로 초기화
+            fireTime = new int[h][w];
+            personTime = new int[h][w];
 
-            int startX = 0;
-            int startY = 0;
-            for(int i=0; i<h; i++){
-                String temp = br.readLine();
-                for(int j=0; j<w; j++){
-                    map[i][j] = temp.charAt(j);
-                    if(map[i][j] == '@'){   // 시작점
-                        startX = i;
-                        startY = j;
+            ArrayDeque<int[]> fireQ = new ArrayDeque<>();
+            ArrayDeque<int[]> personQ = new ArrayDeque<>();
+
+            for (int i = 0; i < h; i++) {
+                String str = br.readLine();
+                for (int j = 0; j < w; j++) {
+                    map[i][j] = str.charAt(j);
+                    fireTime[i][j] = -1;
+                    personTime[i][j] = -1;
+
+                    if (map[i][j] == '*') {
+                        fireQ.offer(new int[]{i, j});
+                        fireTime[i][j] = 0;
+                    } else if (map[i][j] == '@') {
+                        personQ.offer(new int[]{i, j});
+                        personTime[i][j] = 0;
                     }
-                    else if(map[i][j] == '*'){  // 불 좌표를 큐에 추가
-                        fire.offer(new Coord(i, j));
+                }
+            }
+
+            // 1. 불 BFS
+            while (!fireQ.isEmpty()) {
+                int[] cur = fireQ.poll();
+                for (int i = 0; i < 4; i++) {
+                    int nx = cur[0] + dx[i], ny = cur[1] + dy[i];
+                    if (nx < 0 || ny < 0 || nx >= h || ny >= w) continue;
+                    if (map[nx][ny] == '#' || fireTime[nx][ny] != -1) continue;
+                    fireTime[nx][ny] = fireTime[cur[0]][cur[1]] + 1;
+                    fireQ.offer(new int[]{nx, ny});
+                }
+            }
+
+            // 2. 사람 BFS 
+            int result = -1;
+            boolean isEscaped = false;
+            while (!personQ.isEmpty() && !isEscaped) {
+                int[] cur = personQ.poll();
+                for (int i = 0; i < 4; i++) {
+                    int nx = cur[0] + dx[i], ny = cur[1] + dy[i];
+
+                    // 탈출 조건
+                    if (nx < 0 || ny < 0 || nx >= h || ny >= w) {
+                        result = personTime[cur[0]][cur[1]] + 1;
+                        isEscaped = true; // 플래그를 true로 변경해서 while문 빠지기
+                        break; // 현재 for문을 빠져나감
                     }
+
+                    if (map[nx][ny] == '#' || personTime[nx][ny] != -1) continue;
+                    if (fireTime[nx][ny] != -1 && personTime[cur[0]][cur[1]] + 1 >= fireTime[nx][ny]) continue;
+
+                    personTime[nx][ny] = personTime[cur[0]][cur[1]] + 1;
+                    personQ.offer(new int[]{nx, ny});
                 }
             }
 
-            bfs(new Coord(startX, startY));
-
+            if (isEscaped) sb.append(result).append("\n");
+            else sb.append("IMPOSSIBLE\n");
         }
-
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.print(sb);
     }
-
-    private static void bfs(Coord start){
-        Queue<Coord> q = new ArrayDeque<>();    // 상근이를 담을 큐
-
-        vis = new boolean[h][w];
-        vis[start.x][start.y] = true;
-        q.offer(new Coord(-1, -1)); // 불이 퍼지는 함수를 먼저 실행시키기 위한 플래그
-        q.offer(start);
-        int time = -1;  // 불이 먼저 움직여야 하므로, 불이 움직이는 건 시간으로 안 침
-
-        while(!q.isEmpty()){
-            Coord cur = q.poll();
-
-            if(cur.x == -1 && cur.y == -1){
-                burn();
-
-                if(!q.isEmpty()){
-                    q.offer(cur);   // 아직 상근이가 이동 중이라면, 불 옮겨붙기 다음에 한번 더 해야하므로
-                }
-                time++;
-                continue;
-            }
-
-            for(int i=0; i<4; i++){
-                int nx = cur.x + dx[i];
-                int ny = cur.y + dy[i];
-
-                if(nx < 0 || ny < 0 || nx >= h || ny >= w ){
-                    time++; // 탈출 칸도 1초로 친다.
-                    sb.append(time + "\n");
-                    return;
-                }
-
-                if(map[nx][ny] == '.' && !vis[nx][ny]){
-                    vis[nx][ny] = true;
-                    q.offer(new Coord(nx, ny));
-                }
-
-            }
-        }
-        sb.append("IMPOSSIBLE\n");
-    }
-
-    private static void burn(){
-        int size = fire.size(); // 불 1개당 1번만 옮겨붙어야 하므로
-
-        for(int s=0; s<size; s++){
-            Coord cur = fire.poll();
-
-            for(int i=0; i<4; i++) {
-                int nx = cur.x + dx[i];
-                int ny = cur.y + dy[i];
-
-                if(nx >= 0 && ny >= 0 && nx < h && ny < w && (map[nx][ny] == '.' || map[nx][ny] == '@')) {
-                    fire.offer(new Coord(nx, ny));
-                    map[nx][ny] = '*';
-                }
-
-            }
-        }
-    }
-
 }
