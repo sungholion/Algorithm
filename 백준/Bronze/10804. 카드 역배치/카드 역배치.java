@@ -14,10 +14,12 @@ public class Main {
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
 
-            for(int j = 0; j <= (b - a) / 2; j++){
-                int temp = card[a + j];
-                card[a + j] = card[b - j];
-                card[b - j] = temp;
+            while (a < b) {
+                int temp = card[a];
+                card[a] = card[b];
+                card[b] = temp;
+                a++;
+                b--;
             }
         }
 
