@@ -1,29 +1,25 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.*;
 
-public class Main{
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		String str = br.readLine();
-		int[] num = new int[10];
-		
-		for(int i=0; i<str.length(); i++) {
-			int x = str.charAt(i) - '0';
-			if(x == 9) num[6]++;
-			else num[x]++;
-		}
-		
-		if(num[6] % 2 == 1) num[6] = num[6]/2 +1;	// 홀수면 +1
-		else num[6] = num[6] / 2;
-		
-		int max = 0;
-		for(int i :num) max = Math.max(max, i);
-		
-		System.out.println(max);
-		
-		
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
-	}
+        String str = br.readLine();
+        int[] freq = new int[10];
+        for(int i = 0; i < str.length(); i++) {
+            freq[str.charAt(i) - '0']++;
+        }
+        int sixNine = freq[6] + freq[9];
+        freq[6] = (sixNine + 1) / 2;
+        freq[9] = 0;
+        
+        int ans = -1;
+        for(int i = 0; i < freq.length; i++) {
+            if(freq[i] > ans) ans = freq[i];
+        }
+        sb.append(ans);
+        System.out.print(sb);
+    }
 }
