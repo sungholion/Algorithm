@@ -1,54 +1,43 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.LinkedList;
-import java.util.ListIterator;
+import java.io.*;
+import java.util.*;
 
-public class Main{
-    public static void main(String[] args) throws IOException {
+public class Main {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
         int T = Integer.parseInt(br.readLine());
-        for(int loop=0; loop<T; loop++) {
+        for(int t = 0; t < T; t++) {
             String str = br.readLine();
-
-            LinkedList<Character> list = new LinkedList<>();
-            ListIterator<Character> it = list.listIterator();
-            
-            for(int i=0; i<str.length(); i++) {
-                char x = str.charAt(i);
-
-                if(x == '<') {
-                    if(it.hasPrevious()) {
-                        it.previous();
+            Stack<Character> left = new Stack<>();
+            Stack<Character> right = new Stack<>();
+            for(int i = 0; i < str.length(); i++) {
+                char c = str.charAt(i);
+                if(c == '<'){
+                    if(!left.isEmpty()){
+                        right.push(left.pop());
                     }
-                }
-                else if(x == '>') {
-                    if(it.hasNext()) {
-                        it.next();
+                } else if(c == '>'){
+                    if(!right.isEmpty()){
+                        left.push(right.pop());
                     }
-                }
-                else if(x == '-') {
-                    if(it.hasPrevious()) {
-                        it.previous();
-                        it.remove();
+                } else if(c == '-'){
+                    if(!left.isEmpty()){
+                        left.pop();
                     }
-                }
-                else {
-                    it.add(x); // '-'가 아니면 현재 커서 위치에 문자 추가
-                }
+                } else left.push(c);
             }
 
-            for(char c : list) bw.write(c);
-            bw.write("\n");
+            while(!left.isEmpty()){
+                right.push(left.pop());
+            }
+
+            while(!right.isEmpty()){
+                sb.append(right.pop());
+            }
+            sb.append("\n");
+
         }
-
-        bw.flush();
-        bw.close();
-        br.close();
-
+        System.out.print(sb);
     }
 }
