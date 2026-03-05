@@ -2,35 +2,31 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
         int n = Integer.parseInt(br.readLine());
-        Stack<Integer> s = new Stack<>();
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
 
-        int start = 1;
-        boolean possible = true;
-        while(n --> 0){
+        int cur = 1;
+        for(int i = 1; i <= n; i++) {
             int x = Integer.parseInt(br.readLine());
-            while(start <= x){
-                s.push(start++);
+            while(cur <= x){
+                stack.push(cur++);
                 sb.append("+\n");
             }
-
-            if(s.empty() || s.peek() != x){
-                possible = false;
-                break;
+            if(cur > x){
+                if(!stack.isEmpty() && stack.peek() == x){
+                    stack.pop();
+                    sb.append("-\n");
+                } else{
+                    System.out.println("NO\n");
+                    return;
+                }
             }
-
-            s.pop();
-            sb.append("-\n");
         }
 
-        if(possible)
-            System.out.println(sb);
-        else
-            System.out.println("NO");
+        System.out.println(sb);
     }
 }
-
