@@ -1,21 +1,12 @@
 import java.io.*;
-import java.util.*;
 
 public class Main {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
 
-        int A = Integer.parseInt(br.readLine());
-        int B = Integer.parseInt(br.readLine());
+        int a = Integer.parseInt(br.readLine());
+        int b = Integer.parseInt(br.readLine());
 
-        sb.append(A+B);
-
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
-
+        System.out.println(a + b);
     }
 }
