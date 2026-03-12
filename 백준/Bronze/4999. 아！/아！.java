@@ -1,17 +1,16 @@
-import java.util.Scanner;
+import java.io.*;
 
 public class Main {
-	public static void main(String[] args) {
-        
-		Scanner sc = new Scanner(System.in);
-		
-		String a = sc.next();
-		String b = sc.next();
-		
-		if (a.length() >= b.length()) {
-			System.out.println("go");
-		}else {
-			System.out.println("no");
-		}
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        String jae = br.readLine();
+        String doc = br.readLine();
+
+        if (jae.length() >= doc.length()) {
+            System.out.println("go");
+        } else {
+            System.out.println("no");
+        }
+    }
 }
