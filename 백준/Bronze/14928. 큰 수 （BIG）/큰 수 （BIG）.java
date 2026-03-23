@@ -1,27 +1,17 @@
 import java.io.*;
-import java.math.BigInteger;
-import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
+        String n = br.readLine();
 
-        String str = br.readLine();
+        int mod = 20000303;
+        long cur = 0;
 
-        long remain = 0;
-        for(int i = 0; i < str.length(); i++) {
-            remain = (remain * 10 + (str.charAt(i) - '0')) % 20000303;
+        for (int i = 0; i < n.length(); i++) {
+            cur = (cur * 10 + (n.charAt(i) - '0')) % mod;
         }
 
-        sb.append(remain);
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.println(cur);
     }
-
-
-
 }
