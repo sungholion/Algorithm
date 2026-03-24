@@ -1,14 +1,11 @@
 import java.io.*;
-import java.math.BigInteger;
-import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringBuilder sb = new StringBuilder();
+    static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        String str = "                                                           :8DDDDDDDDDDDDDD$.                                           \n" +
+    public static void main(String[] args) throws IOException {
+
+        System.out.println("                                                           :8DDDDDDDDDDDDDD$.                                           \n" +
                 "                                                      DDDNNN8~~~~~~~~~~=~7DNNDNDDDNNI                                   \n" +
                 "                                                  ?NNDD=~=~~~~~~~~~~~~~~~~~=~~==~=INNDNN7                               \n" +
                 "                                               +NDDI~~~~~~~~~~~~~~~~~~~~~~~=~~========~ODND+                            \n" +
@@ -71,15 +68,7 @@ public class Main {
                 "                                          .DND=~~~~=::~~=NN.   . . 8D~~.~~~~~~=DN$ODNDNDNNNDNNNNND8+~..                 \n" +
                 "                                             8DNNI=.~~~~=NDDNNNNDDNDNN.~~~~~IDDNDND7:.                                  \n" +
                 "                                                ?DNNDD?~DD          ~NN~~=NDD$                                          \n" +
-                "                                                     :DDD.            NNNN=                                   ";
-
-        sb.append(str);
-        bw.write(sb.toString());
-        bw.flush();
-        bw.close();
-        br.close();
+                "                                                     :DDD.            NNNN=                                             ");
     }
 
-
-
-}
+} 
